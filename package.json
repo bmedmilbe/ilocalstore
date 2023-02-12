@@ -4,6 +4,9 @@
   "description": "this is kachabazar-store built with next.js and tailwindcss",
   "homepage": "https://kachabazar-store.vercel.app/",
   "private": true,
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
