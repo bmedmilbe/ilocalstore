@@ -21,7 +21,7 @@ const Layout = ({ title, description, children }) => {
     try {
       setUser(await getUser());
     } catch (ex) {
-      console.log("user offline");
+      console.log("user out");
     }
   }, []);
 

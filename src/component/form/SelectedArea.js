@@ -2,7 +2,6 @@ import React from "react";
 import Label from "@component/form/Label";
 
 const SelectedArea = ({
-  onChange,
   data,
   register,
   defaultValue,
@@ -34,6 +33,7 @@ const SelectedArea = ({
           }
         >
           {" "}
+          {/* {console.log(data)} */}
           <option value={0}>Choose...</option>
           {data.map((item) => (
             <option

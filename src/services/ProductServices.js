@@ -28,6 +28,7 @@ const ProductServices = {
   },
 
   saveProduct(product) {
+    // console.log(product);
     if (product.id) {
       const body = { ...product };
       delete body.id;

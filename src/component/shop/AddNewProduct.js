@@ -50,9 +50,9 @@ const AddNewProduct = ({ product }) => {
 
     // "id", "product", "price", "description", 'slug',
     //"id", "name", "collection", "description", 'tag', 'image', 'slug'
-    console.log(data);
+    // console.log(data);
     const collectionData = {};
-    if (data.collection === "0") {
+    if (data.collection === "0" || data.newcollection !== "") {
       if (data.newcollection) {
         let collection = collections.find(
           (collection, i) => collection.title === data.newcollection
@@ -68,7 +68,7 @@ const AddNewProduct = ({ product }) => {
           })
             .then((res) => {
               collectionData.collection = res.id;
-              console.log(collectionData);
+              // console.log(collectionData);
               setLoading(false);
             })
             .catch((err) => {
@@ -83,15 +83,16 @@ const AddNewProduct = ({ product }) => {
         notifyError("You have to insert or choose a collection");
       }
     } else {
-      collectionData.collection = collection;
+      collectionData.collection = data.collection;
     }
 
-    console.log(collectionData);
+    // console.log(collectionData);
 
     const productData = {
-      ...collectionData,
+      collection:
+        data.collection !== 0 ? data.collection : collectionData.collection,
       name: data.name,
-      collection: collection,
+
       description: data.description,
       tag: data.tag,
       image: imageUrl,
@@ -101,21 +102,22 @@ const AddNewProduct = ({ product }) => {
     ProductServices.saveProduct(productData)
       .then((res) => {
         if (res) {
-          res.id = null;
           res.price = data.price;
-          console.log(data);
-          // ShopServices.saveShopProduct(data.store, res)
-          //   .then((res) => {
-          //     if (res) {
-          //       setLoading(false);
-          //       notifySuccess("Product Successfully Added!");
-          //       Cookies.set("product", JSON.stringify(res));
-          //     }
-          //   })
-          //   .catch((err) => {
-          //     setLoading(false);
-          //     notifyError(err ? err?.response?.data?.details : err.message);
-          //   });
+          res.product = res.id;
+          res.id = null;
+          // console.log(res);
+          ShopServices.saveShopProduct(data.store, res)
+            .then((res) => {
+              if (res) {
+                setLoading(false);
+                notifySuccess("Product Successfully Added!");
+                Cookies.set("product", JSON.stringify(res));
+              }
+            })
+            .catch((err) => {
+              setLoading(false);
+              notifyError(err ? err?.response?.data?.details : err.message);
+            });
         }
       })
       .catch((err) => {
@@ -138,31 +140,29 @@ const AddNewProduct = ({ product }) => {
 
     ShopServices.getMyShops()
       .then((res) => {
+        setStores(
+          res.map((r) => {
+            r.value = r.id;
+            r.name = `${r.post_code} | ${r.name}`;
+            return r;
+          })
+        );
+      })
+      .catch((err) => {
+        setLoading(false);
+        notifyError(err ? err?.response?.data?.details : err.message);
+      });
+    CollectionServices.getShowingCollection()
+      .then((res) => {
         if (res) {
-          setStores(
+          setCollections(
             res.map((r) => {
               r.value = r.id;
-              r.name = `${r.post_code} | ${r.name}`;
+              r.name = r.title;
               return r;
             })
           );
-          CollectionServices.getShowingCollection()
-            .then((res) => {
-              if (res) {
-                setCollections(
-                  res.map((r) => {
-                    r.value = r.id;
-                    r.name = r.title;
-                    return r;
-                  })
-                );
-                setLoading(false);
-              }
-            })
-            .catch((err) => {
-              setLoading(false);
-              notifyError(err ? err?.response?.data?.details : err.message);
-            });
+          setLoading(false);
         }
       })
       .catch((err) => {
@@ -170,11 +170,6 @@ const AddNewProduct = ({ product }) => {
         notifyError(err ? err?.response?.data?.details : err.message);
       });
   }, []);
-
-  const handleChange = (data) => {
-    console.log(data);
-    // data.store = e.target.value;
-  };
 
   return (
     <>
@@ -220,8 +215,7 @@ const AddNewProduct = ({ product }) => {
                       <div className="col-span-6 sm:col-span-3">
                         <SelectedArea
                           register={register}
-                          onChange={handleChange}
-                          defaultValue={stores.length > 0 ? stores[0].value : 0}
+                          defaultValue={0}
                           data={stores}
                           label="Store where customers can find the item"
                           name="store"
@@ -243,6 +237,7 @@ const AddNewProduct = ({ product }) => {
                         <Error errorName={errors.price} />
                       </div>
                       <div className="col-span-6 sm:col-span-2">
+                        {console.log(collections)}
                         <SelectedArea
                           defaultValue={0}
                           data={collections}

@@ -32,7 +32,7 @@ const ShopServices = {
   },
 
   async getMyStoreBySlug(slug) {
-    console.log(slug);
+    // console.log(slug);
     return await requests.get(`/store/shopmanagebyslug/${slug}`);
   },
 
@@ -76,10 +76,16 @@ const ShopServices = {
     if (product.id) {
       const body = { ...product };
       delete body.id;
-      return requests.put(productShopUrl(shop, product.id), body);
+      return requests.put(
+        apiEndpointManage + "/" + shop + "/shopmanageproducts/" + product,
+        body
+      );
     }
 
-    return requests.post(apiEndpoint + "/" + shop + "/products", product);
+    return requests.post(
+      apiEndpointManage + "/" + shop + "/shopmanageproducts/",
+      product
+    );
   },
 
   deleteShopProduct(shop, productId) {
