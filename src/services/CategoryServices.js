@@ -1,8 +1,12 @@
-import requests from './httpServices';
+import requests from "./httpServices";
 
 const CategoryServices = {
   getShowingCategory() {
-    return requests.get('/category/show');
+    try {
+      return requests.get("/category/show");
+    } catch (ex) {
+      console.log("Trying to get category!");
+    }
   },
 };
 

@@ -10,7 +10,7 @@ import ProductCard from "@component/product/ProductCard";
 import CategoryCarousel from "@component/carousel/CategoryCarousel";
 import { SidebarContext } from "@context/SidebarContext";
 import Loading from "@component/preloader/Loading";
-import CardShop from "@component/shop-card copy/CardShop";
+import CardShop from "@component/shop-card/CardShop";
 import CollectionCarousel from "@component/carousel/CollectionCarousel";
 
 const Search = ({ products }) => {

@@ -18,7 +18,11 @@ const Layout = ({ title, description, children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(async () => {
-    setUser(await getUser());
+    try {
+      setUser(await getUser());
+    } catch (ex) {
+      console.log("user offline");
+    }
   }, []);
 
   return (

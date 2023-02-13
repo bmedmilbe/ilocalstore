@@ -17,7 +17,7 @@ import Loading from "@component/preloader/Loading";
 import CategoryCarousel from "@component/carousel/CategoryCarousel";
 import ShopCarousel from "@component/carousel/ShopCarousel";
 import FeatureCollection from "@component/collection/FeatureCollection";
-import CardShop from "@component/shop-card copy/CardShop";
+import CardShop from "@component/shop-card/CardShop";
 
 const Home = ({ products, popularProducts, discountProducts }) => {
   const router = useRouter();

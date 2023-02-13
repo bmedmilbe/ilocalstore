@@ -1,6 +1,7 @@
 // import http from "./httpService";
 
 import requests from "./httpServices";
+import UserServices from "./UserServices";
 // import { apiUrl, storeUrl } from "../config.json";
 const apiEndpoint = "/store/shops";
 const apiEndpointManage = "/store/shopmanage";
@@ -36,7 +37,14 @@ const ShopServices = {
   },
 
   async getMyShops() {
-    return await requests.get(`${apiEndpointManage}`);
+    try {
+      if (UserServices.getJWT()) {
+        return await requests.get(`${apiEndpointManage}`);
+      }
+    } catch (ex) {
+      return [];
+    }
+    return [];
   },
 
   saveShop(shop) {

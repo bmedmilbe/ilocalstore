@@ -8,7 +8,7 @@ let value;
 
 const initialState = {
   user: getUser(),
-  userShops: getMyStores(),
+  userShops: UserServices.getJWT() ? getMyStores() : [],
   shippingAddress: Cookies.get("shippingAddress")
     ? JSON.parse(Cookies.get("shippingAddress"))
     : { adress: "leve-leve" },
@@ -18,11 +18,25 @@ const initialState = {
 };
 
 export async function getUser() {
-  return await (UserServices.getJWT() ? UserServices.getCurrentUser() : null);
+  try {
+    return await (UserServices.getJWT() ? UserServices.getCurrentUser() : null);
+  } catch (ex) {
+    console.log("Error getting user!");
+    return [];
+    // console.log();
+  }
 }
 
 export async function getMyStores() {
-  return await ShopServices.getMyShops();
+  try {
+    if (UserServices.getJWT()) {
+      return await ShopServices.getMyShops();
+    }
+    return [];
+  } catch (ex) {
+    console.log("Error getting shopp!");
+    return [];
+  }
 }
 
 function reducer(state, action) {
