@@ -189,7 +189,10 @@ const AddNewProduct = ({ product }) => {
               <div>
                 <Label label="Photo" />
                 <div className="mt-1 flex items-center">
-                  <Uploader imageUrl={imageUrl} setImageUrl={setImageUrl} />
+                  <UploaderProduct
+                    imageUrl={imageUrl}
+                    setImageUrl={setImageUrl}
+                  />
                 </div>
               </div>
             </div>
