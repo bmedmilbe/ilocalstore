@@ -82,6 +82,8 @@ const ProductModal = ({ modalOpen, setModalOpen, product }) => {
                     </span>
                   </button>
                 </div>
+
+                {/* {console.log(product)} */}
                 <button
                   onClick={() => handleAddItem(product)}
                   disabled={product.quantity < 1}

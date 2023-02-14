@@ -47,7 +47,7 @@ const CartItem = ({ item }) => {
         />
       </div>
       <div className="flex flex-col w-full overflow-hidden">
-        <Link href={`/product/${item.slug}`}>
+        <Link href={`/product/${item.product_shop.product.slug}`}>
           <a
             onClick={closeCartDrawer}
             className="truncate text-sm font-medium text-gray-700 text-heading line-clamp-1"

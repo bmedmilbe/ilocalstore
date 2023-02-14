@@ -182,7 +182,7 @@ const contactData = [
     title: "Email Us",
     info: "Interactively grow empowered for process-centric total linkage.",
     icon: FiMail,
-    contact: "m.intouch@malanza.co.uk",
+    contact: "m.intouch@ilocalstore.com",
     className: "bg-emerald-100",
   },
   {
@@ -190,7 +190,7 @@ const contactData = [
     title: "Call Us",
     info: "Distinctively disseminate focused solutions clicks-and-mortar ministate.",
     icon: FiPhoneCall,
-    contact: "029-00124667",
+    contact: "07506597518",
     className: "bg-yellow-100",
   },
   {
@@ -198,7 +198,7 @@ const contactData = [
     title: "Location",
     info: "38 Wychinwood Road, Luton, LU2 1RE",
     icon: FiMapPin,
-    contact: "+44 744 801 9595",
+    contact: "+44 7506 597 518",
     className: "bg-indigo-100",
   },
 ];
@@ -207,7 +207,7 @@ const location = {
   address: "38 Wychinwood Road, Luton, LU2 1RE",
   icon: FiMapPin,
   email: "m.intouch@malanza.co.uk",
-  contact: "+44 744 801 9595",
+  contact: "+44 7506 597 518",
   className: "bg-indigo-100",
 };
 export {

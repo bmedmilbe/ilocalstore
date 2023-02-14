@@ -65,8 +65,8 @@ const Dashboard = ({ title, description, children }) => {
     }
   }, [user]);
 
-  console.log("shop dashbaord");
-  console.log(shops);
+  // console.log("shop dashbaord");
+  // console.log(shops);
 
   return (
     <>

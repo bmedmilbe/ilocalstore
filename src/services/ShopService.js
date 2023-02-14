@@ -14,8 +14,8 @@ const ShopServices = {
     return requests.get("/shops/discount");
   },
 
-  getShopBySlug(slug) {
-    return requests.get(`/shops/${slug}`);
+  async getShopBySlug(slug) {
+    return await requests.get(`/store/shopsbyslug/${slug}`);
   },
 
   shopUrl(id) {

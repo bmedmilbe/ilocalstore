@@ -12,20 +12,17 @@ class MyDocument extends Document {
           <link rel="icon" href="/favicon.png" />
           <meta
             property="og:title"
-            content="KachaBazar - React Grocery & Organic Food Store e-commerce Template"
+            content="iLocalStore - Receive your item within 2 hours"
           />
           <meta property="og:type" content="eCommerce Website" />
           <meta
             property="og:description"
-            content="React Grocery & Organic Food Store e-commerce Template"
+            content="Fram a to Z you can buy and receive your item within 2 hours in LU1 Area"
           />
-          <meta
-            property="og:url"
-            content="https://kachabazar-store.vercel.app/"
-          />
+          <meta property="og:url" content="https://www.ilocalstore.com" />
           <meta
             property="og:image"
-            content="https://res.cloudinary.com/ahossain/image/upload/v1636729752/facebook-page_j7alju.png"
+            content="https://res.cloudinary.com/dybteyiju/image/upload/v1676350423/logo-color_-_Copy_g3cuup.png"
           />
         </Head>
         <body>

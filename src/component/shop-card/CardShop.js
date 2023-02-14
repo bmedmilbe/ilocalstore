@@ -7,14 +7,14 @@ import useAsync from "@hooks/useAsync";
 import { ctaCardData } from "@utils/data";
 import ShopServices from "@services/ShopService";
 
-const CardShop = () => {
+const CardShop = ({ shops }) => {
   const { data } = useAsync(() =>
     // CategoryServices.getShowingCategory()
     ShopServices.getShops()
   );
   return (
     <>
-      {data.map((shop) => (
+      {shops.map((shop) => (
         // item.url = '/search?category=fresh-vegetable',
         // item.image = '/cta/cta-bg-1.jpg'
         // subTitle: 'Fresh & Natural',

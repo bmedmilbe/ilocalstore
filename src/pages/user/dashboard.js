@@ -59,7 +59,7 @@ const Dashboard = ({ title, description, children }) => {
     }
   }, [user]);
 
-  console.log("dashbaord");
+  // console.log("dashbaord");
 
   return (
     <>

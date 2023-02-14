@@ -21,7 +21,7 @@ const NavbarPromo = () => {
                     as="nav"
                     className="md:flex space-x-10 items-center"
                   >
-                    <Popover className="relative font-serif">
+                    {/* <Popover className="relative font-serif">
                       <Popover.Button className="group inline-flex items-center py-2 hover:text-emerald-600 focus:outline-none">
                         <span className="font-serif text-sm font-medium">
                           Categories
@@ -74,7 +74,7 @@ const NavbarPromo = () => {
                           </div>
                         </Popover.Panel>
                       </Transition>
-                    </Popover>
+                    </Popover> */}
                     <Link href="/about-us">
                       <a className="font-serif mx-4 py-2 text-sm font-medium hover:text-emerald-600">
                         About Us
@@ -86,7 +86,7 @@ const NavbarPromo = () => {
                       </a>
                     </Link>
 
-                    <Popover className="relative font-serif">
+                    {/* <Popover className="relative font-serif">
                       <Popover.Button className="group inline-flex items-center py-2 text-sm font-medium hover:text-emerald-600 focus:outline-none">
                         <span>Pages</span>
                         <ChevronDownIcon
@@ -135,7 +135,7 @@ const NavbarPromo = () => {
                           <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
                         </div>
                       </a>
-                    </Link>
+                    </Link> */}
                   </Popover.Group>
                 </div>
               </div>

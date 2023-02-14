@@ -46,7 +46,7 @@ const NavBarTop = ({ user }) => {
                 href="tel:+012345609"
                 className="font-bold text-emerald-500 ml-1"
               >
-                +01234560352
+                +44 7506597518
               </a>
             </span>
 

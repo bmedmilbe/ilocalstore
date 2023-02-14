@@ -36,11 +36,11 @@ const useLoginSubmit = (setModalOpen) => {
     UserServices.userRegister(body)
       .then((res) => {
         doLogin(email, password);
-        console.log(body);
-        console.log(res);
+        // console.log(body);
+        // console.log(res);
       })
       .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
         notifyError(err ? err.response.data.detail : err.message);
         setLoading(false);
       });
@@ -52,11 +52,11 @@ const useLoginSubmit = (setModalOpen) => {
       username,
       password,
     };
-    console.log(body);
+    // console.log(body);
     UserServices.userLogin(body)
       .then((res) => {
-        console.log(body);
-        console.log(res);
+        // console.log(body);
+        // console.log(res);
         setLoading(false);
         setModalOpen(false);
         localStorage.setItem(`${prefix}${tokenKey}`, res.access);

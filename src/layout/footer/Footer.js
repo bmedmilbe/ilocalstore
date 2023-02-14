@@ -65,7 +65,7 @@ const Footer = ({}) => {
                   </a>
                 </Link>
               </li>
-              <li className="flex items-baseline">
+              {/* <li className="flex items-baseline">
                 <Link href="#">
                   <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
                     Careers
@@ -78,7 +78,7 @@ const Footer = ({}) => {
                     Latest news
                   </a>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
           <div className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2 lg:col-span-3">
@@ -87,9 +87,15 @@ const Footer = ({}) => {
             </h3>
             <ul className="text-sm lg:text-15px flex flex-col space-y-3">
               {collections.map((collection) => {
-                const link = "/search?collection=" + collection.title;
+                const link =
+                  "/search?collection=" +
+                  collection.title
+                    .toLowerCase()
+                    .replace("&", "")
+                    .split(" ")
+                    .join("-");
                 return (
-                  <li className="flex items-baseline">
+                  <li key={collection.id} className="flex items-baseline">
                     <Link href={link}>
                       <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
                         {collection.title}
@@ -141,7 +147,7 @@ const Footer = ({}) => {
                 <Image
                   width={110}
                   height={40}
-                  src="/logo/logo-color.svg"
+                  src="/logo/logo-color.png"
                   alt="logo"
                 />
               </a>
@@ -234,7 +240,7 @@ const Footer = ({}) => {
                 Call Us Today!
               </p>
               <h5 className="text-2xl font-bold text-emerald-500 leading-7">
-                +012345-67900
+                {location.contact}
               </h5>
             </div>
             <div className="col-span-1 hidden lg:block md:block">
@@ -263,7 +269,7 @@ const Footer = ({}) => {
               rel="noopener noreferrer"
               className="text-emerald-500"
             >
-              Malanza
+              iLocalStore
             </a>
           </Link>
           , All rights reserved.

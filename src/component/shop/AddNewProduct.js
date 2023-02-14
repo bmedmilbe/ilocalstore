@@ -39,60 +39,10 @@ const AddNewProduct = ({ product }) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    if (!imageUrl) {
-      notifyError("Image is required!");
-      return;
-    }
-    setLoading(true);
-
-    // notifySuccess('For demo this feature is disable!');
-
-    // "id", "product", "price", "description", 'slug',
-    //"id", "name", "collection", "description", 'tag', 'image', 'slug'
-    // console.log(data);
-    const collectionData = {};
-    if (data.collection === "0" || data.newcollection !== "") {
-      if (data.newcollection) {
-        let collection = collections.find(
-          (collection, i) => collection.title === data.newcollection
-        );
-        if (!collection) {
-          CollectionServices.saveCollection({
-            title: data.newcollection,
-            slug: data.newcollection
-              .toLowerCase()
-              .replace("&", "")
-              .split(" ")
-              .join("-"),
-          })
-            .then((res) => {
-              collectionData.collection = res.id;
-              // console.log(collectionData);
-              setLoading(false);
-            })
-            .catch((err) => {
-              setLoading(false);
-              notifyError(err ? err?.response?.data?.details : err.message);
-            });
-        } else {
-          // setCollection(collection.id);
-          collectionData.collection = collection.id;
-        }
-      } else {
-        notifyError("You have to insert or choose a collection");
-      }
-    } else {
-      collectionData.collection = data.collection;
-    }
-
-    // console.log(collectionData);
-
+  const saveProduct = (collection, data) => {
     const productData = {
-      collection:
-        data.collection !== 0 ? data.collection : collectionData.collection,
+      collection,
       name: data.name,
-
       description: data.description,
       tag: data.tag,
       image: imageUrl,
@@ -124,6 +74,59 @@ const AddNewProduct = ({ product }) => {
         setLoading(false);
         notifyError(err ? err?.response?.data?.details : err.message);
       });
+  };
+
+  const onSubmit = (data) => {
+    if (!imageUrl) {
+      notifyError("Image is required!");
+      return;
+    }
+    setLoading(true);
+
+    // notifySuccess('For demo this feature is disable!');
+
+    // "id", "product", "price", "description", 'slug',
+    //"id", "name", "collection", "description", 'tag', 'image', 'slug'
+    // console.log(data);
+    if (data.collection === "0" || data.newcollection !== "") {
+      console.log(data);
+      if (data.newcollection) {
+        let collection = collections.find(
+          (collection, i) => collection.title === data.newcollection
+        );
+        if (!collection) {
+          CollectionServices.saveCollection({
+            title: data.newcollection,
+            slug: data.newcollection
+              .toLowerCase()
+              .replace("&", "")
+              .split(" ")
+              .join("-"),
+          })
+            .then((res) => {
+              // collectionData.collection = res.id;
+              saveProduct(res.id, data);
+              // console.log(collectionData);
+              // setLoading(false);
+            })
+            .catch((err) => {
+              setLoading(false);
+              notifyError(err ? err?.response?.data?.details : err.message);
+            });
+        } else {
+          // setCollection(collection.id);
+          // collectionData.collection = collection.id;
+          saveProduct(collection.id, data);
+        }
+      } else {
+        notifyError("You have to insert or choose a collection");
+      }
+    } else {
+      // collectionData.collection = data.collection;
+      saveProduct(data.collection, data);
+    }
+
+    // console.log(collectionData);
   };
 
   useEffect(() => {

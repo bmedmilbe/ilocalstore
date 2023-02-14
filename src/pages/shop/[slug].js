@@ -41,7 +41,7 @@ const ShopScreen = ({ shop }) => {
   useEffect(() => {
     setIsLoading(false);
     {
-      console.log(shop);
+      // console.log(shop);
     }
   }, [shop]);
 

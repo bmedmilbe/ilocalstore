@@ -31,9 +31,9 @@ const UpdateShop = ({ title, description, children }) => {
 
   useEffect(() => {
     (async () => {
-      console.log(slug);
+      // console.log(slug);
       const res = await ShopServices.getMyStoreBySlug(slug);
-      console.log(slug);
+      // console.log(slug);
       setShop(res);
       // This code will be executed only once at begining of the loading of the page
       // It will not be executed again unless you cahnge the page

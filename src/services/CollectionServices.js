@@ -5,7 +5,7 @@ const CollectionServices = {
     return await requests.get("/store/collections");
   },
   async saveCollection(body) {
-    console.log(body);
+    // console.log(body);
     return await requests.post("/store/collections/", body);
   },
 };

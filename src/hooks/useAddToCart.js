@@ -16,7 +16,7 @@ const useAddToCart = () => {
 
   const handleAddItem = async (product) => {
     CartServices.addItem(product, 1);
-
+    // console.log(product);
     const items = await CartServices.getCartItems();
     const element = items.filter((i) => i.product_shop.id === product.id)[0];
     // console.log(element);

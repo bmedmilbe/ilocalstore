@@ -12,8 +12,10 @@ import { SidebarContext } from "@context/SidebarContext";
 import Loading from "@component/preloader/Loading";
 import CardShop from "@component/shop-card/CardShop";
 import CollectionCarousel from "@component/carousel/CollectionCarousel";
+import ShopServices from "@services/ShopService";
 
 const Search = ({ products }) => {
+  // console.log(products);
   const { isLoading, setIsLoading } = useContext(SidebarContext);
 
   const [visibleProduct, setVisibleProduct] = useState(18);
@@ -30,11 +32,9 @@ const Search = ({ products }) => {
           <div className="flex w-full">
             <div className="w-full">
               <div className="w-full grid grid-col gap-4 grid-cols-1 2xl:gap-6 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2">
-                <CardShop />
+                {/* <CardShop /> */}
               </div>
-              <div className="relative">
-                <CollectionCarousel />
-              </div>
+              <div className="relative">{/* <CollectionCarousel /> */}</div>
               {productData.length === 0 ? (
                 <div className="text-center align-middle mx-auto p-5 my-5">
                   <Image
@@ -114,6 +114,13 @@ export const getServerSideProps = async (context) => {
   let products = [];
 
   //service filter with parent collection
+  let shopDetail = [];
+  try {
+    shopDetail = await ShopServices.getShopBySlug(
+      shop?.toLowerCase().replace("&", "").split(" ").join("-")
+    );
+  } catch (ex) {}
+
   if (shop) {
     products = data.filter(
       (product) =>
@@ -132,7 +139,8 @@ export const getServerSideProps = async (context) => {
           .toLowerCase()
           .replace("&", "")
           .split(" ")
-          .join("-") === collection.toLowerCase()
+          .join("-") ===
+        collection.toLowerCase().replace("&", "").split(" ").join("-")
     );
   }
   //service filter with child tag
@@ -152,14 +160,15 @@ export const getServerSideProps = async (context) => {
 
   //search result
   if (query) {
-    products = data.filter((product) =>
-      product.title.toLowerCase().includes(query.toLowerCase())
-    );
+    products = data.filter((product) => {
+      return product.product.name.toLowerCase().includes(query.toLowerCase());
+    });
   }
 
   return {
     props: {
       products,
+      shopDetail,
     },
   };
 };

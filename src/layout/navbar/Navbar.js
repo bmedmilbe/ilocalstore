@@ -56,7 +56,7 @@ const Navbar = ({ user }) => {
                 <Image
                   width={110}
                   height={40}
-                  src="/logo/logo-light.svg"
+                  src="/logo/logo-color3.png"
                   alt="logo"
                 />
               </a>

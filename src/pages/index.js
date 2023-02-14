@@ -18,8 +18,9 @@ import CategoryCarousel from "@component/carousel/CategoryCarousel";
 import ShopCarousel from "@component/carousel/ShopCarousel";
 import FeatureCollection from "@component/collection/FeatureCollection";
 import CardShop from "@component/shop-card/CardShop";
+import ShopServices from "@services/ShopService";
 
-const Home = ({ products, popularProducts, discountProducts }) => {
+const Home = ({ products, stores, popularProducts, discountProducts }) => {
   const router = useRouter();
 
   const [value, set] = useSessionstorage("products", products);
@@ -33,6 +34,11 @@ const Home = ({ products, popularProducts, discountProducts }) => {
     }
   }, [router]);
 
+  const storeStep = 3;
+  const itemStep = 3;
+  let storeNumber = 0;
+  let itemNumber = 0;
+
   return (
     <>
       {isLoading ? (
@@ -44,20 +50,53 @@ const Home = ({ products, popularProducts, discountProducts }) => {
         >
           <div className="min-h-screen">
             <StickyCart />
-
-            {/* feature category's */}
-
             <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
-              <div className="flex py-10 lg:py-12">
+              <br />
+              {/* feature category's */}
+              <div className="sm:px-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
+                {products
+                  ?.slice(itemNumber, itemNumber + itemStep)
+                  .map((product) => {
+                    itemNumber++;
+                    return <ProductCard key={product.id} product={product} />;
+                  })}
+              </div>
+              {/* <div className="mx-auto max-w-screen-2xl px-3 sm:px-10"> */}
+
+              <div className="max-w-screen-2xl flex py-10 lg:py-12">
                 <div className="w-full grid grid-col gap-4 grid-cols-1 2xl:gap-6 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2">
-                  <CardShop />
+                  <CardShop
+                    shops={stores.slice(storeNumber, storeNumber + storeStep)}
+                  />
+                  {/* {(storeNumber += storeStep)} */}
                 </div>
               </div>
-            </div>
-            <div className="sm:px-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
-              {products?.slice(0, 18).map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
+
+              <div className="sm:px-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
+                {products
+                  ?.slice(itemNumber, itemNumber + itemStep)
+                  .map((product) => {
+                    itemNumber++;
+                    return <ProductCard key={product.id} product={product} />;
+                  })}
+              </div>
+              <div className="flex py-10 lg:py-12">
+                <div className="w-full grid grid-col gap-4 grid-cols-1 2xl:gap-6 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2">
+                  <CardShop
+                    shops={stores.slice(storeNumber + storeStep, storeStep * 2)}
+                  />
+                  {/* {(storeNumber += storeStep)} */}
+                </div>
+              </div>
+
+              <div className="sm:px-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
+                {products
+                  ?.slice(itemNumber, itemNumber + itemStep)
+                  .map((product) => {
+                    itemNumber++;
+                    return <ProductCard key={product.id} product={product} />;
+                  })}
+              </div>
             </div>
             {/* popular products */}
             {/* <div className="bg-gray-50 lg:py-16 py-10 mx-auto max-w-screen-2xl px-3 sm:px-10">
@@ -114,6 +153,7 @@ const Home = ({ products, popularProducts, discountProducts }) => {
 
 export const getStaticProps = async () => {
   const products = await ProductServices.getShowingProducts();
+  const stores = await ShopServices.getShops();
 
   const popularProducts = products;
   // const popularProducts = products.filter((p) => p.discount === 0);
@@ -128,6 +168,7 @@ export const getStaticProps = async () => {
   return {
     props: {
       products,
+      stores,
     },
     revalidate: 60,
   };
