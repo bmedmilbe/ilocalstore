@@ -189,10 +189,7 @@ const AddNewProduct = ({ product }) => {
               <div>
                 <Label label="Photo" />
                 <div className="mt-1 flex items-center">
-                  <UploaderProduct
-                    imageUrl={imageUrl}
-                    setImageUrl={setImageUrl}
-                  />
+                  <Uploader imageUrl={imageUrl} setImageUrl={setImageUrl} />
                 </div>
               </div>
             </div>
@@ -237,7 +234,7 @@ const AddNewProduct = ({ product }) => {
                         <Error errorName={errors.price} />
                       </div>
                       <div className="col-span-6 sm:col-span-2">
-                        {console.log(collections)}
+                        {/* {console.log(collections)} */}
                         <SelectedArea
                           defaultValue={0}
                           data={collections}
