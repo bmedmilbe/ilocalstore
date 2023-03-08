@@ -37,7 +37,6 @@ const UpdateProfile = () => {
     const userData = {
       first_name: data.firstName,
       last_name: data.lastName,
-      phone: data.phone,
     };
     UserServices.updateUser(userId, userData)
       .then((res) => {
@@ -61,7 +60,7 @@ const UpdateProfile = () => {
 
       setValue("firstName", user.first_name);
       setValue("lastName", user.last_name);
-      setValue("phone", user.phone);
+      setValue("email", user.email);
     }
   }, []);
 
@@ -106,12 +105,12 @@ const UpdateProfile = () => {
                 <div className="col-span-6 sm:col-span-3">
                   <InputArea
                     register={register}
-                    label="Phone Number"
-                    name="phone"
-                    type="phone"
-                    placeholder="07448019395"
+                    label="Email address"
+                    name="email"
+                    type="email"
+                    placeholder="youremail@gmail.com"
                   />
-                  <Error errorName={errors.phone} />
+                  <Error errorName={errors.email} />
                 </div>
               </div>
               <div className="col-span-6 sm:col-span-3 mt-5 text-left">

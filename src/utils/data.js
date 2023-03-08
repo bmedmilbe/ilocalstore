@@ -8,9 +8,10 @@ import {
   FiCreditCard,
   FiMail,
   FiMapPin,
+  FiLock,
 } from "react-icons/fi";
 
-import { MdOutlineStoreMallDirectory } from "react-icons/md";
+import { MdOutlineStoreMallDirectory, MdAlternateEmail } from "react-icons/md";
 
 import {
   HiOutlineDocumentText,
@@ -31,26 +32,26 @@ const pages = [
   //   href: '/user/dashboard',
   //   icon: FiUser,
   // },
-  {
-    title: "Offer",
-    href: "/offer",
-    icon: FiGift,
-  },
-  {
-    title: "Checkout",
-    href: "/checkout",
-    icon: IoBagCheckOutline,
-  },
-  {
-    title: "FAQ",
-    href: "/faq",
-    icon: FiHelpCircle,
-  },
-  {
-    title: "About Us",
-    href: "/about-us",
-    icon: HiOutlineUserGroup,
-  },
+  // {
+  //   title: "Offer",
+  //   href: "/offer",
+  //   icon: FiGift,
+  // },
+  // {
+  //   title: "Checkout",
+  //   href: "/checkout",
+  //   icon: IoBagCheckOutline,
+  // },
+  // {
+  //   title: "FAQ",
+  //   href: "/faq",
+  //   icon: FiHelpCircle,
+  // // },
+  // {
+  //   title: "About Us",
+  //   href: "/about-us",
+  //   icon: HiOutlineUserGroup,
+  // },
   {
     title: "Contact Us",
     href: "/contact-us",
@@ -65,11 +66,6 @@ const pages = [
     title: "Terms & Conditions",
     href: "/terms-and-conditions",
     icon: HiOutlineDocumentText,
-  },
-  {
-    title: "404",
-    href: "/404",
-    icon: FiAlertCircle,
   },
 ];
 
@@ -90,9 +86,14 @@ const userSidebar = [
     icon: IoSettingsOutline,
   },
   {
+    title: "Change Email",
+    href: "/user/update-email",
+    icon: MdAlternateEmail,
+  },
+  {
     title: "Change Password",
     href: "/user/change-password",
-    icon: HiOutlineDocumentText,
+    icon: FiLock,
   },
   {
     title: "My Own Store",

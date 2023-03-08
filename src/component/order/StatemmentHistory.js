@@ -11,7 +11,7 @@ import OrderStatus from "./OrderStatus";
 import Link from "next/link";
 import TimeAgo from "@component/timeago/TimeAgo";
 
-const OrderHistory = ({ order }) => {
+const StatemmentHistory = ({ order }) => {
   return (
     <>
       <td className="px-5 py-3 leading-6 text-center whitespace-nowrap">
@@ -46,4 +46,4 @@ const OrderHistory = ({ order }) => {
   );
 };
 
-export default OrderHistory;
+export default StatemmentHistory;

@@ -75,16 +75,11 @@ const NavbarPromo = () => {
                         </Popover.Panel>
                       </Transition>
                     </Popover> */}
-                    <Link href="/about-us">
+                    {/* <Link href="/about-us">
                       <a className="font-serif mx-4 py-2 text-sm font-medium hover:text-emerald-600">
                         About Us
                       </a>
-                    </Link>
-                    <Link href="/contact-us">
-                      <a className="font-serif mx-4 py-2 text-sm font-medium hover:text-emerald-600">
-                        Contact Us
-                      </a>
-                    </Link>
+                    </Link> */}
 
                     {/* <Popover className="relative font-serif">
                       <Popover.Button className="group inline-flex items-center py-2 text-sm font-medium hover:text-emerald-600 focus:outline-none">
@@ -142,6 +137,11 @@ const NavbarPromo = () => {
             </Popover>
           </div>
           <div className="flex">
+            <Link href="/contact-us">
+              <a className="font-serif mx-4 py-2 text-sm font-medium hover:text-emerald-600">
+                Contact Us
+              </a>
+            </Link>
             <Link href="/privacy-policy">
               <a className="font-serif mx-4 py-2 text-sm font-medium hover:text-emerald-600">
                 Privacy Policy

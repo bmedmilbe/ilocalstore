@@ -14,6 +14,11 @@ const CartServices = {
   async createCart() {
     return await requests.post(`${apiEndpoint}/`, {});
   },
+  async createNewCart() {
+    const data = await this.createCart();
+    // console.log(data);
+    localStorage.setItem(cartKey, data.id);
+  },
   async getCartKey() {
     if (!localStorage.getItem(cartKey)) {
       const data = await this.createCart();
@@ -75,6 +80,13 @@ const CartServices = {
       product_shop_id: item.id,
       quantity,
     });
+  },
+
+  async updateAddress(address) {
+    console.log(address);
+    const cartId = await this.getCartKey();
+    // console.log(cartId);
+    return requests.patch(`${apiEndpoint}/${cartId}/`, address);
   },
 };
 

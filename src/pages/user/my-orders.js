@@ -12,11 +12,12 @@ import Loading from "@component/preloader/Loading";
 import { UserContext } from "@context/UserContext";
 import OrderHistory from "@component/order/OrderHistory";
 import { SidebarContext } from "@context/SidebarContext";
+import MenuDashboard from "@component/user/MenuDashboard";
 
 const MyOrders = () => {
   const router = useRouter();
   const {
-    state: { userInfo },
+    state: { user },
   } = useContext(UserContext);
   const { currentPage, handleChangePage, isLoading, setIsLoading } =
     useContext(SidebarContext);
@@ -26,10 +27,7 @@ const MyOrders = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    OrderServices.getOrderByUser({
-      page: currentPage,
-      limit: 8,
-    })
+    OrderServices.getOrderByUser()
       .then((res) => {
         setData(res);
         setLoading(false);
@@ -44,10 +42,11 @@ const MyOrders = () => {
 
   useEffect(() => {
     setIsLoading(false);
-    if (!userInfo) {
-      //router.push('/');
+    if (!user) {
+      router.push("/");
     }
-  }, [userInfo]);
+    setLoading(false);
+  }, [user]);
 
   return (
     <>
@@ -65,7 +64,7 @@ const MyOrders = () => {
               <h2 className="text-xl text-center my-10 mx-auto w-11/12 text-red-400">
                 {error}
               </h2>
-            ) : data?.orders?.length === 0 ? (
+            ) : data?.length === 0 ? (
               <div className="text-center">
                 <span className="flex justify-center my-30 pt-16 text-emerald-500 font-semibold text-6xl">
                   <IoBagHandle />
@@ -76,6 +75,7 @@ const MyOrders = () => {
               </div>
             ) : (
               <div className="flex flex-col">
+                <MenuDashboard />
                 <h2 className="text-xl font-serif font-semibold mb-5">
                   My Orders
                 </h2>
@@ -87,12 +87,6 @@ const MyOrders = () => {
                           <tr className="bg-gray-100">
                             <th
                               scope="col"
-                              className="text-left text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
-                            >
-                              ID
-                            </th>
-                            <th
-                              scope="col"
                               className="text-center text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
                             >
                               OrderTime
@@ -102,39 +96,32 @@ const MyOrders = () => {
                               scope="col"
                               className="text-center text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
                             >
-                              Method
-                            </th>
-                            <th
-                              scope="col"
-                              className="text-center text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
-                            >
-                              Status
-                            </th>
-                            <th
-                              scope="col"
-                              className="text-center text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
-                            >
                               Total
                             </th>
                             <th
                               scope="col"
-                              className="text-right text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
+                              className="text-center text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
                             >
-                              Action
+                              Shipping Status
+                            </th>
+                            <th
+                              scope="col"
+                              className="text-center text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
+                            >
+                              Deliver
+                            </th>
+                            <th
+                              scope="col"
+                              className="text-center text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
+                            >
+                              Invoice
                             </th>
                           </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
-                          {data?.orders?.map((order) => (
-                            <tr key={order._id}>
+                          {data?.map((order) => (
+                            <tr key={order.id}>
                               <OrderHistory order={order} />
-                              <td className="px-5 py-3 whitespace-nowrap text-right text-sm">
-                                <Link href={`/order/${order._id}`}>
-                                  <a className="px-3 py-1 bg-emerald-100 text-xs text-emerald-600 hover:bg-emerald-500 hover:text-white transition-all font-semibold rounded-full">
-                                    Details
-                                  </a>
-                                </Link>
-                              </td>
                             </tr>
                           ))}
                         </tbody>

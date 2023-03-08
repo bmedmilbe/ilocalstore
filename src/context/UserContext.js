@@ -9,6 +9,7 @@ let value;
 const initialState = {
   user: getUser(),
   userShops: UserServices.getJWT() ? getMyStores() : [],
+  userCustomer: UserServices.getJWT() ? getUserCustomer() : null,
   shippingAddress: Cookies.get("shippingAddress")
     ? JSON.parse(Cookies.get("shippingAddress"))
     : { adress: "leve-leve" },
@@ -22,6 +23,18 @@ export async function getUser() {
     return await (UserServices.getJWT() ? UserServices.getCurrentUser() : null);
   } catch (ex) {
     console.log("Error getting user!");
+    return [];
+    // console.log();
+  }
+}
+
+export async function getUserCustomer() {
+  try {
+    return await (UserServices.getJWT()
+      ? UserServices.getCurrentCustomer()
+      : null);
+  } catch (ex) {
+    console.log("Error getting user customer!");
     return [];
     // console.log();
   }

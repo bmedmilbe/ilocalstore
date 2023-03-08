@@ -49,6 +49,27 @@ const Register = ({ setShowResetPassword, setModalOpen }) => {
               <div className="col-span-6 sm:col-span-3">
                 <InputArea
                   register={register}
+                  label="Address"
+                  name="addressLine"
+                  type="text"
+                  placeholder="38 Keats Close"
+                />
+                <Error errorName={errors.addressLine} />
+              </div>
+              <div className="col-span-6 sm:col-span-3">
+                <InputArea
+                  register={register}
+                  label="Post Code"
+                  name="postCode"
+                  type="text"
+                  placeholder="EN3 4GH"
+                />
+                <Error errorName={errors.postCode} />
+              </div>
+
+              <div className="col-span-6 sm:col-span-3">
+                <InputArea
+                  register={register}
                   label="Email address"
                   name="email"
                   type="email"

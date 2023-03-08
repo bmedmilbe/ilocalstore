@@ -141,9 +141,11 @@ const InvoiceForDownload = ({ data, user }) => {
               </Text>
               <Text style={styles.info}>
                 Status :{" "}
-                {/* {data.status === 'P' && (
-                  <span style={{ color: '#eab308' }}>{data.status}</span>
-                )} */}
+                {data.shipping_status === "Pendente" && (
+                  <span style={{ color: "#eab308" }}>
+                    {data.shipping_status}
+                  </span>
+                )}
                 {data.shipping_status === "P" && (
                   <span style={{ color: "#14b8a6" }}>Processing</span>
                 )}
@@ -168,7 +170,7 @@ const InvoiceForDownload = ({ data, user }) => {
             <View>
               <Text style={styles.title}>DATE</Text>
               <Text style={styles.info}>
-                {data.createdAt !== undefined && (
+                {data.created_at !== undefined && (
                   <span>{dayjs(data?.created_at).format("MMMM D, YYYY")}</span>
                 )}
               </Text>

@@ -6,20 +6,27 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useCart } from "react-use-cart";
 import { IoSearchOutline } from "react-icons/io5";
-import { FiShoppingCart, FiUser, FiBell } from "react-icons/fi";
+import { FiShoppingCart, FiUser, FiBell, FiMapPin } from "react-icons/fi";
 
 //internal import
 import NavbarPromo from "@layout/navbar/NavbarPromo";
 import { UserContext } from "@context/UserContext";
 import LoginModal from "@component/modal/LoginModal";
+import AddressModal from "@component/modal/AddressModal";
 import CartDrawer from "@component/drawer/CartDrawer";
 import { SidebarContext } from "@context/SidebarContext";
+import CartServices from "@services/CartServices";
+import useAddressSubmit from "@hooks/useAddressSubmit";
+import { notifyError } from "@utils/toast";
 
 const Navbar = ({ user }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [searchText, setSearchText] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+  const [addressModalOpen, setAddressModalOpen] = useState(false);
+
   const { toggleCartDrawer } = useContext(SidebarContext);
+  const { postCode } = useAddressSubmit();
   const { totalItems } = useCart();
   const router = useRouter();
 
@@ -34,16 +41,31 @@ const Navbar = ({ user }) => {
     }
   };
 
-  useEffect(() => {
-    // if (Cookies.get("user")) {
-    //   const user = JSON.parse(Cookies.get("user"));
-    //   setImageUrl(user.image);
-    // }
-  }, []);
+  // useEffect(async () => {
+  //   CartServices.getCart()
+  //     .then((res) => {
+  //       console.log(res);
+  //       if (res.address) {
+  //         setAddress(res.address.post_code);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       notifyError(err ? err.response?.data.detail : err.message);
+  //       // setLoading(false);
+  //     });
+  // }, [false]);
 
   return (
     <>
       <CartDrawer />
+
+      {addressModalOpen && (
+        <AddressModal
+          modalOpen={addressModalOpen}
+          setModalOpen={setAddressModalOpen}
+        />
+      )}
       {modalOpen && (
         <LoginModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
       )}
@@ -73,7 +95,7 @@ const Navbar = ({ user }) => {
                         onChange={(e) => setSearchText(e.target.value)}
                         value={searchText}
                         className="form-input w-full pl-5 appearance-none transition ease-in-out border text-input text-sm font-sans rounded-md min-h-10 h-10 duration-200 bg-white focus:ring-0 outline-none border-none focus:outline-none placeholder-gray-500 placeholder-opacity-75"
-                        placeholder="Search for products (e.g. fish, apple, oil)"
+                        placeholder="Search for items (e.g. ring, hat, cocacola)"
                       />
                     </label>
                     <button
@@ -134,6 +156,21 @@ const Navbar = ({ user }) => {
                   </span>
                 )}
               </button>
+
+              {user?.first_name ? (
+                <button
+                  onClick={() => setAddressModalOpen(!addressModalOpen)}
+                  aria-label="Address"
+                  className="relative px-5 text-white text-2xl font-bold"
+                >
+                  <span className="absolute z-10 top-6 left-1 inline-flex items-center justify-center p-1 h-5 w-15 text-xs font-medium leading-none text-red-100 bg-red-500">
+                    {postCode || "Undefinded"}
+                  </span>
+                  <FiMapPin className="w-6 h-6 drop-shadow-xl" />
+                </button>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>

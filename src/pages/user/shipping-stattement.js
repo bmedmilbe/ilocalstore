@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { IoBagHandle } from "react-icons/io5";
 import ReactPaginate from "react-paginate";
 import { SidebarContext } from "@context/SidebarContext";
@@ -6,15 +6,32 @@ import { SidebarContext } from "@context/SidebarContext";
 //internal import
 import Loading from "@component/preloader/Loading";
 import OrderHistory from "@component/order/OrderHistory";
+import StatemmentHistory from "@component/order/StatemmentHistory";
+import TimeAgo from "@component/timeago/TimeAgo";
+import dayjs from "dayjs";
 
-const RecentOrder = ({ data, loading, error }) => {
-  console.log(data);
+const ShipppingStatemment = ({ data, loading, error }) => {
   const { handleChangePage } = useContext(SidebarContext);
 
   const pageCount = Math.ceil(data?.totalDoc / 8);
 
+  let total = 0;
+  const balances = [];
+
+  if (data) {
+    for (let i = 0; i < data.length; i++) {
+      total += data[i].amount ? data[i].amount : -1 * data[i].shipping_price;
+    }
+
+    for (let i = 0; i < data.length; i++) {
+      balances[i] = total;
+      total -= data[i].amount ? data[i].amount : -1 * data[i].shipping_price;
+    }
+  }
+
   return (
     <>
+      {console.log(data)}
       <div className="max-w-screen-2xl mx-auto">
         <div className="rounded-md font-serif">
           {loading ? (
@@ -35,7 +52,7 @@ const RecentOrder = ({ data, loading, error }) => {
           ) : (
             <div className="flex flex-col">
               <h3 className="text-lg font-serif font-medium mb-5">
-                Recent Order
+                Your Statemment
               </h3>
               <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="align-middle inline-block border border-gray-100 rounded-md min-w-full pb-2 sm:px-6 lg:px-8">
@@ -47,41 +64,60 @@ const RecentOrder = ({ data, loading, error }) => {
                             scope="col"
                             className="text-center text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
                           >
-                            OrderTime
+                            Time
                           </th>
 
                           <th
                             scope="col"
                             className="text-center text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
                           >
-                            Total
+                            Amount
                           </th>
                           <th
                             scope="col"
                             className="text-center text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
                           >
-                            Shipping Status
-                          </th>
-                          <th
-                            scope="col"
-                            className="text-center text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
-                          >
-                            Deliver
-                          </th>
-                          <th
-                            scope="col"
-                            className="text-center text-xs font-serif font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider"
-                          >
-                            Invoice
+                            Balance
                           </th>
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
-                        {data?.map((order) => (
-                          <tr key={order.id}>
-                            <OrderHistory order={order} />
-                          </tr>
-                        ))}
+                        {data?.map((item, index) => {
+                          {
+                            return item?.amount > 0 ||
+                              item?.shipping_price > 0 ? (
+                              <tr key={item.id}>
+                                <td className="px-5 py-3 leading-6 text-center whitespace-nowrap">
+                                  <span className="text-sm">
+                                    <TimeAgo
+                                      date={
+                                        item.created_at
+                                          ? item.created_at
+                                          : item.made_at
+                                      }
+                                    />
+                                  </span>
+                                </td>
+
+                                <td className="px-5 py-3 leading-6 text-center whitespace-nowrap">
+                                  <span className="text-sm font-bold">
+                                    {item?.amount
+                                      ? "+" + item?.amount
+                                      : "-" + item?.shipping_price}{" "}
+                                    £
+                                  </span>
+                                </td>
+                                <td className="px-5 py-3 leading-6 text-center whitespace-nowrap">
+                                  <span className="text-sm font-bold">
+                                    {balances[index].toLocaleString()} £
+                                  </span>
+                                </td>
+                              </tr>
+                            ) : (
+                              ""
+                            );
+                          }
+                        })}
                       </tbody>
                     </table>
                     <div className="paginationOrder">
@@ -116,4 +152,4 @@ const RecentOrder = ({ data, loading, error }) => {
   );
 };
 
-export default RecentOrder;
+export default ShipppingStatemment;

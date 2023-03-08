@@ -5,9 +5,11 @@ import { FiPhoneCall, FiUser } from "react-icons/fi";
 
 //internal import
 import LoginModal from "@component/modal/LoginModal";
+import { contactData } from "@utils/data";
 import { getUser, UserContext } from "@context/UserContext";
 import UserServices from "@services/UserServices";
 import useAsync from "@hooks/useAsync";
+import AddressModal from "@component/modal/AddressModal";
 
 const NavBarTop = ({ user }) => {
   const {
@@ -16,11 +18,22 @@ const NavBarTop = ({ user }) => {
   const router = useRouter();
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [addressModalOpen, setAddressModalOpen] = useState(false);
   // const [user, setUser] = useState(null);
 
   // useEffect(async () => {
   //   setUser(await getUser());
   // }, []);
+
+  const handleAddressModal = async () => {
+    console.log("check if address is set in the cart");
+    if (user.email) {
+      // router.push("/user/dashboard");
+      console.log("check if address is set in the cart");
+    } else {
+      setModalOpen(!modalOpen);
+    }
+  };
 
   const handleModal = async () => {
     if (user.email) {
@@ -32,6 +45,12 @@ const NavBarTop = ({ user }) => {
 
   return (
     <>
+      {addressModalOpen && (
+        <AddressModal
+          modalOpen={addressModalOpen}
+          setModalOpen={setAddressModalOpen}
+        />
+      )}
       {modalOpen && (
         <LoginModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
       )}
@@ -46,15 +65,15 @@ const NavBarTop = ({ user }) => {
                 href="tel:+012345609"
                 className="font-bold text-emerald-500 ml-1"
               >
-                +44 7506597518
+                {contactData[2].contact}
               </a>
             </span>
 
             <div className="lg:text-right flex items-center">
-              <Link href="/about-us">
+              {/* <Link href="/about-us">
                 <a className="font-medium hover:text-emerald-600">About Us</a>
               </Link>
-              <span className="mx-2">|</span>
+              <span className="mx-2">|</span> */}
               <Link href="/contact-us">
                 <a className="font-medium hover:text-emerald-600">Contact Us</a>
               </Link>

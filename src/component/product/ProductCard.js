@@ -66,8 +66,8 @@ const ProductCard = ({ product }) => {
               {product.unit}
             </span>
             <h2 className="text-heading truncate mb-0 block text-sm font-medium text-gray-600">
-              <span className="line-clamp-2">
-                {product.product.name} <br /> ({product.shop.name})
+              <span className="inline-block text-lg font-semibold text-gray-800">
+                {product.product.name}
               </span>
             </h2>
           </div>

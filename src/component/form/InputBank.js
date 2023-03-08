@@ -1,7 +1,7 @@
 import React from "react";
 import Label from "@component/form/Label";
 
-const InputArea = ({
+const InputBank = ({
   register,
   defaultValue,
   name,
@@ -9,6 +9,7 @@ const InputArea = ({
   type,
   placeholder,
   Icon,
+  updateBank,
 }) => {
   return (
     <>
@@ -22,13 +23,12 @@ const InputArea = ({
           </div>
         )}
         <input
-          {...register(`${name}`, {
-            required: `${label} is required!`,
-          })}
+          {...register(`${name}`)}
           defaultValue={defaultValue}
           type={type}
           placeholder={placeholder}
           name={name}
+          onKeyUp={updateBank}
           className={
             Icon
               ? "py-2 pl-10 w-full appearance-none border text-sm opacity-75 text-input rounded-md placeholder-body min-h-12 transition duration-200 focus:ring-0 ease-in-out bg-white border-gray-200 focus:outline-none focus:border-emerald-500 h-11 md:h-12"
@@ -40,4 +40,4 @@ const InputArea = ({
   );
 };
 
-export default InputArea;
+export default InputBank;

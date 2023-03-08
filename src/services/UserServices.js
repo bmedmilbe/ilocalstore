@@ -4,11 +4,16 @@ import requests from "./httpServices";
 
 const apiLoginEndPoint = "/auth/jwt";
 const apiUserEndPoint = "/auth/users";
+const apiCustomerEndPoint = "/store/customers";
 const prefix = "hkUYGuygyIUUYuygu";
 const tokenKey = prefix + "token";
 const refreshKey = prefix + "refresh";
 
 const UserServices = {
+  logout() {
+    localStorage.removeItem(tokenKey);
+    localStorage.removeItem(refreshKey);
+  },
   async userLogin(body) {
     return await requests.post(`${apiLoginEndPoint}/create`, body);
   },
@@ -37,11 +42,17 @@ const UserServices = {
   },
 
   async changePassword(body) {
-    return await requests.post("/user/change-password", body);
+    return await requests.post("/auth/users/set_password/", body);
   },
 
   async updateUser(id, body) {
-    return await requests.put(`/user/${id}`, body);
+    // console.log(body);
+    return await requests.patch(`/auth/users/${id}/`, body);
+  },
+
+  async updateEmail(body) {
+    // console.log(id);
+    return await requests.post(`/auth/users/set_email/`, body);
   },
 
   getTokenKey() {
@@ -64,6 +75,14 @@ const UserServices = {
     try {
       // console.log(jwt);
       return await requests.get(`${apiUserEndPoint}/me`);
+    } catch (ex) {
+      return null;
+    }
+  },
+  async getCurrentCustomer() {
+    try {
+      // console.log(jwt);
+      return await requests.get(`${apiCustomerEndPoint}/me`);
     } catch (ex) {
       return null;
     }

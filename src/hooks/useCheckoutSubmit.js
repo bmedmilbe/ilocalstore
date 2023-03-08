@@ -12,7 +12,7 @@ import { getUser, UserContext } from "@context/UserContext";
 import OrderServices from "@services/OrderServices";
 import CouponServices from "@services/CouponServices";
 import { notifyError, notifySuccess } from "@utils/toast";
-import AddressServices from "@services/AddressServices";
+import CustomerAddressServices from "@services/CustomerAddressServices";
 import CartServices from "@services/CartServices";
 
 const useCheckoutSubmit = () => {
@@ -103,7 +103,7 @@ const useCheckoutSubmit = () => {
   }, []);
 
   const newAddress = async (data) => {
-    const addresses = await AddressServices.getAddresses();
+    const addresses = await CustomerAddressServices.getCustomerAddresses();
 
     const address = addresses.find(
       (address) =>
@@ -119,7 +119,7 @@ const useCheckoutSubmit = () => {
       };
       console.log(body);
       try {
-        address = await AddressServices.saveAddress(body);
+        address = await CustomerAddressServices.saveAddress(body);
       } catch (ex) {
         console.log(ex.response.data.detail);
       }
@@ -190,13 +190,26 @@ const useCheckoutSubmit = () => {
         .then((res) => {
           // console.log(res);
           router.push(`/order/${res.id}`);
-          notifySuccess("Your Order Confirmed!");
-          Cookies.remove("couponInfo");
-          sessionStorage.removeItem("products");
-          emptyCart();
-          setIsCheckoutSubmit(false);
+
+          CartServices.createNewCart()
+            .then((res) => {
+              // console.log(res);
+
+              notifySuccess("Your Order Confirmed!");
+              // CartServices.createNewCart();
+              Cookies.remove("couponInfo");
+              sessionStorage.removeItem("products");
+              emptyCart();
+              setIsCheckoutSubmit(false);
+            })
+            .catch((err) => {
+              err;
+              notifyError(err.message);
+              setIsCheckoutSubmit(false);
+            });
         })
         .catch((err) => {
+          err;
           notifyError(err.message);
           setIsCheckoutSubmit(false);
         });

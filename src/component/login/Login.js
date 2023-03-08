@@ -32,7 +32,7 @@ const Login = ({ setShowResetPassword, setModalOpen }) => {
               placeholder="Email"
               Icon={FiMail}
             />
-            <Error errorName={errors.registerEmail} />
+            <Error errorName={errors.email} />
           </div>
           <div className="form-group">
             <InputArea

@@ -9,6 +9,7 @@ import UserServices from "@services/UserServices";
 import { UserContext } from "@context/UserContext";
 import { notifyError, notifySuccess } from "@utils/toast";
 import { collapseToast } from "react-toastify";
+import CustomerAddressServices from "@services/CustomerAddressServices";
 
 const useLoginSubmit = (setModalOpen) => {
   const router = useRouter();
@@ -25,7 +26,14 @@ const useLoginSubmit = (setModalOpen) => {
     formState: { errors },
   } = useForm();
 
-  const registerNew = (firstName, lastName, email, password) => {
+  const registerNew = (
+    firstName,
+    lastName,
+    email,
+    password,
+    addressLine,
+    postCode
+  ) => {
     const body = {
       first_name: firstName,
       last_name: lastName,
@@ -33,9 +41,29 @@ const useLoginSubmit = (setModalOpen) => {
       password,
       username: email,
     };
+    const addressBody = {
+      street: addressLine,
+      post_code: postCode,
+    };
+
     UserServices.userRegister(body)
       .then((res) => {
-        doLogin(email, password);
+        doLogin(email, password, false);
+        if (UserServices.getCurrentUser()) {
+          CustomerAddressServices.saveAddress(addressBody)
+            .then((res) => {
+              router.reload(window.location.pathname);
+              setLoading(false);
+              // console.log(body);
+              // console.log(res);
+            })
+            .catch((err) => {
+              // console.log(err.response);
+              notifyError(err ? err.response.data.detail : err.message);
+              setLoading(false);
+            });
+        }
+
         // console.log(body);
         // console.log(res);
       })
@@ -46,10 +74,10 @@ const useLoginSubmit = (setModalOpen) => {
       });
   };
 
-  const doLogin = (username, password) => {
+  const doLogin = (email, password, refresh = true) => {
     const cookieTimeOut = 0.5;
     const body = {
-      username,
+      email,
       password,
     };
     // console.log(body);
@@ -57,17 +85,21 @@ const useLoginSubmit = (setModalOpen) => {
       .then((res) => {
         // console.log(body);
         // console.log(res);
-        setLoading(false);
+
         setModalOpen(false);
         localStorage.setItem(`${prefix}${tokenKey}`, res.access);
         localStorage.setItem(`${prefix}${refreshKey}`, res.refresh);
-        router.push(redirect || "/");
-        notifySuccess("Login Success!");
-        dispatch({ type: "USER_LOGIN", payload: res });
+        if (refresh) {
+          router.reload(window.location.pathname);
+        }
+        // notifySuccess("Login Success!");
 
-        Cookies.set("userInfo", JSON.stringify(res), {
-          expires: cookieTimeOut,
-        });
+        setLoading(false);
+        // dispatch({ type: "USER_LOGIN", payload: res });
+
+        // Cookies.set("userInfo", JSON.stringify(res), {
+        //   expires: cookieTimeOut,
+        // });
       })
       .catch((err) => {
         console.log(err.response);

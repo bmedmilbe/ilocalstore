@@ -1,6 +1,13 @@
 import requests from "./httpServices";
-const apiEndpoint = "/store/orders";
-const OrderServices = {
+const apiEndpoint = "/store/deliverorders";
+const DeliverOrderServices = {
+  async getDeliverOrders() {
+    return await requests.get(`${apiEndpoint}`);
+  },
+  async updateStatus(orderId, body) {
+    return await requests.patch(`/store/orderfordeliver/${orderId}/`, body);
+  },
+
   async addOrder(body) {
     // console.log(body);
     return await requests.post(`${apiEndpoint}/`, body);
@@ -23,4 +30,4 @@ const OrderServices = {
   },
 };
 
-export default OrderServices;
+export default DeliverOrderServices;

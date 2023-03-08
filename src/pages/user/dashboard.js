@@ -12,47 +12,47 @@ import useAsync from "@hooks/useAsync";
 import useFilter from "@hooks/useFilter";
 import { userSidebar } from "@utils/data";
 import Card from "@component/order-card/Card";
-import { UserContext } from "@context/UserContext";
+import { getUser, UserContext } from "@context/UserContext";
 import OrderServices from "@services/OrderServices";
 import RecentOrder from "@pages/user/recent-order";
 import { SidebarContext } from "@context/SidebarContext";
 import Loading from "@component/preloader/Loading";
+import MenuDashboard from "@component/user/MenuDashboard";
+import UserServices from "@services/UserServices";
 
 const Dashboard = ({ title, description, children }) => {
   const router = useRouter();
+
+  const { isLoading, setIsLoading, currentPage } = useContext(SidebarContext);
   const {
-    dispatch,
     state: { user },
   } = useContext(UserContext);
-  const { isLoading, setIsLoading, currentPage } = useContext(SidebarContext);
-
   const [data, setData] = useState({});
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    OrderServices.getOrderByUser({
-      page: currentPage,
-      limit: 8,
-    })
+  useEffect(async () => {
+    OrderServices.getOrderByUser({})
       .then((res) => {
         setData(res);
         setLoading(false);
       })
       .catch((err) => {
+        console.log(err);
         setLoading(false);
         setError(err.message);
       });
   }, [currentPage]);
 
   const handleLogOut = () => {
-    dispatch({ type: "USER_LOGOUT" });
-    Cookies.remove("user");
-    Cookies.remove("couponInfo");
+    // dispatchEvent({ type: "USER_LOGOUT" });
+    // Cookies.remove("user");
+    // Cookies.remove("couponInfo");
+    UserServices.logout();
     router.push("/");
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     setIsLoading(false);
     if (!user) {
       router.push("/");
@@ -109,48 +109,8 @@ const Dashboard = ({ title, description, children }) => {
                     <h2 className="text-xl font-serif font-semibold mb-5">
                       Dashboard
                     </h2>
-                    <div className="grid gap-4 mb-8 md:grid-cols-2 xl:grid-cols-4">
-                      <Link href={"/user/my-orders"}>
-                        <a>
-                          <Card
-                            title="Total Order"
-                            Icon={FiShoppingCart}
-                            quantity={data?.totalDoc}
-                            className="text-red-600  bg-red-200"
-                          />
-                        </a>
-                      </Link>
-                      <Link href={"/user/recent-order"}>
-                        <a>
-                          <Card
-                            title="Pending Order"
-                            Icon={FiRefreshCw}
-                            quantity={data?.pending}
-                            className="text-orange-600 bg-orange-200"
-                          />
-                        </a>
-                      </Link>
-                      <Link href={"/user/my-orders"}>
-                        <a>
-                          <Card
-                            title="Processing Order"
-                            Icon={FiTruck}
-                            quantity={data?.processing}
-                            className="text-indigo-600 bg-indigo-200"
-                          />
-                        </a>
-                      </Link>
-                      <Link href={"/user/my-orders"}>
-                        <a>
-                          <Card
-                            title="Complete Order"
-                            Icon={FiCheck}
-                            quantity={data?.delivered}
-                            className="text-emerald-600 bg-emerald-200"
-                          />
-                        </a>
-                      </Link>
-                    </div>
+                    <MenuDashboard />
+
                     <RecentOrder data={data} loading={loading} error={error} />
                   </div>
                 )}

@@ -21,7 +21,7 @@ import InputPayment from "@component/form/InputPayment";
 import useCheckoutSubmit from "@hooks/useCheckoutSubmit";
 import InputAreaLock from "@component/form/InputAreaLock";
 import { getUser } from "@context/UserContext";
-import AddressServices from "@services/AddressServices";
+import CustomerAddressServices from "@services/CustomerAddressServices";
 import InputAddress from "@component/form/InputAddress";
 import { useRouter } from "next/router";
 
@@ -60,7 +60,7 @@ const Checkout = () => {
 
   useEffect(async () => {
     try {
-      const address = await AddressServices.getAddresses();
+      const address = await CustomerAddressServices.getAddresses();
       setAddresses(address);
     } catch (ex) {
       // console.log(ex.response.data.detail);

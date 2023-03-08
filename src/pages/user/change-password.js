@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import Cookies from 'js-cookie';
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import Cookies from "js-cookie";
 
 //internal import
-import Error from '@component/form/Error';
-import Dashboard from '@pages/user/dashboard';
-import InputArea from '@component/form/InputArea';
-import UserServices from '@services/UserServices';
-import { notifyError, notifySuccess } from '@utils/toast';
+import Error from "@component/form/Error";
+import Dashboard from "@pages/user/dashboard";
+import InputArea from "@component/form/InputArea";
+import UserServices from "@services/UserServices";
+import { notifyError, notifySuccess } from "@utils/toast";
 
 const ChangePassword = () => {
   const {
@@ -17,22 +17,27 @@ const ChangePassword = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = ({ email, currentPassword, newPassword }) => {
-    UserServices.changePassword({ email, currentPassword, newPassword })
+  const onSubmit = (data) => {
+    // console.log(data);
+    UserServices.changePassword(data)
       .then((res) => {
-        notifySuccess(res.message);
+        notifySuccess("Password Successfully Changed");
       })
       .catch((err) => {
         notifyError(err ? err.response.data.message : err.message);
       });
   };
 
-  useEffect(() => {
-    if (Cookies.get('userInfo')) {
-      const user = JSON.parse(Cookies.get('userInfo'));
-      setValue('email', user.email);
-    }
-  });
+  // useEffect(async () => {
+  //   user = await getUser();
+  //   if (user) {
+  //     // const user = JSON.parse(Cookies.get("user"));
+  //     // setUserId(user.id);
+  //     // setValue("current_password", user.first_name);
+  //     // setValue("re_new_email");
+  //     // setValue("email", user.email);
+  //   }
+  // }, []);
 
   return (
     <Dashboard
@@ -48,38 +53,38 @@ const ChangePassword = () => {
                 <div className="col-span-6 sm:col-span-6">
                   <InputArea
                     register={register}
-                    label="Email Address"
-                    name="email"
-                    type="email"
-                    placeholder="Your Email"
-                  />
-                  <Error errorName={errors.email} />
-                </div>
-                <div className="col-span-6 sm:col-span-6">
-                  <InputArea
-                    register={register}
                     label="Current Password"
-                    name="currentPassword"
+                    name="current_password"
                     type="password"
                     placeholder="Your Current Password"
                   />
-                  <Error errorName={errors.currentPassword} />
+                  <Error errorName={errors.current_password} />
                 </div>
                 <div className="col-span-6 sm:col-span-6">
                   <InputArea
                     register={register}
-                    label="New Password"
-                    name="newPassword"
+                    label="New Current Password"
+                    name="new_password"
+                    type="password"
+                    placeholder="Your New Current Password"
+                  />
+                  <Error errorName={errors.new_password} />
+                </div>
+                <div className="col-span-6 sm:col-span-6">
+                  <InputArea
+                    register={register}
+                    label="Retype New Password"
+                    name="re_new_password"
                     type="password"
                     placeholder="Your New Password"
                   />
-                  <Error errorName={errors.newPassword} />
+                  <Error errorName={errors.re_new_password} />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="mt-5 text-right">
+        <div className="mt-5 text-left">
           <button
             type="submit"
             className="md:text-sm leading-5 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-medium text-center justify-center border-0 border-transparent rounded-md placeholder-white focus-visible:outline-none focus:outline-none bg-emerald-500 text-white px-5 md:px-6 lg:px-8 py-2 md:py-3 lg:py-3 hover:text-white hover:bg-emerald-600 h-12 mt-1 text-sm lg:text-sm w-full sm:w-auto"
