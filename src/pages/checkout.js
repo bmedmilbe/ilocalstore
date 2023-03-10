@@ -52,10 +52,10 @@ const Checkout = () => {
   const [addresses, setAddresses] = useState(null);
 
   useEffect(async () => {
-    user = await user;
-    if (isEmpty || !user) {
-      router.push("/");
-    }
+    // user = await user;
+    // if (isEmpty) {
+    //   router.push("/");
+    // }
   }, [router]);
 
   useEffect(async () => {
@@ -157,13 +157,13 @@ const Checkout = () => {
                       <div className="col-span-6 sm:col-span-6 lg:col-span-2">
                         <InputAreaLock
                           register={register}
-                          label="Post code for LU1 area"
+                          label="Post code for LU1 to LU3 area"
                           name="postCode"
                           type="text"
-                          starter={"LU1"}
-                          placeholder="1RE"
+                          starter={"LU"}
+                          placeholder="31RE"
                           id={"postCode"}
-                          length={3}
+                          length={4}
                         />
                         <Error errorName={errors.postCode} />
                       </div>
@@ -230,7 +230,7 @@ const Checkout = () => {
                         <p className="text-red-400 text-sm mt-1">{error}</p>
                       </div>
                     )}
-                    <div className="grid grid-cols-6 gap-6">
+                    <div className="form-group mt-12">
                       <div className="col-span-6 sm:col-span-3">
                         <InputPayment
                           setShowCard={setShowCard}
@@ -242,7 +242,7 @@ const Checkout = () => {
                         <Error errorName={errors.paymentMethod} />
                       </div>
 
-                      <div className="col-span-6 sm:col-span-3">
+                      <div className="col-span-12 sm:col-span-12">
                         <InputPayment
                           setShowCard={setShowCard}
                           register={register}

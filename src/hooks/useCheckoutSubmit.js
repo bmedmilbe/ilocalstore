@@ -103,19 +103,28 @@ const useCheckoutSubmit = () => {
   }, []);
 
   const newAddress = async (data) => {
+    if (
+      !data.postCode.startsWith("1") ||
+      !data.postCode.startsWith("2") ||
+      !data.postCode.startsWith("3")
+    ) {
+      notifyError("Your post code must be from LU1 to LU3");
+      return;
+    }
+
     const addresses = await CustomerAddressServices.getCustomerAddresses();
 
     const address = addresses.find(
       (address) =>
         address.house_number === data.houseNumber &&
         address.street === data.address &&
-        address.post_code === "LU1 " + data.postCode
+        address.post_code === "LU " + data.postCode.toUpperCase()
     );
     if (!address) {
       const body = {
         house_number: data.houseNumber,
         street: data.address,
-        post_code: "LU1 " + data.postCode,
+        post_code: "LU " + data.postCode.toUpperCase(),
       };
       console.log(body);
       try {
@@ -136,6 +145,11 @@ const useCheckoutSubmit = () => {
 
     const cart = await CartServices.getCart();
     const address_id = await newAddress(data);
+
+    if (!address_id) {
+      setIsCheckoutSubmit(false);
+      return;
+    }
 
     let orderInfo = {
       cart_id: cart.id,
@@ -184,6 +198,7 @@ const useCheckoutSubmit = () => {
         return;
       }
     }
+    // if (data.paymentMethod === "COD") {
     if (data.paymentMethod === "COD") {
       // console.log(orderInfo);
       OrderServices.addOrder(orderInfo)

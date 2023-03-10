@@ -42,7 +42,7 @@ const InputAreaLock = ({
           name={name}
           aria-label={label}
           aria-describedby={id}
-          maxLength={3}
+          maxLength={length}
         />
         <label
           class="flex items-center rounded-l-lg border border-slate-400 bg-slate-50 px-2 text-sm  transition-colors"

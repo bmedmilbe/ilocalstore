@@ -1,7 +1,7 @@
 import "@styles/custom.css";
 import { CartProvider } from "react-use-cart";
 import { Elements } from "@stripe/react-stripe-js";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 //internal import
 import getStripe from "@utils/stripe";
 import { UserProvider } from "@context/UserContext";
