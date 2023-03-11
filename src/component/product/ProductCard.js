@@ -8,6 +8,7 @@ import Discount from "@component/common/Discount";
 import ProductModal from "@component/modal/ProductModal";
 import CartServices from "@services/CartServices";
 import useAddToCart from "@hooks/useAddToCart";
+import NewUsed from "@component/common/NewUsed";
 
 const ProductCard = ({ product }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -51,7 +52,7 @@ const ProductCard = ({ product }) => {
             </span>
           )}
           <Discount product={product} />
-
+          <NewUsed product={product} />
           <Image
             src={product.product.image}
             width={160}

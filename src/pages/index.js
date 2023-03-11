@@ -19,6 +19,7 @@ import ShopCarousel from "@component/carousel/ShopCarousel";
 import FeatureCollection from "@component/collection/FeatureCollection";
 import CardShop from "@component/shop-card/CardShop";
 import ShopServices from "@services/ShopService";
+import StickyCategory from "@component/collection/StickyCategory";
 
 const Home = ({ products, stores, popularProducts, discountProducts }) => {
   const router = useRouter();
@@ -35,7 +36,7 @@ const Home = ({ products, stores, popularProducts, discountProducts }) => {
   }, [router]);
 
   const storeStep = 3;
-  const itemStep = 3;
+  const itemStep = 1000;
   let storeNumber = 0;
   let itemNumber = 0;
 
@@ -45,11 +46,14 @@ const Home = ({ products, stores, popularProducts, discountProducts }) => {
         <Loading loading={isLoading} />
       ) : (
         <Layout
-          title={"Receive by 2 hours"}
-          description={"Buy now and receive by 2 hour in LU1 Area"}
+          title={"Receive in same day"}
+          description={"Buy now and receive same day in Luton Area"}
         >
           <div className="min-h-screen">
             <StickyCart />
+            <StickyCategory />
+            <CategoryCarousel />
+            {/* <div>hgkf kgvkg</div> */}
             <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
               <br />
               {/* feature category's */}
@@ -63,40 +67,14 @@ const Home = ({ products, stores, popularProducts, discountProducts }) => {
               </div>
               {/* <div className="mx-auto max-w-screen-2xl px-3 sm:px-10"> */}
 
-              <div className="max-w-screen-2xl flex py-10 lg:py-12">
+              {/* <div className="max-w-screen-2xl flex py-10 lg:py-12">
                 <div className="w-full grid grid-col gap-4 grid-cols-1 2xl:gap-6 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2">
                   <CardShop
                     shops={stores.slice(storeNumber, storeNumber + storeStep)}
                   />
-                  {/* {(storeNumber += storeStep)} */}
+                  // {(storeNumber += storeStep)} 
                 </div>
-              </div>
-
-              <div className="sm:px-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
-                {products
-                  ?.slice(itemNumber, itemNumber + itemStep)
-                  .map((product) => {
-                    itemNumber++;
-                    return <ProductCard key={product.id} product={product} />;
-                  })}
-              </div>
-              <div className="flex py-10 lg:py-12">
-                <div className="w-full grid grid-col gap-4 grid-cols-1 2xl:gap-6 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2">
-                  <CardShop
-                    shops={stores.slice(storeNumber + storeStep, storeStep * 2)}
-                  />
-                  {/* {(storeNumber += storeStep)} */}
-                </div>
-              </div>
-
-              <div className="sm:px-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
-                {products
-                  ?.slice(itemNumber, itemNumber + itemStep)
-                  .map((product) => {
-                    itemNumber++;
-                    return <ProductCard key={product.id} product={product} />;
-                  })}
-              </div>
+              </div> */}
             </div>
             {/* popular products */}
             {/* <div className="bg-gray-50 lg:py-16 py-10 mx-auto max-w-screen-2xl px-3 sm:px-10">
@@ -107,7 +85,6 @@ const Home = ({ products, stores, popularProducts, discountProducts }) => {
                 <FeatureCollection />
               </div>
             </div> */}
-
             {/* promotional banner card
             <div className="block mx-auto max-w-screen-2xl">
               <div className="mx-auto max-w-screen-2xl px-4 sm:px-10">
@@ -116,7 +93,6 @@ const Home = ({ products, stores, popularProducts, discountProducts }) => {
                 </div>
               </div>
             </div> */}
-
             {/* discounted products */}
             {/* <div
               id="discount"
@@ -153,7 +129,8 @@ const Home = ({ products, stores, popularProducts, discountProducts }) => {
 
 export const getStaticProps = async () => {
   const products = await ProductServices.getShowingProducts();
-  const stores = await ShopServices.getShops();
+  // const stores = await ShopServices.getShops();
+  const stores = [];
 
   const popularProducts = products;
   // const popularProducts = products.filter((p) => p.discount === 0);

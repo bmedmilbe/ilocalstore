@@ -55,6 +55,13 @@ const CartServices = {
       return ex;
     }
   },
+
+  async createPaymentIntent(body) {
+    const cartId = await this.getCartKey();
+
+    return requests.post(`${apiEndpoint}/${cartId}/secret/`, body);
+  },
+
   async getCartItem(item) {
     try {
       const cartId = await this.getCartKey();

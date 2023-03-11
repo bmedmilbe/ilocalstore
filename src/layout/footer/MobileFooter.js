@@ -10,13 +10,14 @@ import LoginModal from "@component/modal/LoginModal";
 import { SidebarContext } from "@context/SidebarContext";
 import CategoryDrawer from "@component/drawer/CategoryDrawer";
 
-const MobileFooter = () => {
+const MobileFooter = ({ user }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const { toggleCartDrawer, toggleCategoryDrawer } = useContext(SidebarContext);
   const { totalItems } = useCart();
-  const {
-    state: { user },
-  } = useContext(UserContext);
+  // const {
+  //   state: { user },
+  // } = useContext(UserContext);
+  console.log(user);
 
   return (
     <>
@@ -70,7 +71,7 @@ const MobileFooter = () => {
           ) : user?.first_name ? (
             <Link href="/user/dashboard">
               <a className="leading-none font-bold font-serif block">
-                {user?.first_name[0]}
+                <FiUser className="w-6 h-6 drop-shadow-xl" />
               </a>
             </Link>
           ) : (

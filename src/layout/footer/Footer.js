@@ -15,10 +15,10 @@ import {
 import { UserContext } from "@context/UserContext";
 import CollectionServices from "@services/CollectionServices";
 
-const Footer = ({}) => {
-  const {
-    state: { user },
-  } = useContext(UserContext);
+const Footer = ({ user }) => {
+  // const {
+  //   state: { user },
+  // } = useContext(UserContext);
   // const [collections, setCollections] = useState(
   //   CollectionServices.getShowingCollection()
   // );
@@ -39,9 +39,9 @@ const Footer = ({}) => {
     });
   }, []);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (!collections) return <p>No profile data</p>;
-  // console.log(collections);
+  // if (isLoading) return <p>Loading...</p>;
+  // if (!collections) return <p>No profile data</p>;
+  // // console.log(collections);
   return (
     <div className="pb-16 lg:pb-0 xl:pb-0 bg-white">
       <div className="mx-auto max-w-screen-2xl px-4 sm:px-10">
@@ -86,10 +86,10 @@ const Footer = ({}) => {
               Top Category
             </h3>
             <ul className="text-sm lg:text-15px flex flex-col space-y-3">
-              {collections.map((collection) => {
+              {collections?.map((collection) => {
                 const link =
                   "/search?collection=" +
-                  collection.title
+                  collection.slug
                     .toLowerCase()
                     .replace("&", "")
                     .split(" ")
@@ -106,41 +106,45 @@ const Footer = ({}) => {
               })}
             </ul>
           </div>
-          <div className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2 lg:col-span-3">
-            <h3 className="text-md lg:leading-7 font-medium mb-4 sm:mb-5 lg:mb-6 pb-0.5">
-              My Account
-            </h3>
-            <ul className="text-sm lg:text-15px flex flex-col space-y-3">
-              <li className="flex items-baseline">
-                <Link href={`${user?.email ? "/user/dashboard" : "#"}`}>
-                  <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                    Dashboard
-                  </a>
-                </Link>
-              </li>
-              <li className="flex items-baseline">
-                <Link href={`${user?.email ? "/user/my-orders" : "#"}`}>
-                  <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                    My Orders
-                  </a>
-                </Link>
-              </li>
-              <li className="flex items-baseline">
-                <Link href={`${user?.email ? "/user/dashboard" : "#"}`}>
-                  <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                    Recent Orders
-                  </a>
-                </Link>
-              </li>
-              <li className="flex items-baseline">
-                <Link href={`${user?.email ? "/user/update-profile" : "#"}`}>
-                  <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
-                    Updated Profile
-                  </a>
-                </Link>
-              </li>
-            </ul>
-          </div>
+
+          {user && (
+            <div className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2 lg:col-span-3">
+              <h3 className="text-md lg:leading-7 font-medium mb-4 sm:mb-5 lg:mb-6 pb-0.5">
+                My Account
+              </h3>
+              <ul className="text-sm lg:text-15px flex flex-col space-y-3">
+                <li className="flex items-baseline">
+                  <Link href={`${user?.email ? "/user/dashboard" : "#"}`}>
+                    <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
+                      Dashboard
+                    </a>
+                  </Link>
+                </li>
+                <li className="flex items-baseline">
+                  <Link href={`${user?.email ? "/user/my-orders" : "#"}`}>
+                    <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
+                      My Orders
+                    </a>
+                  </Link>
+                </li>
+                <li className="flex items-baseline">
+                  <Link href={`${user?.email ? "/user/dashboard" : "#"}`}>
+                    <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
+                      Recent Orders
+                    </a>
+                  </Link>
+                </li>
+                <li className="flex items-baseline">
+                  <Link href={`${user?.email ? "/user/update-profile" : "#"}`}>
+                    <a className="text-gray-600 inline-block w-full hover:text-emerald-500">
+                      Updated Profile
+                    </a>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          )}
+
           <div className="pb-3.5 sm:pb-0 col-span-1 md:col-span-2 lg:col-span-3">
             <Link href="/">
               <a className="mr-3 lg:mr-12 xl:mr-12" rel="noreferrer">
@@ -185,7 +189,7 @@ const Footer = ({}) => {
                     </a>
                   </Link>
                 </li>
-                <li className="flex items-center  mr-3 transition ease-in-out duration-500">
+                {/* <li className="flex items-center  mr-3 transition ease-in-out duration-500">
                   <Link href="https://twitter.com">
                     <a
                       aria-label="Social Link"
@@ -220,7 +224,7 @@ const Footer = ({}) => {
                       <LinkedinIcon size={34} round />
                     </a>
                   </Link>
-                </li>
+                </li> */}
                 <li className="flex items-center  mr-3 transition ease-in-out duration-500">
                   <Link href="https://www.whatsapp.com">
                     <a
@@ -250,7 +254,7 @@ const Footer = ({}) => {
                     width={274}
                     height={85}
                     className="w-full"
-                    src="/payment-method/payment-logo.png"
+                    src="/payment-method/stripe_card_accept3.png"
                     alt="payment method"
                   />
                 </li>
@@ -262,8 +266,8 @@ const Footer = ({}) => {
 
       <div className="mx-auto max-w-screen-2xl px-3 sm:px-10 flex justify-center py-4">
         <p className="text-sm text-gray-500 leading-6">
-          Copyright 2023 @{" "}
-          <Link href="#">
+          <span dangerouslySetInnerHTML={{ __html: "&copy;" }} /> Copyright 2023{" "}
+          <Link href="/">
             <a
               target="_blank"
               rel="noopener noreferrer"

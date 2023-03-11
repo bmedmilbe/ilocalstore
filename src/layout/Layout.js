@@ -33,7 +33,7 @@ const Layout = ({ title, description, children }) => {
           <title>
             {title
               ? `iLocalStore | ${title}`
-              : "iLocalStore - Receive your item within 2 hours"}
+              : "iLocalStore - Receive your by same day"}
           </title>
           {description && <meta name="description" content={description} />}
           <link ref="icon" href="/favicon.png" />
@@ -41,15 +41,15 @@ const Layout = ({ title, description, children }) => {
         <NavBarTop user={user} />
         <Navbar user={user} />
         <div className="bg-gray-50">{children}</div>
-        <MobileFooter />
+        <MobileFooter user={user} />
         <div className="w-full">
-          <FooterTop />
+          <FooterTop user={user} />
           <div className="hidden relative lg:block mx-auto max-w-screen-2xl py-6 px-3 sm:px-10">
-            <FeatureCard />
+            <FeatureCard user={user} />
           </div>
           <hr className="hr-line"></hr>
           <div className="border-t border-gray-100 w-full">
-            <Footer />
+            <Footer user={user} />
           </div>
         </div>
       </div>

@@ -3,7 +3,9 @@ const apiEndpoint = "/store/orders";
 const OrderServices = {
   async addOrder(body) {
     // console.log(body);
-    return await requests.post(`${apiEndpoint}/`, body);
+    const request = await requests.post(`${apiEndpoint}/`, body);
+    console.log(request);
+    return request;
   },
 
   createPaymentIntent(body) {

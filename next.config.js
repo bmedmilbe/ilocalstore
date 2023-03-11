@@ -21,6 +21,7 @@ module.exports = withPWA({
     domains: [
       "images.unsplash.com",
       "img.icons8.com",
+      "icons8.com",
       "i.ibb.co",
       "i.postimg.cc",
       "fakestoreapi.com",

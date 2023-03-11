@@ -12,22 +12,25 @@ import "swiper/css/navigation";
 import useAsync from "@hooks/useAsync";
 import CategoryServices from "@services/CategoryServices";
 import { SidebarContext } from "@context/SidebarContext";
+import Collection from "@component/collection/Collection";
+import CollectionServices from "@services/CollectionServices";
 
 const CategoryCarousel = () => {
   const router = useRouter();
   const { isLoading, setIsLoading } = useContext(SidebarContext);
-  const { data, error } = useAsync(() => CategoryServices.getShowingCategory());
+  const { data, error } = useAsync(() =>
+    CollectionServices.getShowingCollection()
+  );
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
   const handleCategoryClick = (category) => {
-    router.push(
-      `/search?Category=${category
-        .toLowerCase()
-        .replace("&", "")
-        .split(" ")
-        .join("-")}`
-    );
+    router.push(`/search?collection=${category}`);
+
+    // .toLowerCase()
+    // .replace("&", "")
+    // .split(" ")
+    // .join("-")
     setIsLoading(!isLoading);
   };
 
@@ -96,23 +99,23 @@ const CategoryCarousel = () => {
           </p>
         ) : (
           <div>
-            {data?.map((category, i) => (
+            {data?.map((collection, i) => (
               <SwiperSlide key={i + 1} className="group">
                 <div
-                  onClick={() => handleCategoryClick(category.parent)}
+                  onClick={() => handleCategoryClick(collection.slug)}
                   className="text-center cursor-pointer p-3 bg-white rounded-lg"
                 >
                   <div className="bg-white p-2 mx-auto w-10 h-10 rounded-full shadow-md">
                     <Image
-                      src={category.icon}
-                      alt={category.parent}
+                      src={collection.icon}
+                      alt={collection.title}
                       width={35}
                       height={35}
                     />
                   </div>
 
                   <h3 className="text-xs text-gray-600 mt-2 font-serif group-hover:text-emerald-500">
-                    {category.parent}
+                    {collection.title}
                   </h3>
                 </div>
               </SwiperSlide>

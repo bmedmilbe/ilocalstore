@@ -4,12 +4,12 @@ import { DefaultSeo as NextSeo } from "next-seo";
 const DefaultSeo = () => {
   return (
     <NextSeo
-      title="iLocalStore - Receive your item within 2 hours"
+      title="iLocalStore - Receive in same day"
       openGraph={{
         type: "website",
         locale: "en_IE",
         url: "https://ilocalstore.com/",
-        site_name: "iLocalStore - Receive your item within 2 hours",
+        site_name: "iLocalStore - Receive in same day",
       }}
       twitter={{
         handle: "@handle",

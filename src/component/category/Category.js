@@ -1,21 +1,23 @@
-import { useContext } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { IoClose } from 'react-icons/io5';
+import { useContext } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { IoClose, IoFlash } from "react-icons/io5";
 
 //internal import
-import { pages } from '@utils/data';
-import useAsync from '@hooks/useAsync';
-import Loading from '@component/preloader/Loading';
-import { SidebarContext } from '@context/SidebarContext';
-import CategoryServices from '@services/CategoryServices';
-import CategoryCard from '@component/category/CategoryCard';
+import { pages } from "@utils/data";
+import useAsync from "@hooks/useAsync";
+import Loading from "@component/preloader/Loading";
+import { SidebarContext } from "@context/SidebarContext";
+import CategoryServices from "@services/CategoryServices";
+import CategoryCard from "@component/category/CategoryCard";
+import Collection from "@component/collection/Collection";
+import CollectionServices from "@services/CollectionServices";
 
 const Category = () => {
   const { categoryDrawerOpen, closeCategoryDrawer } =
     useContext(SidebarContext);
   const { data, loading, error } = useAsync(() =>
-    CategoryServices.getShowingCategory()
+    CollectionServices.getShowingCollection()
   );
 
   return (
@@ -25,12 +27,15 @@ const Category = () => {
           <h2 className="font-semibold font-serif text-lg m-0 text-heading flex align-center">
             <Link href="/">
               <a className="mr-10">
-                <Image
+                {/* <Image
                   width={100}
                   height={38}
                   src="/logo/logo-light.svg"
                   alt="logo"
-                />
+                /> */}
+                <IoFlash className="w-10 h-10 drop-shadow-xl inline" />
+                {/* IoFlash */}
+                <span className="inline text-lg"> iLocalStore</span>
               </a>
             </Link>
           </h2>
@@ -53,16 +58,17 @@ const Category = () => {
           <p className="flex justify-center align-middle items-center m-auto text-xl text-red-500">
             <span> {error}</span>
           </p>
-        ) : data.length === 0 ? (
+        ) : data?.length === 0 ? (
           <Loading loading={loading} />
         ) : (
           <div className="relative grid gap-2 p-6">
-            {data?.map((category) => (
+            {/* {console.log(data)} */}
+            {data?.map((collection) => (
               <CategoryCard
-                key={category._id}
-                title={category.parent}
-                icon={category.icon}
-                nested={category.children}
+                key={collection.id}
+                title={collection.title}
+                icon={collection.icon}
+                nested={collection.subcategories}
               />
             ))}
           </div>

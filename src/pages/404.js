@@ -1,13 +1,13 @@
-import React from 'react';
-import Link from 'next/link';
-import Head from 'next/head';
-import Image from 'next/image';
+import React from "react";
+import Link from "next/link";
+import Head from "next/head";
+import Image from "next/image";
 
 const NotFound = () => {
   return (
     <>
       <Head>
-        <title>KachaBazar | 404</title>
+        <title>iLocalStore | 404</title>
         <meta name="description" content="This is page not found 404 page" />
         <link rel="icon" href="/favicon.png" />
       </Head>

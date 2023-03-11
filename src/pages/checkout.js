@@ -24,6 +24,8 @@ import { getUser } from "@context/UserContext";
 import CustomerAddressServices from "@services/CustomerAddressServices";
 import InputAddress from "@component/form/InputAddress";
 import { useRouter } from "next/router";
+import { notifyError, notifySuccess, notifyWarning } from "@utils/toast";
+import LoginModal from "@component/modal/LoginModal";
 
 const Checkout = () => {
   const {
@@ -46,257 +48,202 @@ const Checkout = () => {
     items,
     cartTotal,
     isCheckoutSubmit,
+
     user,
   } = useCheckoutSubmit();
   const router = useRouter();
   const [addresses, setAddresses] = useState(null);
+  const [userDetails, setUserDetails] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(async () => {
-    // user = await user;
-    // if (isEmpty) {
-    //   router.push("/");
-    // }
-  }, [router]);
-
-  useEffect(async () => {
+    setUserDetails(await user);
     try {
-      const address = await CustomerAddressServices.getAddresses();
+      const address = await CustomerAddressServices.getCustomerAddresses();
       setAddresses(address);
     } catch (ex) {
       // console.log(ex.response.data.detail);
     }
   }, []);
 
+  console.log(userDetails);
+
   return (
     <>
+      {modalOpen && (
+        <LoginModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
+      )}
       <Layout title="Checkout" description="this is checkout page">
         <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
           <div className="py-10 lg:py-12 px-0 2xl:max-w-screen-2xl w-full xl:max-w-screen-xl flex flex-col md:flex-row lg:flex-row">
             <div className="md:w-full lg:w-3/5 flex h-full flex-col order-2 sm:order-1 lg:order-1">
               <div className="mt-5 md:mt-0 md:col-span-2">
-                <form onSubmit={handleSubmit(submitHandler)}>
-                  {/* <div className="form-group">
-                    <h2 className="font-semibold font-serif text-base text-gray-700 pb-3">
-                      01. Personal Details
-                    </h2>
-                    <div className="grid grid-cols-6 gap-6">
-                      <div className="col-span-6 sm:col-span-3">
-                        <InputArea
-                          register={register}
-                          label="First Name"
-                          name="firstName"
-                          type="text"
-                          placeholder="John"
-                        />
-                        <Error errorName={errors.firstName} />
-                      </div>
+                {userDetails ? (
+                  <form onSubmit={handleSubmit(submitHandler)}>
+                    <div className="form-group">
+                      <h2 className="font-semibold font-serif text-base text-gray-700 pb-3">
+                        01. Shipping Details
+                      </h2>
 
-                      <div className="col-span-6 sm:col-span-3">
-                        <InputArea
-                          register={register}
-                          label="Last name"
-                          name="lastName"
-                          type="text"
-                          placeholder="Doe"
-                        />
-                        <Error errorName={errors.lastName} />
-                      </div>
+                      <div className="grid grid-cols-6 gap-6 mb-8">
+                        <div className="col-span-6 sm:col-span-6 lg:col-span-2">
+                          <InputArea
+                            register={register}
+                            label="Address Line 1"
+                            name="houseNumber"
+                            type="text"
+                            placeholder=""
+                          />
+                          <Error errorName={errors.houseNumber} />
+                        </div>
+                        <div className="col-span-6 sm:col-span-6 lg:col-span-2">
+                          <InputArea
+                            register={register}
+                            label="Address Line 2"
+                            name="address"
+                            type="text"
+                            placeholder=""
+                          />
+                          <Error errorName={errors.address} />
+                        </div>
 
-                      <div className="col-span-6 sm:col-span-3">
-                        <InputArea
-                          register={register}
-                          label="Email address"
-                          name="email"
-                          type="email"
-                          placeholder="youremail@gmail.com"
-                        />
-                        <Error errorName={errors.email} />
+                        <div className="col-span-6 sm:col-span-6 lg:col-span-2">
+                          <InputAreaLock
+                            register={register}
+                            label="Post code for LU1 to LU3 area"
+                            name="postCode"
+                            type="text"
+                            starter={"LU"}
+                            placeholder="31RE"
+                            id={"postCode"}
+                            length={4}
+                          />
+                          <Error errorName={errors.postCode} />
+                        </div>
                       </div>
+                      {/* <Label label="Other address" />
+                   <div className="grid grid-cols-6 gap-6">
+                     <div className="col-span-6 sm:col-span-3">
+                       <InputAddress
+                         handleShippingCost={handleShippingCost}
+                         register={register}
+                         value="Malanza Luton Express"
+                         time="In 2 hours"
+                         cost={2}
+                       />
+                       <Error errorName={errors.shippingOption} />
+                     </div>
 
-                      <div className="col-span-6 sm:col-span-3">
-                        <InputArea
-                          register={register}
-                          label="Phone number"
-                          name="contact"
-                          type="tel"
-                          placeholder="+062-6532956"
-                        />
+                     <div className="col-span-6 sm:col-span-3">
+                       <InputAddress
+                         handleShippingCost={handleShippingCost}
+                         register={register}
+                         value="UPS"
+                         time="7 Days"
+                         cost={20}
+                       />
+                       <Error errorName={errors.shippingOption} />
+                     </div>
+                   </div> */}
 
-                        <Error errorName={errors.contact} />
-                      </div>
+                      {/* <Label label="Shipping Cost" />
+                   <div className="grid grid-cols-6 gap-6">
+                     <div className="col-span-6 sm:col-span-3">
+                       <InputShipping
+                         handleShippingCost={handleShippingCost}
+                         register={register}
+                         value="Malanza Luton Express"
+                         time="In 2 hours"
+                         cost={2}
+                       />
+                       <Error errorName={errors.shippingOption} />
+                     </div>
+
+                     <div className="col-span-6 sm:col-span-3">
+                       <InputShipping
+                         handleShippingCost={handleShippingCost}
+                         register={register}
+                         value="UPS"
+                         time="7 Days"
+                         cost={20}
+                       />
+                       <Error errorName={errors.shippingOption} />
+                     </div>
+                   </div> */}
                     </div>
-                  </div> */}
 
-                  <div className="form-group">
-                    <h2 className="font-semibold font-serif text-base text-gray-700 pb-3">
-                      01. Shipping Details
-                    </h2>
-
-                    <div className="grid grid-cols-6 gap-6 mb-8">
-                      <div className="col-span-6 sm:col-span-6 lg:col-span-2">
-                        <InputArea
-                          register={register}
-                          label="House number"
-                          name="houseNumber"
-                          type="text"
-                          placeholder="2 or Flat 2"
-                        />
-                        <Error errorName={errors.houseNumber} />
-                      </div>
-                      <div className="col-span-6 sm:col-span-6 lg:col-span-2">
-                        <InputArea
-                          register={register}
-                          label="Street address"
-                          name="address"
-                          type="text"
-                          placeholder="Flat 1, 32 Buxton Road"
-                        />
-                        <Error errorName={errors.address} />
-                      </div>
-
-                      <div className="col-span-6 sm:col-span-6 lg:col-span-2">
-                        <InputAreaLock
-                          register={register}
-                          label="Post code for LU1 to LU3 area"
-                          name="postCode"
-                          type="text"
-                          starter={"LU"}
-                          placeholder="31RE"
-                          id={"postCode"}
-                          length={4}
-                        />
-                        <Error errorName={errors.postCode} />
-                      </div>
-                    </div>
-                    {/* <Label label="Other address" />
-                    <div className="grid grid-cols-6 gap-6">
-                      <div className="col-span-6 sm:col-span-3">
-                        <InputAddress
-                          handleShippingCost={handleShippingCost}
-                          register={register}
-                          value="Malanza Luton Express"
-                          time="In 2 hours"
-                          cost={2}
-                        />
-                        <Error errorName={errors.shippingOption} />
-                      </div>
-
-                      <div className="col-span-6 sm:col-span-3">
-                        <InputAddress
-                          handleShippingCost={handleShippingCost}
-                          register={register}
-                          value="UPS"
-                          time="7 Days"
-                          cost={20}
-                        />
-                        <Error errorName={errors.shippingOption} />
-                      </div>
-                    </div> */}
-
-                    {/* <Label label="Shipping Cost" />
-                    <div className="grid grid-cols-6 gap-6">
-                      <div className="col-span-6 sm:col-span-3">
-                        <InputShipping
-                          handleShippingCost={handleShippingCost}
-                          register={register}
-                          value="Malanza Luton Express"
-                          time="In 2 hours"
-                          cost={2}
-                        />
-                        <Error errorName={errors.shippingOption} />
-                      </div>
-
-                      <div className="col-span-6 sm:col-span-3">
-                        <InputShipping
-                          handleShippingCost={handleShippingCost}
-                          register={register}
-                          value="UPS"
-                          time="7 Days"
-                          cost={20}
-                        />
-                        <Error errorName={errors.shippingOption} />
-                      </div>
-                    </div> */}
-                  </div>
-
-                  <div className="form-group mt-12">
-                    <h2 className="font-semibold font-serif text-base text-gray-700 pb-3">
-                      02. Payment Details
-                    </h2>
-
-                    {showCard && (
-                      <div className="mb-3">
-                        <CardElement />{" "}
-                        <p className="text-red-400 text-sm mt-1">{error}</p>
-                      </div>
-                    )}
                     <div className="form-group mt-12">
+                      <h2 className="font-semibold font-serif text-base text-gray-700 pb-3">
+                        02. Payment Details
+                      </h2>
+
+                      {showCard && (
+                        <div className="mb-3">
+                          <CardElement />{" "}
+                          <p className="text-red-400 text-sm mt-1">{error}</p>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="grid grid-cols-6 gap-4 lg:gap-6 mt-10">
                       <div className="col-span-6 sm:col-span-3">
-                        <InputPayment
-                          setShowCard={setShowCard}
-                          register={register}
-                          name="Cash On Delivery"
-                          value="COD"
-                          Icon={IoWalletSharp}
-                        />
-                        <Error errorName={errors.paymentMethod} />
-                      </div>
-
-                      <div className="col-span-12 sm:col-span-12">
-                        <InputPayment
-                          setShowCard={setShowCard}
-                          register={register}
-                          name="Credit Card"
-                          value="Card"
-                          Icon={ImCreditCard}
-                        />
-                        <Error errorName={errors.paymentMethod} />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-6 gap-4 lg:gap-6 mt-10">
-                    <div className="col-span-6 sm:col-span-3">
-                      <Link href="/">
-                        <a className="bg-indigo-50 border border-indigo-100 rounded py-3 text-center text-sm font-medium text-gray-700 hover:text-gray-800 hover:border-gray-300 transition-all flex justify-center font-serif w-full">
-                          <span className="text-xl mr-2">
-                            <IoReturnUpBackOutline />
-                          </span>
-                          Continue Shopping
-                        </a>
-                      </Link>
-                    </div>
-                    <div className="col-span-6 sm:col-span-3">
-                      <button
-                        type="submit"
-                        disabled={isEmpty || !stripe || isCheckoutSubmit}
-                        className="bg-emerald-500 hover:bg-emerald-600 border border-emerald-500 transition-all rounded py-3 text-center text-sm font-serif font-medium text-white flex justify-center w-full"
-                      >
-                        {isCheckoutSubmit ? (
-                          <span className="flex justify-center text-center">
-                            {" "}
-                            <img
-                              src="/spinner.gif"
-                              alt="Loading"
-                              width={20}
-                              height={10}
-                            />{" "}
-                            <span className="ml-2">Processing</span>
-                          </span>
-                        ) : (
-                          <span className="flex justify-center text-center">
-                            {" "}
-                            Confirm
-                            <span className="text-xl ml-2">
-                              {" "}
-                              <IoArrowForward />
+                        <Link href="/">
+                          <a className="bg-indigo-50 border border-indigo-100 rounded py-3 text-center text-sm font-medium text-gray-700 hover:text-gray-800 hover:border-gray-300 transition-all flex justify-center font-serif w-full">
+                            <span className="text-xl mr-2">
+                              <IoReturnUpBackOutline />
                             </span>
-                          </span>
-                        )}
-                      </button>
+                            Continue Shopping
+                          </a>
+                        </Link>
+                      </div>
+                      <div className="col-span-6 sm:col-span-3">
+                        <button
+                          type="submit"
+                          disabled={isEmpty || !stripe || isCheckoutSubmit}
+                          className="bg-emerald-500 hover:bg-emerald-600 border border-emerald-500 transition-all rounded py-3 text-center text-sm font-serif font-medium text-white flex justify-center w-full"
+                        >
+                          {isCheckoutSubmit ? (
+                            <span className="flex justify-center text-center">
+                              {" "}
+                              <img
+                                src="/spinner.gif"
+                                alt="Loading"
+                                width={20}
+                                height={10}
+                              />{" "}
+                              <span className="ml-2">Processing</span>
+                            </span>
+                          ) : (
+                            <span className="flex justify-center text-center">
+                              {" "}
+                              Confirm
+                              <span className="text-xl ml-2">
+                                {" "}
+                                <IoArrowForward />
+                              </span>
+                            </span>
+                          )}
+                        </button>
+                      </div>
                     </div>
+                  </form>
+                ) : (
+                  <div className="col-span-6 sm:col-span-3">
+                    <button
+                      onClick={() => setModalOpen(!modalOpen)}
+                      className="bg-emerald-500 hover:bg-emerald-600 border border-emerald-500 transition-all rounded py-3 text-center text-sm font-serif font-medium text-white flex justify-center w-full"
+                    >
+                      <span className="flex justify-center text-center">
+                        {" "}
+                        Sign in and Checkout
+                        <span className="text-xl ml-2">
+                          {" "}
+                          <IoArrowForward />
+                        </span>
+                      </span>
+                    </button>
                   </div>
-                </form>
+                )}
               </div>
             </div>
 

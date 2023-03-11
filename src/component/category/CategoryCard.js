@@ -1,14 +1,14 @@
-import React, { useContext, useState } from 'react';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
+import React, { useContext, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/router";
 import {
   IoChevronForwardOutline,
   IoChevronDownOutline,
   IoRemoveSharp,
-} from 'react-icons/io5';
+} from "react-icons/io5";
 
 //internal import
-import { SidebarContext } from '@context/SidebarContext';
+import { SidebarContext } from "@context/SidebarContext";
 
 const CategoryCard = ({ title, icon, nested }) => {
   const [show, setShow] = useState(false);
@@ -20,9 +20,9 @@ const CategoryCard = ({ title, icon, nested }) => {
     router.push(
       `/search?category=${children
         .toLowerCase()
-        .replace('&', '')
-        .split(' ')
-        .join('-')}`
+        .replace("&", "")
+        .split(" ")
+        .join("-")}`
     );
     closeCategoryDrawer();
   };
@@ -34,6 +34,7 @@ const CategoryCard = ({ title, icon, nested }) => {
         className="p-2 flex items-center rounded-md hover:bg-gray-50 w-full hover:text-emerald-600"
         role="button"
       >
+        {console.log(icon)}
         <Image
           src={icon}
           width={18}
@@ -50,16 +51,16 @@ const CategoryCard = ({ title, icon, nested }) => {
       </a>
       {show ? (
         <ul className="pl-6 pb-3 pt-1 -mt-1">
-          {nested.map((children) => (
-            <li key={children}>
+          {nested.map((subcategory) => (
+            <li key={subcategory}>
               <a
-                onClick={() => handleSubCategory(children)}
+                onClick={() => handleSubCategory(subcategory.slug)}
                 className="flex items-center font-serif py-1 text-sm text-gray-600 hover:text-emerald-600 cursor-pointer"
               >
                 <span className="text-xs text-gray-500 pr-1">
                   <IoRemoveSharp />
                 </span>
-                {children}
+                {subcategory.title}
               </a>
             </li>
           ))}

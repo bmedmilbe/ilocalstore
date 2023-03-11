@@ -1,15 +1,15 @@
-import React from 'react';
-import Image from 'next/image';
-import { useForm } from 'react-hook-form';
+import React from "react";
+import Image from "next/image";
+import { useForm } from "react-hook-form";
 
 //internal import
-import Layout from '@layout/Layout';
-import Label from '@component/form/Label';
-import Error from '@component/form/Error';
-import { contactData } from '@utils/data';
-import { notifySuccess } from '@utils/toast';
-import InputArea from '@component/form/InputArea';
-import PageHeader from '@component/header/PageHeader';
+import Layout from "@layout/Layout";
+import Label from "@component/form/Label";
+import Error from "@component/form/Error";
+import { contactData } from "@utils/data";
+import { notifySuccess } from "@utils/toast";
+import InputArea from "@component/form/InputArea";
+import PageHeader from "@component/header/PageHeader";
 
 const ContactUs = () => {
   const {
@@ -20,7 +20,7 @@ const ContactUs = () => {
 
   const submitHandler = () => {
     notifySuccess(
-      'your message sent successfully. We will contact you shortly.'
+      "your message sent successfully. We will contact you shortly."
     );
   };
 
@@ -44,7 +44,7 @@ const ContactUs = () => {
                     className="text-emerald-500"
                   >
                     {data.contact}
-                  </a>{' '}
+                  </a>{" "}
                   {data.info}
                 </p>
               </div>
@@ -53,7 +53,7 @@ const ContactUs = () => {
 
           {/* contact form */}
           <div className="px-0 pt-24 mx-auto items-center flex flex-col md:flex-row w-full justify-between">
-            <div className="hidden md:w-full lg:w-5/12 lg:flex flex-col h-full">
+            {/* <div className="hidden md:w-full lg:w-5/12 lg:flex flex-col h-full">
               <Image
                 width={874}
                 height={874}
@@ -61,8 +61,9 @@ const ContactUs = () => {
                 alt="logo"
                 className="block w-auto"
               />
-            </div>
-            <div className="px-0 pb-2 lg:w-5/12 flex flex-col md:flex-row">
+            </div> */}
+
+            {/* <div className="px-0 pb-2 lg:w-5/12 flex flex-col md:flex-row">
               <form
                 onSubmit={handleSubmit(submitHandler)}
                 className="w-full mx-auto flex flex-col justify-center"
@@ -136,7 +137,7 @@ const ContactUs = () => {
                   </div>
                 </div>
               </form>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

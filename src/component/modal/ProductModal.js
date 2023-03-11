@@ -97,27 +97,29 @@ const ProductModal = ({ modalOpen, setModalOpen, product }) => {
               <div className="flex items-center justify-between space-s-3 sm:space-s-4 w-full">
                 <div>
                   <span className="font-serif font-semibold py-1 text-sm d-block">
-                    <span className="text-gray-700">Category:</span>{" "}
+                    <span className="text-gray-700">
+                      {product.product.collection?.title}:
+                    </span>{" "}
                     {/* {console.log(product)} */}
                     <span className="text-gray-500">
-                      {product.product.collection.title}
+                      {product.product.sub_collection?.title}
                     </span>
                   </span>{" "}
                   <br />
                   <span className="font-serif font-semibold py-1 text-sm d-block">
-                    <span className="text-gray-700">Shop:</span>{" "}
-                    {/* {console.log(product)} */}
-                    <span className="text-gray-500">{product.shop.name}</span>
+                    {/* <span className="text-gray-700">Shop:</span>{" "}
+                    {/* {console.log(product)} 
+                    <span className="text-gray-500">{product.shop.name}</span> */}
                   </span>
                   <Tags product={product} />
                 </div>
                 <div>
-                  <button
+                  {/* <button
                     onClick={() => handleMoreInfo(product.product.slug)}
                     className="font-sans font-medium text-sm text-orange-500"
                   >
                     More Info
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>

@@ -19,6 +19,7 @@ import { SidebarContext } from "@context/SidebarContext";
 import Loading from "@component/preloader/Loading";
 import MenuDashboard from "@component/user/MenuDashboard";
 import UserServices from "@services/UserServices";
+import { Router } from "next/router";
 
 const Dashboard = ({ title, description, children }) => {
   const router = useRouter();
@@ -29,9 +30,18 @@ const Dashboard = ({ title, description, children }) => {
   } = useContext(UserContext);
   const [data, setData] = useState({});
   const [error, setError] = useState("");
+  const [userDetails, setUserDetails] = useState("");
+
   const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
+    const userLogged = await user;
+
+    if (!userLogged) {
+      router.push("/");
+      return;
+    }
+    setUserDetails(userLogged);
     OrderServices.getOrderByUser({})
       .then((res) => {
         setData(res);
@@ -42,6 +52,7 @@ const Dashboard = ({ title, description, children }) => {
         setLoading(false);
         setError(err.message);
       });
+    setIsLoading(false);
   }, [currentPage]);
 
   const handleLogOut = () => {
@@ -51,15 +62,6 @@ const Dashboard = ({ title, description, children }) => {
     UserServices.logout();
     router.push("/");
   };
-
-  useEffect(async () => {
-    setIsLoading(false);
-    if (!user) {
-      router.push("/");
-    }
-  }, [user]);
-
-  // console.log("dashbaord");
 
   return (
     <>

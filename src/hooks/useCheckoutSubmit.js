@@ -25,7 +25,7 @@ const useCheckoutSubmit = () => {
   const [total, setTotal] = useState("");
   const [couponInfo, setCouponInfo] = useState({});
   const [minimumAmount, setMinimumAmount] = useState(0);
-  const [showCard, setShowCard] = useState(false);
+  const [showCard, setShowCard] = useState(true);
   const [shippingCost, setShippingCost] = useState(0);
 
   const [cartId, setCartId] = useState(0);
@@ -104,8 +104,8 @@ const useCheckoutSubmit = () => {
 
   const newAddress = async (data) => {
     if (
-      !data.postCode.startsWith("1") ||
-      !data.postCode.startsWith("2") ||
+      !data.postCode.startsWith("1") &&
+      !data.postCode.startsWith("2") &&
       !data.postCode.startsWith("3")
     ) {
       notifyError("Your post code must be from LU1 to LU3");
@@ -118,13 +118,13 @@ const useCheckoutSubmit = () => {
       (address) =>
         address.house_number === data.houseNumber &&
         address.street === data.address &&
-        address.post_code === "LU " + data.postCode.toUpperCase()
+        address.post_code === "LU" + data.postCode.toUpperCase()
     );
     if (!address) {
       const body = {
         house_number: data.houseNumber,
         street: data.address,
-        post_code: "LU " + data.postCode.toUpperCase(),
+        post_code: "LU" + data.postCode.toUpperCase(),
       };
       console.log(body);
       try {
@@ -145,7 +145,7 @@ const useCheckoutSubmit = () => {
 
     const cart = await CartServices.getCart();
     const address_id = await newAddress(data);
-
+    // console.log(address_id);
     if (!address_id) {
       setIsCheckoutSubmit(false);
       return;
@@ -170,33 +170,32 @@ const useCheckoutSubmit = () => {
       // total: total,
     };
 
-    if (data.paymentMethod === "Card") {
-      if (!stripe || !elements) {
-        return;
-      }
+    if (!stripe || !elements) {
+      setIsCheckoutSubmit(false);
+      return;
+    }
 
-      const { error, paymentMethod } = await stripe.createPaymentMethod({
-        type: "card",
-        card: elements.getElement(CardElement),
-      });
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: elements.getElement(CardElement),
+    });
 
-      console.log("error", error);
+    console.log("error", error);
 
-      if (error && !paymentMethod) {
-        setError(error.message);
-        setIsCheckoutSubmit(false);
-      } else {
-        setError("");
-        const orderData = {
-          ...orderInfo,
-          cardInfo: paymentMethod,
-        };
+    if (error && !paymentMethod) {
+      setError(error.message);
+      setIsCheckoutSubmit(false);
+    } else {
+      setError("");
+      const orderData = {
+        ...orderInfo,
+        cardInfo: paymentMethod,
+      };
 
-        handlePaymentWithStripe(orderData);
+      handlePaymentWithStripe(orderData);
 
-        // console.log('cardInfo', orderData);
-        return;
-      }
+      // console.log('cardInfo', orderData);
+      return;
     }
     // if (data.paymentMethod === "COD") {
     if (data.paymentMethod === "COD") {
@@ -234,39 +233,60 @@ const useCheckoutSubmit = () => {
   const handlePaymentWithStripe = async (order) => {
     try {
       // console.log('try goes here!', order);
-      // const updatedOrder = {
-      //   ...order,
-      //   currency: 'usd',
-      // };
-      OrderServices.createPaymentIntent(order)
+      const updatedOrder = {
+        ...order,
+        cartId: order.cart_id,
+      };
+
+      // console.log(updatedOrder);
+
+      CartServices.createPaymentIntent(order)
         .then((res) => {
           stripe.confirmCardPayment(res.client_secret, {
             payment_method: {
               card: elements.getElement(CardElement),
             },
           });
-
           const orderData = {
             ...order,
             cardInfo: res,
           };
-          OrderServices.addOrder(orderData)
+          OrderServices.addOrder({
+            cart_id: order.cart_id,
+            deliver_address_id: order.deliver_address_id,
+          })
             .then((res) => {
-              router.push(`/order/${res._id}`);
-              notifySuccess("Your Order Confirmed!");
-              Cookies.remove("couponInfo");
-              emptyCart();
-              sessionStorage.removeItem("products");
-              setIsCheckoutSubmit(false);
+              console.log(res);
+              router.push(`/order/${res.id}`);
+
+              CartServices.createNewCart()
+                .then((res) => {
+                  // console.log(res);
+
+                  notifySuccess("Your Order Confirmed!");
+                  // CartServices.createNewCart();
+                  Cookies.remove("couponInfo");
+                  sessionStorage.removeItem("products");
+                  emptyCart();
+                  setIsCheckoutSubmit(false);
+                })
+                .catch((err) => {
+                  err;
+                  notifyError(err.message);
+                  setIsCheckoutSubmit(false);
+                });
             })
             .catch((err) => {
+              console.log(err);
+              console.log(err.response?.data);
               notifyError(err ? err?.response?.data?.message : err.message);
               setIsCheckoutSubmit(false);
             });
-          // console.log('res', res, 'paymentIntent', paymentIntent);
+          console.log("res", res, "paymentIntent", paymentIntent);
         })
 
         .catch((err) => {
+          console.log(err);
           console.log("err on creating payment intent", err.message);
           notifyError(err ? err?.response?.data?.message : err.message);
           setIsCheckoutSubmit(false);

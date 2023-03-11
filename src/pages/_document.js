@@ -12,12 +12,12 @@ class MyDocument extends Document {
           <link rel="icon" href="/favicon.png" />
           <meta
             property="og:title"
-            content="iLocalStore - Receive your item within 2 hours"
+            content="iLocalStore - Receive your in same day"
           />
           <meta property="og:type" content="eCommerce Website" />
           <meta
             property="og:description"
-            content="Fram a to Z you can buy and receive your item within 2 hours in LU1 Area"
+            content="By what you want and receive in same day in Luton Area"
           />
           <meta property="og:url" content="https://www.ilocalstore.com" />
           <meta

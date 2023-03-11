@@ -1,14 +1,19 @@
-import React, { useState, useMemo, createContext } from 'react';
+import React, { useState, useMemo, createContext } from "react";
 
 // create context
 export const SidebarContext = createContext();
 
 export const SidebarProvider = ({ children }) => {
   const [cartDrawerOpen, setCartDrawerOpen] = useState(false);
+  const [categoryLeftDrawerOpen, setCategoryLeftDrawerOpen] = useState(false);
   const [categoryDrawerOpen, setCategoryDrawerOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+
+  const toggleCategoryLeftDrawer = () =>
+    setCategoryLeftDrawerOpen(!categoryLeftDrawerOpen);
+  const closeCategoryLeftDrawer = () => setCategoryLeftDrawerOpen(false);
 
   const toggleCartDrawer = () => setCartDrawerOpen(!cartDrawerOpen);
   const closeCartDrawer = () => setCartDrawerOpen(false);
@@ -29,6 +34,12 @@ export const SidebarProvider = ({ children }) => {
       toggleCartDrawer,
       closeCartDrawer,
       setCartDrawerOpen,
+
+      categoryLeftDrawerOpen,
+      toggleCategoryLeftDrawer,
+      closeCategoryLeftDrawer,
+      setCategoryLeftDrawerOpen,
+
       categoryDrawerOpen,
       toggleCategoryDrawer,
       closeCategoryDrawer,
@@ -42,7 +53,14 @@ export const SidebarProvider = ({ children }) => {
       setIsLoading,
     }),
 
-    [cartDrawerOpen, categoryDrawerOpen, isModalOpen, currentPage, isLoading]
+    [
+      cartDrawerOpen,
+      categoryDrawerOpen,
+      categoryLeftDrawerOpen,
+      isModalOpen,
+      currentPage,
+      isLoading,
+    ]
   );
 
   return (

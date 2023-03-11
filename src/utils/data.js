@@ -95,11 +95,11 @@ const userSidebar = [
     href: "/user/change-password",
     icon: FiLock,
   },
-  {
-    title: "My Own Store",
-    href: "/shop/dashboard",
-    icon: MdOutlineStoreMallDirectory,
-  },
+  // {
+  //   title: "My Own Store",
+  //   href: "/shop/dashboard",
+  //   icon: MdOutlineStoreMallDirectory,
+  // },
 ];
 
 const sliderData = [

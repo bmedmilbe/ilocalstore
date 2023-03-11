@@ -43,7 +43,7 @@ const useAddressSubmit = (setModalOpen) => {
       })
       .catch((err) => {
         console.log(err);
-        notifyError(err ? err.response?.data.detail : err.message);
+        // notifyError(err ? err.response?.data.detail : err.message);
         // setLoading(false);
       });
 
@@ -52,8 +52,8 @@ const useAddressSubmit = (setModalOpen) => {
         setAddresses(res);
       })
       .catch((err) => {
-        // console.log(err.response);
-        notifyError(err ? err.response.data.detail : err.message);
+        console.log(err.response);
+        // notifyError(err ? err.response.data.detail : err.message);
         // setLoading(false);
       });
   }, [false]);
@@ -77,14 +77,14 @@ const useAddressSubmit = (setModalOpen) => {
             notifySuccess("Address was successfuly setted");
           })
           .catch((err) => {
-            // console.log(err.response);
-            notifyError(err ? err.response?.data.detail : err.message);
+            console.log(err.response);
+            // notifyError(err ? err.response?.data.detail : err.message);
             setLoading(false);
           });
       })
       .catch((err) => {
-        // console.log(err.response);
-        notifyError(err ? err.response.data.detail : err.message);
+        console.log(err.response);
+        // notifyError(err ? err.response.data.detail : err.message);
         setLoading(false);
       });
   };

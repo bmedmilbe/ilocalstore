@@ -5,8 +5,15 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useCart } from "react-use-cart";
-import { IoSearchOutline } from "react-icons/io5";
-import { FiShoppingCart, FiUser, FiBell, FiMapPin } from "react-icons/fi";
+import { IoFlash, IoSearchOutline } from "react-icons/io5";
+import {
+  FiShoppingCart,
+  FiUser,
+  FiBell,
+  FiMapPin,
+  FiAlignLeft,
+  FiShoppingBag,
+} from "react-icons/fi";
 
 //internal import
 import NavbarPromo from "@layout/navbar/NavbarPromo";
@@ -18,6 +25,7 @@ import { SidebarContext } from "@context/SidebarContext";
 import CartServices from "@services/CartServices";
 import useAddressSubmit from "@hooks/useAddressSubmit";
 import { notifyError } from "@utils/toast";
+import CategoryDrawer from "@component/drawer/CategoryDrawer";
 
 const Navbar = ({ user }) => {
   const [imageUrl, setImageUrl] = useState("");
@@ -59,6 +67,7 @@ const Navbar = ({ user }) => {
   return (
     <>
       <CartDrawer />
+      <CategoryDrawer />
 
       {addressModalOpen && (
         <AddressModal
@@ -74,15 +83,30 @@ const Navbar = ({ user }) => {
         <div className="max-w-screen-2xl mx-auto px-3 sm:px-10">
           <div className="top-bar h-16 lg:h-auto flex items-center justify-between py-4 mx-auto">
             <Link href="/">
-              <a className="mr-3 lg:mr-12 xl:mr-12 hidden md:hidden lg:block">
-                <Image
-                  width={110}
-                  height={40}
-                  src="/logo/logo-color3.png"
+              <a className="mr-3 lg:mr-12 xl:mr-12 hidden md:hidden lg:block font-bold text-white">
+                {/* <Image
+                  width={120}
+                  height={120}
+                  // src="/logo/logo-color3.png"
+                  // src="https://res.cloudinary.com/dybteyiju/image/upload/v1678500741/logo-color_-_Copy_2_byv3cy.png"
+                  src="/icon-192x192.png"
                   alt="logo"
-                />
+                /> */}
+                <IoFlash className="w-10 h-10 drop-shadow-xl inline" />
+                {/* IoFlash */}
+                <span className="inline text-lg"> iLocalStore</span>
               </a>
             </Link>
+            {/* <button
+              aria-label="Bar"
+              onClick={0}
+              className="flex items-center justify-center flex-shrink-0 h-auto relative focus:outline-none"
+            >
+              Categories
+              <span className="text-xl text-white">
+                <FiAlignLeft className="w-6 h-6 drop-shadow-xl" />
+              </span>
+            </button> */}
             <div className="w-full transition-all duration-200 ease-in-out lg:flex lg:max-w-[520px] xl:max-w-[750px] 2xl:max-w-[900px] md:mx-12 lg:mx-4 xl:mx-0">
               <div className="w-full flex flex-col justify-center flex-shrink-0 relative z-30">
                 <div className="flex flex-col mx-auto w-full">
@@ -147,7 +171,7 @@ const Navbar = ({ user }) => {
                 ) : user?.first_name ? (
                   <Link href="/user/dashboard">
                     <a className="leading-none font-bold font-serif block">
-                      {user.first_name}
+                      <FiUser className="w-6 h-6 drop-shadow-xl" />
                     </a>
                   </Link>
                 ) : (
@@ -156,21 +180,6 @@ const Navbar = ({ user }) => {
                   </span>
                 )}
               </button>
-
-              {user?.first_name ? (
-                <button
-                  onClick={() => setAddressModalOpen(!addressModalOpen)}
-                  aria-label="Address"
-                  className="relative px-5 text-white text-2xl font-bold"
-                >
-                  <span className="absolute z-10 top-6 left-1 inline-flex items-center justify-center p-1 h-5 w-15 text-xs font-medium leading-none text-red-100 bg-red-500">
-                    {postCode || "Undefinded"}
-                  </span>
-                  <FiMapPin className="w-6 h-6 drop-shadow-xl" />
-                </button>
-              ) : (
-                ""
-              )}
             </div>
           </div>
         </div>

@@ -48,21 +48,20 @@ const useLoginSubmit = (setModalOpen) => {
 
     UserServices.userRegister(body)
       .then((res) => {
-        doLogin(email, password, false);
-        if (UserServices.getCurrentUser()) {
-          CustomerAddressServices.saveAddress(addressBody)
-            .then((res) => {
-              router.reload(window.location.pathname);
-              setLoading(false);
-              // console.log(body);
-              // console.log(res);
-            })
-            .catch((err) => {
-              // console.log(err.response);
-              notifyError(err ? err.response.data.detail : err.message);
-              setLoading(false);
-            });
-        }
+        doLogin(email, password, true);
+        // if (UserServices.getCurrentUser()) {
+        //   CustomerAddressServices.saveAddress(addressBody)
+        //     .then((res) => {
+        //       setLoading(false);
+        //       // console.log(body);
+        //       // console.log(res);
+        //     })
+        //     .catch((err) => {
+        //       // console.log(err.response);
+        //       notifyError(err ? err.response.data.detail : err.message);
+        //       setLoading(false);
+        //     });
+        // }
 
         // console.log(body);
         // console.log(res);
@@ -122,7 +121,7 @@ const useLoginSubmit = (setModalOpen) => {
       registerNew(firstName, lastName, email, password);
     }
 
-    if (name && email && password) {
+    if (name && email && password && !lastName) {
       UserServices.verifyEmailAddress({ name, email, password })
         .then((res) => {
           setLoading(false);

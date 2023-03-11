@@ -33,7 +33,8 @@ const useAddToCart = () => {
         `${item} ${element.product_shop.product.name} added to cart!`
       );
     } else {
-      notifyError(` item not added to cart!`);
+      console.log("item not added to cart!");
+      // notifyError(` item not added to cart!`);
     }
     // CartServices.updateItemQuantity(product.id, 1);
   };
@@ -65,7 +66,9 @@ const useAddToCart = () => {
         `${item} ${product.product_shop.product.name} added to cart!`
       );
     } catch (ex) {
-      notifyError(` item not added to cart!`);
+      console.log("item not added to cart!");
+
+      // notifyError(` item not added to cart!`);
     }
   };
   const handleDecreaseQuantity = (product) => {

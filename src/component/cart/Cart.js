@@ -24,7 +24,7 @@ const Cart = () => {
   } = useContext(UserContext);
 
   const handleOpenLogin = () => {
-    if (router.push("/?redirect=/ch eckout")) {
+    if (router.push("/?redirect=/checkout")) {
       toggleCartDrawer();
       setModalOpen(!modalOpen);
     }

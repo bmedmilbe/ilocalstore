@@ -108,6 +108,7 @@ export const getServerSideProps = async (context) => {
   const { tag } = context.query;
   const { shop } = context.query;
   const { collection } = context.query;
+  const { category } = context.query;
 
   const data = await ProductServices.getShowingProducts();
   // console.log(data);
@@ -141,6 +142,12 @@ export const getServerSideProps = async (context) => {
           .split(" ")
           .join("-") ===
         collection.toLowerCase().replace("&", "").split(" ").join("-")
+    );
+  }
+
+  if (category) {
+    products = data.filter(
+      (product) => product.product.sub_collection?.slug === category
     );
   }
   //service filter with child tag
