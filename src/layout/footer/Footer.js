@@ -163,7 +163,7 @@ const Footer = ({ user }) => {
               <br />
               <span>Tel: {location.contact}</span>
               <br />
-              <span>Email: {location.email}</span>
+              {/* <span>Email: {location.email}</span> */}
             </p>
           </div>
         </div>

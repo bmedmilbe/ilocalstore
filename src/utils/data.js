@@ -197,9 +197,9 @@ const contactData = [
 ];
 const location = {
   title: "Location",
-  address: "38 Wychinwood Road, Luton, LU2 1RE",
+  address: "38 Wychinwood Road, Luton, LU2 7HU",
   icon: FiMapPin,
-  email: "m.intouch@malanza.co.uk",
+  email: "",
   contact: "+44 7506 597 518",
   className: "bg-indigo-100",
 };
