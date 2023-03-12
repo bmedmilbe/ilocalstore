@@ -1,9 +1,9 @@
-import React from 'react';
-import Image from 'next/image';
+import React from "react";
+import Image from "next/image";
 
 //internal import
-import Layout from '@layout/Layout';
-import PageHeader from '@component/header/PageHeader';
+import Layout from "@layout/Layout";
+import PageHeader from "@component/header/PageHeader";
 
 const AboutUs = () => {
   return (
@@ -15,7 +15,7 @@ const AboutUs = () => {
           <div className="grid grid-flow-row lg:grid-cols-2 gap-4 lg:gap-16 items-center">
             <div className="">
               <h3 className="text-xl lg:text-3xl mb-2 font-serif font-semibold">
-                Welcome to our KachaBazar
+                Welcome to iLocalStore
               </h3>
               <div className="mt-3 text-base opacity-90 leading-7">
                 <p>
@@ -47,7 +47,7 @@ const AboutUs = () => {
                     Listed Products
                   </h4>
                   <p className="mb-0 opacity-90 leading-7">
-                    Dynamically morph team driven partnerships after vertical.{' '}
+                    Dynamically morph team driven partnerships after vertical.{" "}
                   </p>
                 </div>
                 <div className="p-8 bg-indigo-50 shadow-sm rounded-lg">
@@ -58,7 +58,7 @@ const AboutUs = () => {
                     Lovely Customer
                   </h4>
                   <p className="mb-0 opacity-90 leading-7">
-                    Competently productize virtual models without performance.{' '}
+                    Competently productize virtual models without performance.{" "}
                   </p>
                 </div>
               </div>
@@ -82,11 +82,11 @@ const AboutUs = () => {
               functionalities. Credibly utilize proactive ideas whereas
               cross-media core competencies. Uniquely maximize professional best
               practices through resource maximizing services. Conveniently
-              architect cross-unit web services for e-business imperatives.{' '}
+              architect cross-unit web services for e-business imperatives.{" "}
             </p>
 
             <p>
-              {' '}
+              {" "}
               Appropriately visualize market-driven data before one-to-one
               scenarios. Collaboratively productize multifunctional ROI through
               intuitive supply chains. Enthusiastically seize revolutionary

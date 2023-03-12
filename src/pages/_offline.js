@@ -1,11 +1,11 @@
-import React from 'react';
-import Head from 'next/head';
+import React from "react";
+import Head from "next/head";
 
 const Offline = () => {
   return (
     <>
       <Head>
-        <title>KachaBazar | React eCommerce Template</title>
+        <title>iLocalStore | Buy and receive in few hours</title>
       </Head>
       <div className="px-6 py-10 lg:py-20 bg-emerald-50 h-screen flex flex-wrap content-center">
         <div className="block justify-items-stretch mx-auto items-center text-center">

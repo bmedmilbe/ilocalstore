@@ -1,11 +1,11 @@
-import React from 'react';
-import Image from 'next/image';
-import { Disclosure } from '@headlessui/react';
-import { ChevronUpIcon } from '@heroicons/react/solid';
+import React from "react";
+import Image from "next/image";
+import { Disclosure } from "@headlessui/react";
+import { ChevronUpIcon } from "@heroicons/react/solid";
 
 //internal import
-import Layout from '@layout/Layout';
-import PageHeader from '@component/header/PageHeader';
+import Layout from "@layout/Layout";
+import PageHeader from "@component/header/PageHeader";
 
 const Faq = () => {
   return (
@@ -22,10 +22,10 @@ const Faq = () => {
                 {({ open }) => (
                   <>
                     <Disclosure.Button className="flex justify-between w-full px-4 py-3 text-base font-medium text-left text-gray-600 focus:text-emerald-500 bg-gray-50 hover:bg-emerald-50 rounded-lg focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                      <span>How does the kachabazar work?</span>
+                      <span>How does the iLocalStore work?</span>
                       <ChevronUpIcon
                         className={`${
-                          open ? 'transform rotate-180 text-emerald-500' : ''
+                          open ? "transform rotate-180 text-emerald-500" : ""
                         } w-5 h-5 text-gray-500`}
                       />
                     </Disclosure.Button>
@@ -48,7 +48,7 @@ const Faq = () => {
                       <span>Can I cancel my subscription anytime?</span>
                       <ChevronUpIcon
                         className={`${
-                          open ? 'transform rotate-180 text-emerald-500' : ''
+                          open ? "transform rotate-180 text-emerald-500" : ""
                         } w-5 h-5 text-gray-500`}
                       />
                     </Disclosure.Button>
@@ -72,7 +72,7 @@ const Faq = () => {
                       <span>Whice payment method you should accept?</span>
                       <ChevronUpIcon
                         className={`${
-                          open ? 'transform rotate-180 text-emerald-500' : ''
+                          open ? "transform rotate-180 text-emerald-500" : ""
                         } w-5 h-5 text-gray-500`}
                       />
                     </Disclosure.Button>
@@ -95,7 +95,7 @@ const Faq = () => {
                       <span>Can I cancel my subscription anytime?</span>
                       <ChevronUpIcon
                         className={`${
-                          open ? 'transform rotate-180 text-emerald-500' : ''
+                          open ? "transform rotate-180 text-emerald-500" : ""
                         } w-5 h-5 text-gray-500`}
                       />
                     </Disclosure.Button>
@@ -114,10 +114,10 @@ const Faq = () => {
                 {({ open }) => (
                   <>
                     <Disclosure.Button className="flex justify-between w-full px-4 py-3 text-base font-medium text-left text-gray-600 focus:text-emerald-500 bg-gray-50 hover:bg-emerald-50 rounded-lg focus:outline-none">
-                      <span>What is kachabazar EC2 auto scaling?</span>
+                      <span>What is iLocalStore EC2 auto scaling?</span>
                       <ChevronUpIcon
                         className={`${
-                          open ? 'transform rotate-180 text-emerald-500' : ''
+                          open ? "transform rotate-180 text-emerald-500" : ""
                         } w-5 h-5 text-gray-500`}
                       />
                     </Disclosure.Button>
@@ -137,11 +137,11 @@ const Faq = () => {
                   <>
                     <Disclosure.Button className="flex justify-between w-full px-4 py-3 text-base font-medium text-left text-gray-600 focus:text-emerald-500 bg-gray-50 hover:bg-emerald-50 rounded-lg focus:outline-none">
                       <span>
-                        What are the benefits of using kachabazar affliate?
+                        What are the benefits of using iLocalStore affliate?
                       </span>
                       <ChevronUpIcon
                         className={`${
-                          open ? 'transform rotate-180 text-emerald-500' : ''
+                          open ? "transform rotate-180 text-emerald-500" : ""
                         } w-5 h-5 text-gray-500`}
                       />
                     </Disclosure.Button>
@@ -163,7 +163,7 @@ const Faq = () => {
                       <span>What is a affliates product configuration?</span>
                       <ChevronUpIcon
                         className={`${
-                          open ? 'transform rotate-180 text-emerald-500' : ''
+                          open ? "transform rotate-180 text-emerald-500" : ""
                         } w-5 h-5 text-gray-500`}
                       />
                     </Disclosure.Button>
@@ -189,7 +189,7 @@ const Faq = () => {
                       </span>
                       <ChevronUpIcon
                         className={`${
-                          open ? 'transform rotate-180 text-emerald-500' : ''
+                          open ? "transform rotate-180 text-emerald-500" : ""
                         } w-5 h-5 text-gray-500`}
                       />
                     </Disclosure.Button>

@@ -6,9 +6,9 @@
   "scope": "/",
   "start_url": "/",
   "id": "/",
-  "short_name": "KachaBazar - Store",
-  "name": "KachaBazar - React Grocery & Organic Food Store e-commerce Template",
-  "description": "React Grocery & Organic Food Store e-commerce Template",
+  "short_name": "iLocalStore",
+  "name": "iLocalStore - Get your shopping in same day",
+  "description": "Buy what anything you want and receive in few hours",
   "icons": [
     {
       "src": "/icon-192x192.png",
