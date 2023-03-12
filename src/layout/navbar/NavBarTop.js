@@ -65,7 +65,7 @@ const NavBarTop = ({ user }) => {
                 href="tel:+012345609"
                 className="font-bold text-emerald-500 ml-1"
               >
-                {contactData[2].contact}
+                {contactData[0].contact}
               </a>
             </span>
 
