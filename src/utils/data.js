@@ -178,20 +178,21 @@ const featurePromo = [
 ];
 
 const contactData = [
-  {
-    id: 1,
-    title: "Email Us",
-    info: "Interactively grow empowered for process-centric total linkage.",
-    icon: FiMail,
-    contact: "m.intouch@ilocalstore.com",
-    className: "bg-emerald-100",
-  },
+  // {
+  //   id: 1,
+  //   title: "Email Us",
+  //   info: "Interactively grow empowered for process-centric total linkage.",
+  //   icon: FiMail,
+  //   contact: "m.intouch@ilocalstore.com",
+  //   className: "bg-emerald-100",
+  // },
   {
     id: 2,
     title: "Call Us",
-    info: "Distinctively disseminate focused solutions clicks-and-mortar ministate.",
+    info: "Interactively grow empowered for process-centric total linkage",
+    // info: "Distinctively disseminate focused solutions clicks-and-mortar ministate.",
     icon: FiPhoneCall,
-    contact: "07506597518",
+    contact: "+44 7506 597 518",
     className: "bg-yellow-100",
   },
   {
@@ -199,7 +200,7 @@ const contactData = [
     title: "Location",
     info: "38 Wychinwood Road, Luton, LU2 1RE",
     icon: FiMapPin,
-    contact: "+44 7506 597 518",
+    contact: "",
     className: "bg-indigo-100",
   },
 ];

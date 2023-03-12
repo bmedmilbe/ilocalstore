@@ -1,8 +1,8 @@
 {
-  "name": "kachabazar-store",
+  "name": "ilocalstore",
   "version": "0.1.0",
-  "description": "this is kachabazar-store built with next.js and tailwindcss",
-  "homepage": "https://kachabazar-store.vercel.app/",
+  "description": "ilocalstore - shop and receive in the same day",
+  "homepage": "https://www.ilocalstore.com",
   "private": true,
   "engines": {
     "node": "18.x"
