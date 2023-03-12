@@ -178,19 +178,10 @@ const featurePromo = [
 ];
 
 const contactData = [
-  // {
-  //   id: 1,
-  //   title: "Email Us",
-  //   info: "Interactively grow empowered for process-centric total linkage.",
-  //   icon: FiMail,
-  //   contact: "m.intouch@ilocalstore.com",
-  //   className: "bg-emerald-100",
-  // },
   {
     id: 2,
     title: "Call Us",
     info: "Interactively grow empowered for process-centric total linkage",
-    // info: "Distinctively disseminate focused solutions clicks-and-mortar ministate.",
     icon: FiPhoneCall,
     contact: "+44 7506 597 518",
     className: "bg-yellow-100",
