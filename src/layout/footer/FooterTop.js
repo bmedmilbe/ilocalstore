@@ -21,11 +21,10 @@ const FooterTop = () => {
           </div>
           <div className="text-center">
             <h3 className="text-xl md:text-2xl lg:text-3xl font-bold font-serif mb-3">
-              Get What You Needs and Receive Same Day If You Are In Luton
+              Get What You Need and Receive Same Day In Luton
             </h3>
             <p className="text-base opacity-90 leading-7">
-              There are many products you will find there, Choose your necessary
-              product from our favority shop and get in same day.
+              Choose your necessary item from our store and get in same day.
             </p>
             <div className="mt-8">
               {/* <Link href="https://www.apple.com/app-store/">
