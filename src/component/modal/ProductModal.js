@@ -23,13 +23,13 @@ const ProductModal = ({ modalOpen, setModalOpen, product }) => {
 
     setIsLoading(!isLoading);
   };
-
+  // () => handleMoreInfo(product.slug)
   return (
     <MainModal modalOpen={modalOpen} setModalOpen={setModalOpen}>
       <div className="inline-block overflow-y-auto h-full align-middle transition-all transform bg-white shadow-xl rounded-2xl">
         <div className="flex flex-col lg:flex-row md:flex-row w-full max-w-4xl overflow-hidden">
           <div
-            onClick={() => handleMoreInfo(product.product.slug)}
+            onClick={() => handleMoreInfo(product.slug)}
             className="flex-shrink-0 flex items-center justify-center h-auto cursor-pointer"
           >
             <Image
