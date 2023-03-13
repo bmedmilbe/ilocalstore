@@ -34,7 +34,7 @@ const useAddressSubmit = (setModalOpen) => {
   useEffect(async () => {
     CartServices.getCart()
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.address) {
           // console.log(res.address.postCode);
           setPostCode(res.address.post_code);
@@ -42,7 +42,7 @@ const useAddressSubmit = (setModalOpen) => {
         }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         // notifyError(err ? err.response?.data.detail : err.message);
         // setLoading(false);
       });
@@ -52,7 +52,7 @@ const useAddressSubmit = (setModalOpen) => {
         setAddresses(res);
       })
       .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
         // notifyError(err ? err.response.data.detail : err.message);
         // setLoading(false);
       });

@@ -311,7 +311,9 @@ export const getStaticProps = async (context) => {
   if (slug) {
     const selectProduct = products.find((product) => product.slug === slug);
     relatedProduct = products.filter(
-      (product) => product.children === selectProduct.children
+      (product) =>
+        product.product.sub_collection.slug ===
+        selectProduct.product.sub_collection.slug
     );
   }
 
