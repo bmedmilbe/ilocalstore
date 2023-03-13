@@ -153,8 +153,8 @@ const ctaCardData = [
 const featurePromo = [
   {
     id: 1,
-    title: "Free Shipping",
-    info: "From £100.00",
+    title: "Fast Shipping",
+    info: "in Luton Area",
     icon: FiTruck,
   },
   {

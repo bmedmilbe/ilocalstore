@@ -259,7 +259,7 @@ const ProductScreen = ({ product, relatedProduct }) => {
                 <div className="flex">
                   <div className="w-full">
                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
-                      {relatedProduct?.slice(1, 13).map((product, i) => (
+                      {relatedProduct?.slice(0, 13).map((product, i) => (
                         <ProductCard key={i + 1} product={product} />
                       ))}
                     </div>
@@ -311,11 +311,13 @@ export const getStaticProps = async (context) => {
 
   let relatedProduct = [];
   if (slug) {
-    const selectProduct = products.find((product) => product.slug === slug);
+    const selectProduct = product;
+
     relatedProduct = products.filter(
       (product) =>
-        product.product.sub_collection.slug ===
-        selectProduct.product.sub_collection.slug
+        product.product.sub_collection.slug ==
+          selectProduct.product.sub_collection.slug &&
+        product.id !== selectProduct.id
     );
   }
 
@@ -324,7 +326,7 @@ export const getStaticProps = async (context) => {
       product,
       relatedProduct,
     },
-    revalidate: 60,
+    revalidate: 20,
   };
 };
 
