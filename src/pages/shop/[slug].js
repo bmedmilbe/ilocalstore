@@ -36,7 +36,7 @@ const ShopScreen = ({ shop }) => {
   const { isLoading, setIsLoading } = useContext(SidebarContext);
   const { handleAddItem, setItem, item } = useAddToCart();
 
-  const { slug } = getStaticPaths();
+  // const { slug } = getStaticPaths();
 
   useEffect(() => {
     setIsLoading(false);
