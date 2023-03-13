@@ -96,7 +96,7 @@ const ProductScreen = ({ product, relatedProduct }) => {
                     <Image
                       src={product.product.image}
                       alt={product.product.title}
-                      layout="responsive"
+                      // layout="responsive"
                       width={650}
                       height={650}
                       priority
@@ -123,7 +123,9 @@ const ProductScreen = ({ product, relatedProduct }) => {
                         </div>
                         <div>
                           <p className="text-sm leading-6 text-gray-500 md:leading-7">
-                            {product.product.description}
+                            {product.product.description
+                              ? product.product.description
+                              : product.description}
                           </p>
 
                           <div className="flex items-center mt-4">
