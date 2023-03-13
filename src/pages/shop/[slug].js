@@ -66,7 +66,7 @@ const ShopScreen = ({ shop }) => {
                 {!children && (
                   <div className="overflow-hidden">
                     <Shopmenu />
-                    {console.log(shop)}
+                    {/* {console.log(shop)} */}
                     <AddNewShop shop={shop} />
                   </div>
                 )}

@@ -15,10 +15,16 @@ const useAddToCart = () => {
   }, []);
 
   const handleAddItem = async (product) => {
+    const check_items = await CartServices.getCartKey();
+    // console.log(check_items);
+    // if (!check_items) {
+    //   CartServices.createNewCart();
+    //   console.log(9);
+    // }
     CartServices.addItem(product, 1);
     // console.log(product);
     const items = await CartServices.getCartItems();
-    const element = items.filter((i) => i.product_shop.id === product.id)[0];
+    const element = items?.filter((i) => i.product_shop.id === product.id)[0];
     // console.log(element);
     if (element) {
       const newItem = {

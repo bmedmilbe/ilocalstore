@@ -8,7 +8,7 @@ import Loading from "@component/preloader/Loading";
 import OrderHistory from "@component/order/OrderHistory";
 
 const RecentOrder = ({ data, loading, error }) => {
-  console.log(data);
+  // console.log(data);
   const { handleChangePage } = useContext(SidebarContext);
 
   const pageCount = Math.ceil(data?.totalDoc / 8);

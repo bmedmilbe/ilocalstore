@@ -22,7 +22,7 @@ const CartServices = {
   async getCartKey() {
     if (!localStorage.getItem(cartKey)) {
       const data = await this.createCart();
-      // console.log(data);
+      console.log(data);
       localStorage.setItem(cartKey, data.id);
     }
     // try {

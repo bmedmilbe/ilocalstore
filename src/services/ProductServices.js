@@ -20,7 +20,7 @@ const ProductServices = {
   },
 
   getProducts() {
-    return requests.get(apiEndpoint);
+    return requests.get("store/productshop/");
   },
 
   getProduct(productId) {

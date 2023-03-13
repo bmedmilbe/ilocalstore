@@ -17,7 +17,7 @@ const MobileFooter = ({ user }) => {
   // const {
   //   state: { user },
   // } = useContext(UserContext);
-  console.log(user);
+  // console.log(user);
 
   return (
     <>

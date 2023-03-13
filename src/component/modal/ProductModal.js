@@ -114,12 +114,12 @@ const ProductModal = ({ modalOpen, setModalOpen, product }) => {
                   <Tags product={product} />
                 </div>
                 <div>
-                  {/* <button
-                    onClick={() => handleMoreInfo(product.product.slug)}
+                  <button
+                    onClick={() => handleMoreInfo(product.slug)}
                     className="font-sans font-medium text-sm text-orange-500"
                   >
                     More Info
-                  </button> */}
+                  </button>
                 </div>
               </div>
             </div>
@@ -132,10 +132,10 @@ const ProductModal = ({ modalOpen, setModalOpen, product }) => {
 
 export default React.memo(ProductModal);
 
-export const getStaticPaths = async (product) => {
-  const paths = {
-    params: { slug: product.product.slug },
-  };
+// export const getStaticPaths = async (slug) => {
+//   const paths = {
+//     params: { slug: slug },
+//   };
 
-  return { paths, fallback: true };
-};
+//   return { paths, fallback: true };
+// };

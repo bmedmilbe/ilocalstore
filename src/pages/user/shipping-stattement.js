@@ -31,7 +31,7 @@ const ShipppingStatemment = ({ data, loading, error }) => {
 
   return (
     <>
-      {console.log(data)}
+      {/* {console.log(data)} */}
       <div className="max-w-screen-2xl mx-auto">
         <div className="rounded-md font-serif">
           {loading ? (

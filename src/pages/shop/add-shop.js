@@ -36,7 +36,7 @@ const AddStore = ({ title, description, children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(async () => {
-    console.log(router.query.slug);
+    // console.log(router.query.slug);
 
     ShopServices.getMyStoreBySlug(router.query.slug)
       .then((res) => {

@@ -30,19 +30,25 @@ import { SidebarContext } from "@context/SidebarContext";
 import Loading from "@component/preloader/Loading";
 
 const ProductScreen = ({ product, relatedProduct }) => {
+  // const slug = params.slug;
   const router = useRouter();
   const { isLoading, setIsLoading } = useContext(SidebarContext);
   const { handleAddItem, setItem, item } = useAddToCart();
 
+  const { slug } = getStaticPaths();
+
   useEffect(() => {
     setIsLoading(false);
+    {
+      console.log(product);
+    }
   }, [product]);
 
   //comment this when using getServerSideProps
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
-  // console.log(product);
+
   return (
     <>
       {isLoading ? (
@@ -60,32 +66,25 @@ const ProductScreen = ({ product, relatedProduct }) => {
                   </li>
                   <li className="text-sm mt-[1px]">
                     {" "}
-                    <FiChevronRight />
-                    {""}
-                  </li>
-                  <li className="text-sm pr-1 transition duration-200 ease-in cursor-pointer hover:text-emerald-500 font-semibold">
-                    <Link href="/">
-                      <a>Products</a>
-                    </Link>
+                    <FiChevronRight />{" "}
                   </li>
                   <li className="text-sm pl-1 transition duration-200 ease-in cursor-pointer hover:text-emerald-500 font-semibold ">
-                    {/* {console.log(product)} */}
-                    {/* <Link
-                      href={`/search?category=${product.sub_category
+                    <Link
+                      href={`/search?collection=${product.product.collection.title
                         .toLowerCase()
                         .replace("&", "")
                         .split(" ")
                         .join("-")}`}
                     >
-                      <a>{product.children}</a>
-                    </Link> */}
+                      <a>{product.product.collection.title}</a>
+                    </Link>
                   </li>
                   <li className="text-sm mt-[1px]">
                     {" "}
                     <FiChevronRight />{" "}
                   </li>
                   <li className="text-sm px-1 transition duration-200 ease-in ">
-                    {product.product.name}
+                    {product.title}
                   </li>
                 </ol>
               </div>
@@ -95,7 +94,7 @@ const ProductScreen = ({ product, relatedProduct }) => {
                     <Discount product={product} slug={true} />
                     <Image
                       src={product.product.image}
-                      alt={product.product.title}
+                      alt={product.title}
                       layout="responsive"
                       width={650}
                       height={650}
@@ -107,15 +106,16 @@ const ProductScreen = ({ product, relatedProduct }) => {
                       <div className="w-full md:w-7/12 md:pr-4 lg:pr-4 xl:pr-12">
                         <div className="mb-6">
                           <h1 className="leading-7 text-lg md:text-xl lg:text-2xl mb-1 font-semibold font-serif text-gray-800">
-                            {product.product.name}
+                            {product.title}
                           </h1>
-                          <p className="uppercase font-serif font-medium text-gray-500 text-sm">
+                          {/* <p className="uppercase font-serif font-medium text-gray-500 text-sm">
                             SKU :{" "}
                             <span className="font-bold text-gray-600">
-                              {product.sku ? product.sku : 10} {/*//Stock */}
-                              {/* : product._id.substring(18, 24)} */}
+                              {product.sku
+                                ? product.sku
+                                : `${product.id}`.substring(18, 24)}
                             </span>
-                          </p>
+                          </p> */}
                         </div>
                         <Price product={product} />
                         <div className="mb-4 md:mb-5 block">
@@ -123,7 +123,7 @@ const ProductScreen = ({ product, relatedProduct }) => {
                         </div>
                         <div>
                           <p className="text-sm leading-6 text-gray-500 md:leading-7">
-                            {product.product.description}
+                            {product.description}
                           </p>
 
                           <div className="flex items-center mt-4">
@@ -173,13 +173,9 @@ const ProductScreen = ({ product, relatedProduct }) => {
 
                           <div className="flex flex-col mt-4">
                             <span className="font-serif font-semibold py-1 text-sm d-block">
-                              <span className="text-gray-700">
-                                <h3 className="text-base font-semibold mb-1 font-serif">
-                                  {product.product.collection.title}
-                                </h3>
-                              </span>{" "}
+                              <span className="text-gray-700">Category:</span>{" "}
                               <span className="text-gray-500">
-                                {product.product.sub_collection.title}
+                                {product.product.collection.title}
                               </span>
                             </span>
                             <Tags product={product} />
@@ -197,40 +193,40 @@ const ProductScreen = ({ product, relatedProduct }) => {
                             <ul className="flex mt-4">
                               <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
                                 <FacebookShareButton
-                                  url={`https://www.ilocalstore.com/product/${router.query.slug}`}
-                                  quote="iLocalStore"
+                                  url={`https://www.ilocalshop.com/product/${router.query.slug}`}
+                                  quote="iLocalShop"
                                 >
                                   <FacebookIcon size={32} round />
                                 </FacebookShareButton>
                               </li>
                               <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
                                 <TwitterShareButton
-                                  url={`https://www.ilocalstore.com/product/${router.query.slug}`}
-                                  quote="iLocalStore"
+                                  url={`https://www.ilocalshop.com/product/${router.query.slug}`}
+                                  quote="iLocalShop"
                                 >
                                   <TwitterIcon size={32} round />
                                 </TwitterShareButton>
                               </li>
                               <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
                                 <RedditShareButton
-                                  url={`https://www.ilocalstore.com/product/${router.query.slug}`}
-                                  quote="iLocalStore"
+                                  url={`https://www.ilocalshop.com/product/${router.query.slug}`}
+                                  quote="iLocalShop"
                                 >
                                   <RedditIcon size={32} round />
                                 </RedditShareButton>
                               </li>
                               <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
                                 <WhatsappShareButton
-                                  url={`https://www.ilocalstore.com/product/${router.query.slug}`}
-                                  quote="iLocalStore"
+                                  url={`https://www.ilocalshop.com/product/${router.query.slug}`}
+                                  quote="iLocalShop"
                                 >
                                   <WhatsappIcon size={32} round />
                                 </WhatsappShareButton>
                               </li>
                               <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
                                 <LinkedinShareButton
-                                  url={`https://www.ilocalstore.com/product/${router.query.slug}`}
-                                  quote="iLocalStore"
+                                  url={`https://www.ilocalshop.com/product/${router.query.slug}`}
+                                  quote="iLocalShop"
                                 >
                                   <LinkedinIcon size={32} round />
                                 </LinkedinShareButton>
@@ -257,7 +253,7 @@ const ProductScreen = ({ product, relatedProduct }) => {
                 <div className="flex">
                   <div className="w-full">
                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
-                      {relatedProduct?.slice(1, 13).map((product, i) => (
+                      {relatedProduct?.slice(0, 13).map((product, i) => (
                         <ProductCard key={i + 1} product={product} />
                       ))}
                     </div>
@@ -309,9 +305,13 @@ export const getStaticProps = async (context) => {
 
   let relatedProduct = [];
   if (slug) {
-    const selectProduct = products.find((product) => product.slug === slug);
+    const selectProduct = products.find(
+      (product) => product.product.slug === slug
+    );
     relatedProduct = products.filter(
-      (product) => product.children === selectProduct.children
+      (product) =>
+        product.product.collection.id === selectProduct.product.collection.id &&
+        product.id !== selectProduct.id
     );
   }
 
@@ -324,15 +324,19 @@ export const getStaticProps = async (context) => {
   };
 };
 
-export const getStaticPaths = async () => {
-  // const products = await ProductServices.getShowingProducts();
-  const products = await ProductServices.getShowingProducts();
-
-  const paths = products.map((product) => ({
-    params: { slug: product.slug },
-  }));
-
-  return { paths, fallback: true };
+export const getStaticPaths = async ({ slug }) => {
+  try {
+    const products = await ProductServices.getShowingProducts();
+    // console.log(products);
+    const paths = products.map((product) => ({
+      params: { slug: product.slug },
+    }));
+    // console.log(paths);
+    return { paths, fallback: true };
+  } catch (er) {
+    console.error(er);
+    return { paths: [], fallback: false }; // <- ADDED RETURN STMNT
+  }
 };
 
 export default ProductScreen;

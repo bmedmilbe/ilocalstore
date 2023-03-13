@@ -28,7 +28,7 @@ const MenuDashboard = ({}) => {
       router.push("/");
     } else {
       setData(await userCustomer);
-      console.log(await userCustomer);
+      // console.log(await userCustomer);
     }
   }, [false]);
 

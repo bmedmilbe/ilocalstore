@@ -40,7 +40,7 @@ const BankDetails = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data);
     setLoading(true);
     setLoading(false);
 
@@ -84,7 +84,7 @@ const BankDetails = () => {
     CustomerServices.getCurrentCustomer()
       .then((res) => {
         setCustomer(res);
-        console.log(res);
+        // console.log(res);
         setValue("name", res.name_in_bank);
         setValue("sortCode", res.sort_code);
         setValue("accountNumber", res.account_number);
@@ -92,11 +92,11 @@ const BankDetails = () => {
           .then((res) => {
             // console.log(res);
             const stores = res.stores.map((store) => store.productshop);
-            console.log(stores);
+            // console.log(stores);
             const orderitems = stores.map((item) => item[0].orderitems);
             // console.log();
             const pp = orderitems[0]?.map((item) => item);
-            console.log(pp);
+            // console.log(pp);
             setStatemment(
               [...res.payments, ...pp]
                 .sort((a, b) => {
@@ -128,7 +128,7 @@ const BankDetails = () => {
             setLoading(false);
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
             setLoading(false);
             notifyError(err ? err?.response?.data?.message : err.message);
           });

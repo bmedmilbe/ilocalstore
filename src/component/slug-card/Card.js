@@ -17,8 +17,8 @@ const Card = ({ product }) => {
           <FiTruck />
         </span>
         <p className="font-sans leading-5 text-sm text-gray-500">
-          Free shipping apply to all orders over shipping{" "}
-          <span className="font-semibold">£100</span>
+          We can shipping this item{" "}
+          <span className="font-semibold">by today</span> for you!{" "}
         </p>
       </li>
       <li className="flex items-center py-3">
@@ -26,7 +26,7 @@ const Card = ({ product }) => {
           <FiHome />
         </span>
         <p className="font-sans leading-5 text-sm text-gray-500">
-          Home Delivery within <span className="font-semibold">2 Hour</span>
+          Home delivery within <span className="font-semibold">few hours</span>
         </p>
       </li>
 
@@ -35,9 +35,12 @@ const Card = ({ product }) => {
           <FiMapPin />
         </span>
         <p className="font-sans leading-5 text-sm text-gray-500">
+          {/* <span className="font-semibold">
+            {product.shop.name}, {product.shop.street},{" "}
+            {product.shop.post_code.toUpperCase()}
+          </span> */}
           <span className="font-semibold">
-            {product.shop.name}, {product.shop.house_number}{" "}
-            {product.shop.street}, Luton, {product.shop.post_code.toUpperCase()}
+            iLocalStore, Wychnwood, {"LU2 7HU".toUpperCase()}
           </span>
         </p>
       </li>

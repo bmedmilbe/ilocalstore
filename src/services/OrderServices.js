@@ -4,7 +4,7 @@ const OrderServices = {
   async addOrder(body) {
     // console.log(body);
     const request = await requests.post(`${apiEndpoint}/`, body);
-    console.log(request);
+    // console.log(request);
     return request;
   },
 

@@ -126,7 +126,7 @@ const useCheckoutSubmit = () => {
         street: data.address,
         post_code: "LU" + data.postCode.toUpperCase(),
       };
-      console.log(body);
+      // console.log(body);
       try {
         address = await CustomerAddressServices.saveAddress(body);
       } catch (ex) {
@@ -180,7 +180,7 @@ const useCheckoutSubmit = () => {
       card: elements.getElement(CardElement),
     });
 
-    console.log("error", error);
+    // console.log("error", error);
 
     if (error && !paymentMethod) {
       setError(error.message);
@@ -282,7 +282,7 @@ const useCheckoutSubmit = () => {
               notifyError(err ? err?.response?.data?.message : err.message);
               setIsCheckoutSubmit(false);
             });
-          console.log("res", res, "paymentIntent", paymentIntent);
+          // console.log("res", res, "paymentIntent", paymentIntent);
         })
 
         .catch((err) => {
