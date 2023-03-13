@@ -1,7 +1,7 @@
 import React from "react";
 
 const Tags = ({ product }) => {
-  console.log(product.product.tag);
+  // console.log(product.product.tag);
   return (
     <>
       {product.product.tag !== null && (

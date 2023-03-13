@@ -102,7 +102,7 @@ export const getStaticPaths = async () => {
     const paths = shops.map((shop) => ({
       params: { slug: shop.slug },
     }));
-    console.log(paths);
+    // console.log(paths);
     return { paths, fallback: true };
   } catch (er) {
     console.error(er);

@@ -34,7 +34,7 @@ const CategoryCard = ({ title, icon, nested }) => {
         className="p-2 flex items-center rounded-md hover:bg-gray-50 w-full hover:text-emerald-600"
         role="button"
       >
-        {console.log(icon)}
+        {/* {console.log(icon)} */}
         <Image
           src={icon}
           width={18}
