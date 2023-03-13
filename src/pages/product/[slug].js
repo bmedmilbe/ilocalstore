@@ -340,7 +340,7 @@ export const getStaticPaths = async () => {
   const products = await ProductServices.getShowingProducts();
 
   const paths = products.map((product) => ({
-    params: { slug: `${product.slug}` + "" },
+    params: { slug: `${product.slug ? product.slug.toString() : ""}` + "" },
   }));
 
   return { paths, fallback: true };
