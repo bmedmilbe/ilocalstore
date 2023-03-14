@@ -109,10 +109,14 @@ const AddNewProduct = ({ product }) => {
         saveProductMain(productData);
         ProductServices.getProductMainBySlug(productData.slug)
           .then((res) => {
-            try {
-              saveProductShop(res.id, data.store, data.price);
-            } catch (ex) {
-              notifyError("Error, please try again later save pS!");
+            if (res) {
+              try {
+                saveProductShop(res.id, data.store, data.price);
+              } catch (ex) {
+                notifyError("Error, please try again later save pS!");
+              }
+            } else {
+              notifyError("Error, please try again later save pp!");
             }
           })
           .catch((err) => {
@@ -400,7 +404,6 @@ const AddNewProduct = ({ product }) => {
                     </div>
                     <div className="col-span-6 sm:col-span-3 mt-5 text-left">
                       <button
-                        disabled={loading}
                         type="submit"
                         className="md:text-sm leading-5 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-medium text-center justify-center border-0 border-transparent rounded-md placeholder-white focus-visible:outline-none focus:outline-none bg-emerald-500 text-white px-5 md:px-6 lg:px-8 py-2 md:py-3 lg:py-3 hover:text-white hover:bg-emerald-600 h-12 mt-1 text-sm lg:text-sm w-full sm:w-auto"
                       >
