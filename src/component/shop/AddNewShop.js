@@ -15,6 +15,7 @@ import { notifySuccess, notifyError } from "@utils/toast";
 import useShopSubmit from "@hooks/useShopSubmit";
 import InputAreaLock from "@component/form/InputAreaLock";
 import ShopServices from "@services/ShopService";
+import UploaderShop from "../image-uploader/UploaderShop";
 
 const AddNewShop = ({ shop }) => {
   const [imageUrl, setImageUrl] = useState("");
@@ -89,7 +90,7 @@ const AddNewShop = ({ shop }) => {
               <div>
                 <Label label="Photo" />
                 <div className="mt-1 flex items-center">
-                  <Uploader imageUrl={imageUrl} setImageUrl={setImageUrl} />
+                  <UploaderShop imageUrl={imageUrl} setImageUrl={setImageUrl} />
                 </div>
               </div>
             </div>
@@ -148,7 +149,6 @@ const AddNewShop = ({ shop }) => {
                     </div>
                     <div className="col-span-6 sm:col-span-3 mt-5 text-left">
                       <button
-                        disabled={loading}
                         type="submit"
                         className="md:text-sm leading-5 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-medium text-center justify-center border-0 border-transparent rounded-md placeholder-white focus-visible:outline-none focus:outline-none bg-emerald-500 text-white px-5 md:px-6 lg:px-8 py-2 md:py-3 lg:py-3 hover:text-white hover:bg-emerald-600 h-12 mt-1 text-sm lg:text-sm w-full sm:w-auto"
                       >
