@@ -4,7 +4,7 @@ const CollectionServices = {
   async getShowingCollection() {
     try {
       // return [];
-      return await requests.get("/store/collections");
+      return await requests.get("/store/collections/all");
     } catch (ex) {
       console.log("Trying to get category!");
     }

@@ -15,6 +15,7 @@ const UserServices = {
     localStorage.removeItem(refreshKey);
   },
   async userLogin(body) {
+    // console.log(body);
     return await requests.post(`${apiLoginEndPoint}/create`, body);
   },
 
@@ -23,6 +24,7 @@ const UserServices = {
   },
 
   async userRegister(body) {
+    // console.log(body);
     try {
       requests.post(`/auth/users/`, body);
       return await this.userLogin(body);

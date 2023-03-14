@@ -96,7 +96,7 @@ const MenuDashboard = ({}) => {
         ) : (
           ""
         )}
-        {/* {console.log(data)} */}
+
         {data.stores?.length > 0 ? (
           <Link href={"/shop/dashboard"}>
             <a>

@@ -81,27 +81,38 @@ const ProductCard = ({ product }) => {
                 {items.map(
                   (item) =>
                     item.id === product.id && (
-                      <div
-                        key={item.id}
-                        className="h-13 w-auto flex flex-wrap items-center justify-evenly py-1 px-2 bg-emerald-500 text-white rounded"
+                      // <div
+                      //   key={item.id}
+                      //   className="h-13 w-auto flex flex-wrap items-center justify-evenly py-1 px-2 bg-emerald-500 text-white rounded"
+                      // >
+                      //   <button onClick={() => handleDecreaseQuantity(item)}>
+                      //     <span className="text-dark text-base">
+                      //       <IoRemove />
+                      //     </span>
+                      //   </button>
+                      //   <p className="text-sm text-dark px-1 font-serif font-semibold">
+                      //     {item.quantity}
+                      //   </p>
+                      //   <button
+                      //     onClick={() => handleIncreaseQuantity(item)}
+                      //     // disabled={product.quantity === item.quantity}
+                      //   >
+                      //     <span className="text-dark text-base">
+                      //       <IoAdd />
+                      //     </span>
+                      //   </button>
+                      // </div>
+                      <button
+                        onClick={() => handleAddItem(product)}
+                        // disabled={product.quantity < 1}
+                        aria-label="cart"
+                        className="h-9 w-9 flex items-center justify-center border border-gray-200 rounded text-emerald-500 hover:border-emerald-500 hover:bg-emerald-500 hover:text-white transition-all"
                       >
-                        <button onClick={() => handleDecreaseQuantity(item)}>
-                          <span className="text-dark text-base">
-                            <IoRemove />
-                          </span>
-                        </button>
-                        <p className="text-sm text-dark px-1 font-serif font-semibold">
-                          {item.quantity}
-                        </p>
-                        <button
-                          onClick={() => handleIncreaseQuantity(item)}
-                          // disabled={product.quantity === item.quantity}
-                        >
-                          <span className="text-dark text-base">
-                            <IoAdd />
-                          </span>
-                        </button>
-                      </div>
+                        {" "}
+                        <span className="text-xl">
+                          <IoBagAddSharp />
+                        </span>{" "}
+                      </button>
                     )
                 )}{" "}
               </div>

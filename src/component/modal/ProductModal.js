@@ -49,7 +49,7 @@ const ProductModal = ({ modalOpen, setModalOpen, product }) => {
               <Stock product={product} />
             </div>
             <p className="text-sm leading-6 text-gray-500 md:leading-6">
-              {product.description}
+              {product.product.description.substring(0, 50)}...
             </p>
             <div className="flex items-center mt-4">
               <Price product={product} />

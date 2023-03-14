@@ -15,6 +15,10 @@ const ProductServices = {
     return requests.get(`store/productshop/${slug}`);
   },
 
+  getProductMainBySlug(slug) {
+    return requests.get(`store/mainproducts/${slug}`);
+  },
+
   productUrl(id) {
     return `${apiEndpoint}/${id}`;
   },

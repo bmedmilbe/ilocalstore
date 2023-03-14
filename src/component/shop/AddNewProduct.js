@@ -22,13 +22,18 @@ import CollectionServices from "@services/CollectionServices";
 import TextArea from "@component/form/TextArea";
 import NoInputArea from "@component/form/NoInputArea";
 import Collection from "@component/collection/Collection";
+import SubCollectionServices from "../../services/SubCollectionServices";
+import { useRouter } from "next/router";
 
 const AddNewProduct = ({ product }) => {
+  const router = useRouter();
   const [imageUrl, setImageUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [stores, setStores] = useState([]);
   const [collections, setCollections] = useState([]);
-  const [collection, setCollection] = useState(0);
+  const [subCollections, setSubCollections] = useState([]);
+
+  // const [collection, setCollection] = useState(0);
   const {
     state: {},
   } = useContext(UserContext);
@@ -39,40 +44,80 @@ const AddNewProduct = ({ product }) => {
     formState: { errors },
   } = useForm();
 
-  const saveProduct = (collection, data) => {
+  const saveProductShop = async (product_id, store_id, price) => {
+    // console.log("aqui");
+    const productShop = {
+      price: price,
+      slug: `${product_id}-${store_id}`,
+      product: product_id,
+    };
+    console.log(productShop);
+    // return;
+
+    ProductServices.getProductBySlug(productShop.slug)
+      .then((res) => {
+        notifyError("Error, this item is added already!");
+        // router.reload(window.location.pathname);
+      })
+      .catch((err) => {
+        ShopServices.saveShopProduct(store_id, productShop)
+          .then((res) => {
+            // setLoading(false);
+            notifySuccess("Product successfully added!");
+            Cookies.set("product", JSON.stringify(res));
+            // router.reload(window.location.pathname);
+          })
+          .catch((err) => {
+            // setLoading(false);
+            notifyError(err ? err?.response?.data?.details : err.message);
+          });
+      });
+  };
+
+  const saveProductMain = (data) => {
+    ProductServices.saveProduct(data)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        // setLoading(false);
+        notifyError(err ? err?.response?.data?.details : err.message);
+      });
+  };
+
+  const saveProduct = async (data) => {
+    console.log(data);
     const productData = {
-      collection,
+      collection: data.collection,
+      sub_collection: data.subCollection,
       name: data.name,
       description: data.description,
       tag: data.tag,
       image: imageUrl,
       slug: data.name.toLowerCase().replace("&", "").split(" ").join("-"),
     };
-
-    ProductServices.saveProduct(productData)
+    // console.log(productData.slug);
+    ProductServices.getProductMainBySlug(productData.slug)
       .then((res) => {
-        if (res) {
-          res.price = data.price;
-          res.product = res.id;
-          res.id = null;
-          // console.log(res);
-          ShopServices.saveShopProduct(data.store, res)
-            .then((res) => {
-              if (res) {
-                setLoading(false);
-                notifySuccess("Product Successfully Added!");
-                Cookies.set("product", JSON.stringify(res));
-              }
-            })
-            .catch((err) => {
-              setLoading(false);
-              notifyError(err ? err?.response?.data?.details : err.message);
-            });
+        try {
+          saveProductShop(res.id, data.store, data.price);
+        } catch (ex) {
+          notifyError("Error, please try again later save pS!");
         }
       })
       .catch((err) => {
-        setLoading(false);
-        notifyError(err ? err?.response?.data?.details : err.message);
+        saveProductMain(productData);
+        ProductServices.getProductMainBySlug(productData.slug)
+          .then((res) => {
+            try {
+              saveProductShop(res.id, data.store, data.price);
+            } catch (ex) {
+              notifyError("Error, please try again later save pS!");
+            }
+          })
+          .catch((err) => {
+            notifyError("Error, please try again later!!");
+          });
       });
   };
 
@@ -80,53 +125,103 @@ const AddNewProduct = ({ product }) => {
     if (!imageUrl) {
       notifyError("Image is required!");
       return;
+    } else if (data.store == 0) {
+      notifyError("Select the store!");
+      return;
+    } else if (data.collection == 0) {
+      notifyError("Select the collecion!");
+      return;
+    } else if (data.subCollection == 0) {
+      notifyError("Select the sub collecion!");
+      return;
     }
+
     setLoading(true);
+
+    saveProduct(data);
 
     // notifySuccess('For demo this feature is disable!');
 
     // "id", "product", "price", "description", 'slug',
     //"id", "name", "collection", "description", 'tag', 'image', 'slug'
     // console.log(data);
-    if (data.collection === "0" || data.newcollection !== "") {
-      console.log(data);
-      if (data.newcollection) {
-        let collection = collections.find(
-          (collection, i) => collection.title === data.newcollection
-        );
-        if (!collection) {
-          CollectionServices.saveCollection({
-            title: data.newcollection,
-            slug: data.newcollection
-              .toLowerCase()
-              .replace("&", "")
-              .split(" ")
-              .join("-"),
-          })
-            .then((res) => {
-              // collectionData.collection = res.id;
-              saveProduct(res.id, data);
-              // console.log(collectionData);
-              // setLoading(false);
-            })
-            .catch((err) => {
-              setLoading(false);
-              notifyError(err ? err?.response?.data?.details : err.message);
-            });
-        } else {
-          // setCollection(collection.id);
-          // collectionData.collection = collection.id;
-          saveProduct(collection.id, data);
-        }
-      } else {
-        notifyError("You have to insert or choose a collection");
-      }
-    } else {
-      // collectionData.collection = data.collection;
-      saveProduct(data.collection, data);
-    }
 
-    // console.log(collectionData);
+    //           saveProduct(res.id, data);
+
+    // if (data.newcollection !== "") {
+    //   let collection_temp = collections?.filter(
+    //     (collection) =>
+    //       (collection.slug = data.newcollection
+    //         .toLowerCase()
+    //         .replace("&", "")
+    //         .split(" ")
+    //         .join("-"))
+    //   );
+    //   if (!collection_temp) {
+    //     CollectionServices.saveCollection({
+    //       title: data.newcollection,
+    //       slug: data.newcollection
+    //         .toLowerCase()
+    //         .replace("&", "")
+    //         .split(" ")
+    //         .join("-"),
+    //     })
+    //       .then((res) => {
+    //         console.log(res);
+
+    //         data.collection = res;
+    //       })
+    //       .catch((err) => {
+    //         setLoading(false);
+    //         notifyError(err ? err?.response?.data?.details : err.message);
+    //       });
+    //   } else {
+    //     collection_temp = collection_temp[0];
+    //     console.log(collection_temp);
+    //     data.collection = collection_temp[0];
+    //   }
+    // }
+    // console.log(data.collection);
+
+    // if (data.newcollection !== "") {
+    //   console.log(data);
+    //   if (data.newcollection) {
+    //     let collection = collections.find(
+    //       (collection, i) => collection.title === data.newcollection
+    //     );
+    //     if (!collection) {
+    //       CollectionServices.saveCollection({
+    //         title: data.newcollection,
+    //         slug: data.newcollection
+    //           .toLowerCase()
+    //           .replace("&", "")
+    //           .split(" ")
+    //           .join("-"),
+    //       })
+    //         .then((res) => {
+    //           // collectionData.collection = res.id;
+    //           saveProduct(res.id, data);
+    //           // console.log(collectionData);
+    //           // setLoading(false);
+    //         })
+    //         .catch((err) => {
+    //           setLoading(false);
+    //           notifyError(err ? err?.response?.data?.details : err.message);
+    //         });
+    //     } else {
+    //       // setCollection(collection.id);
+    //       // collectionData.collection = collection.id;
+    //       saveProduct(collection.id, data);
+    //     }
+    //   } else {
+    //     notifyError("You have to insert or choose a collection");
+    //   }
+    // } else {
+    //   // collectionData.collection = data.collection;
+    //   saveProduct(data.collection, data);
+    // }
+
+    // // console.log(collectionData);
   };
 
   useEffect(() => {
@@ -134,7 +229,7 @@ const AddNewProduct = ({ product }) => {
       setValue("name", product.name);
       setValue("store", product.store);
       setValue("collection", product.collection);
-      setValue("newcollection", product.newcollection);
+      setValue("subCollection", product.collection);
       setValue("description", product.description);
       setValue("tag", product.tag);
       setValue("price", product.price);
@@ -159,6 +254,25 @@ const AddNewProduct = ({ product }) => {
       .then((res) => {
         if (res) {
           setCollections(
+            res.map((r) => {
+              r.value = r.id;
+              r.name = r.title;
+              return r;
+            })
+          );
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        notifyError(err ? err?.response?.data?.details : err.message);
+      });
+
+    SubCollectionServices.getShowingSubCollection()
+      .then((res) => {
+        // console.log(res);
+        if (res) {
+          setSubCollections(
             res.map((r) => {
               r.value = r.id;
               r.name = r.title;
@@ -251,15 +365,18 @@ const AddNewProduct = ({ product }) => {
                         />
                         <Error errorName={errors.collection} />
                       </div>
+
                       <div className="col-span-6 sm:col-span-2">
-                        <NoInputArea
+                        {/* {console.log(collections)} */}
+                        <SelectedArea
+                          defaultValue={0}
+                          data={subCollections}
                           register={register}
-                          label="New Collection"
-                          name="newcollection"
+                          label="Sub collection that this item belongs to"
+                          name="subCollection"
                           type="text"
-                          placeholder="Smarth Phones"
                         />
-                        <Error errorName={errors.newcollection} />
+                        <Error errorName={errors.subCollection} />
                       </div>
 
                       <div className="col-span-6 sm:col-span-6">
