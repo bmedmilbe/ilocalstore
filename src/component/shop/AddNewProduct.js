@@ -51,7 +51,7 @@ const AddNewProduct = ({ product }) => {
       slug: `${product_id}-${store_id}`,
       product: product_id,
     };
-    console.log(productShop);
+    // console.log(productShop);
     // return;
 
     ProductServices.getProductBySlug(productShop.slug)
@@ -86,7 +86,7 @@ const AddNewProduct = ({ product }) => {
   };
 
   const saveProduct = async (data) => {
-    console.log(data);
+    // console.log(data);
     const productData = {
       collection: data.collection,
       sub_collection: data.subCollection,
