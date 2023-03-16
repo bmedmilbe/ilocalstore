@@ -23,7 +23,7 @@ const OrderHistory = ({ order }) => {
 
       <td className="px-5 py-3 leading-6 text-center whitespace-nowrap">
         <span className="text-sm font-bold">
-          £{Math.round(order?.total)}.00
+          £{(order.total * 1.015 + 0.2).toFixed(2)}
         </span>
       </td>
       <td className="px-5 py-3 leading-6 text-center whitespace-nowrap">

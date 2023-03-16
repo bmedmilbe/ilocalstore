@@ -67,7 +67,7 @@ const AddStore = ({ title, description, children }) => {
                 {!children && (
                   <div className="overflow-hidden">
                     <Shopmenu />
-                    {console.log(data)}
+                    {/* {console.log(data)} */}
                     <AddNewShop shop={data} />
                   </div>
                 )}

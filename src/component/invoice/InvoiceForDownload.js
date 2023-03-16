@@ -267,16 +267,24 @@ const InvoiceForDownload = ({ data, user }) => {
             </View>
             <View>
               <Text style={styles.title}>Shipping Cost</Text>
-              <Text style={styles.info}>£{2}.00</Text>
+              <Text style={styles.info}>£{data.shipping_price.toFixed(2)}</Text>
+            </View>
+            <View>
+              <Text style={styles.title}>Charge fee</Text>
+              <Text style={styles.info}>
+                £{(data.total * 0.015 + 0.2).toFixed(2)}
+              </Text>
             </View>
             <View>
               <Text style={styles.title}>Discount</Text>
-              <Text style={styles.info}> £{Math.round(data.discount)}.00</Text>
+              <Text style={styles.info}>
+                £{data.discount ? data.discount.toFixed(2) : 0}
+              </Text>
             </View>
 
             <View>
               <Text style={styles.title}>Total Amount</Text>
-              <Text style={styles.amount}>£{Math.round(data.total)}.00</Text>
+              <Text style={styles.amount}>£{data.total.toFixed(2)}</Text>
             </View>
           </View>
 

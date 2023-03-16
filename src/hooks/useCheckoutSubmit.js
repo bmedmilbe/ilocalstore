@@ -36,7 +36,8 @@ const useCheckoutSubmit = () => {
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [discountProductType, setDiscountProductType] = useState("");
   const [isCheckoutSubmit, setIsCheckoutSubmit] = useState(false);
-
+  const [subTotal, setSubTotal] = useState(0);
+  const [fee, setFee] = useState(0);
   const router = useRouter();
   const stripe = useStripe();
   const elements = useElements();
@@ -82,11 +83,19 @@ const useCheckoutSubmit = () => {
       0
     );
     let totalValue = "";
-    let subTotal = (cartTotal + shippingCost).toFixed(2);
-    let discountAmount = discountProductTotal * (discountPercentage / 100);
-    totalValue = subTotal - discountAmount;
+    const deliverValue = 2.2;
+    let totalFee = (deliverValue + cartTotal) * 0.015 + 0.2;
+    // totalFee = (total + 2 + cartTotal) * 0.015 + 0.2;
+
+    // (2 + cartTotal + () * 0.015 + 0.2;
+    let total = cartTotal + totalFee + deliverValue;
+    let maxValue = (cartTotal + totalFee + deliverValue) * 1.015 + 0.2;
+    let originalFee = maxValue - total;
     setDiscountAmount(discountAmount);
-    setTotal(totalValue);
+    setSubTotal(cartTotal);
+    setShippingCost(deliverValue);
+    setFee(totalFee);
+    setTotal(cartTotal + totalFee + deliverValue);
   }, [cartTotal, shippingCost, discountPercentage]);
 
   //if not login then push user to home page
@@ -256,7 +265,7 @@ const useCheckoutSubmit = () => {
             deliver_address_id: order.deliver_address_id,
           })
             .then((res) => {
-              console.log(res);
+              // console.log(res);
               router.push(`/order/${res.id}`);
 
               CartServices.createNewCart()
@@ -364,6 +373,7 @@ const useCheckoutSubmit = () => {
     isEmpty,
     items,
     cartTotal,
+    fee,
     isCheckoutSubmit,
     user,
   };

@@ -47,8 +47,8 @@ const Checkout = () => {
     isEmpty,
     items,
     cartTotal,
+    fee,
     isCheckoutSubmit,
-
     user,
   } = useCheckoutSubmit();
   const router = useRouter();
@@ -57,6 +57,8 @@ const Checkout = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(async () => {
+    // setSubTotal((2 + total + (2 + total) * 0.015 + 0.02) * 0.015 + 0.2);
+
     setUserDetails(await user);
     try {
       const address = await CustomerAddressServices.getCustomerAddresses();
@@ -66,7 +68,7 @@ const Checkout = () => {
     }
   }, []);
 
-  console.log(userDetails);
+  // console.log(userDetails);
 
   return (
     <>
@@ -196,35 +198,37 @@ const Checkout = () => {
                           </a>
                         </Link>
                       </div>
-                      <div className="col-span-6 sm:col-span-3">
-                        <button
-                          type="submit"
-                          disabled={isEmpty || !stripe || isCheckoutSubmit}
-                          className="bg-emerald-500 hover:bg-emerald-600 border border-emerald-500 transition-all rounded py-3 text-center text-sm font-serif font-medium text-white flex justify-center w-full"
-                        >
-                          {isCheckoutSubmit ? (
-                            <span className="flex justify-center text-center">
-                              {" "}
-                              <img
-                                src="/spinner.gif"
-                                alt="Loading"
-                                width={20}
-                                height={10}
-                              />{" "}
-                              <span className="ml-2">Processing</span>
-                            </span>
-                          ) : (
-                            <span className="flex justify-center text-center">
-                              {" "}
-                              Confirm
-                              <span className="text-xl ml-2">
+                      {cartTotal > 0 && (
+                        <div className="col-span-6 sm:col-span-3">
+                          <button
+                            type="submit"
+                            disabled={isEmpty || !stripe || isCheckoutSubmit}
+                            className="bg-emerald-500 hover:bg-emerald-600 border border-emerald-500 transition-all rounded py-3 text-center text-sm font-serif font-medium text-white flex justify-center w-full"
+                          >
+                            {isCheckoutSubmit ? (
+                              <span className="flex justify-center text-center">
                                 {" "}
-                                <IoArrowForward />
+                                <img
+                                  src="/spinner.gif"
+                                  alt="Loading"
+                                  width={20}
+                                  height={10}
+                                />{" "}
+                                <span className="ml-2">Processing</span>
                               </span>
-                            </span>
-                          )}
-                        </button>
-                      </div>
+                            ) : (
+                              <span className="flex justify-center text-center">
+                                {" "}
+                                Confirm
+                                <span className="text-xl ml-2">
+                                  {" "}
+                                  <IoArrowForward />
+                                </span>
+                              </span>
+                            )}
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </form>
                 ) : (
@@ -307,7 +311,7 @@ const Checkout = () => {
                 <div className="flex items-center py-2 text-sm w-full font-semibold text-gray-500 last:border-b-0 last:text-base last:pb-0">
                   Shipping Cost
                   <span className="ml-auto flex-shrink-0 text-gray-800 font-bold">
-                    £{(2 + shippingCost).toFixed(2)}
+                    £{cartTotal > 0 ? shippingCost.toFixed(2) : 0}
                   </span>
                 </div>
                 <div className="flex items-center py-2 text-sm w-full font-semibold text-gray-500 last:border-b-0 last:text-base last:pb-0">
@@ -316,13 +320,20 @@ const Checkout = () => {
                     £{discountAmount.toFixed(2)}
                   </span>
                 </div>
+                <div className="flex items-center py-2 text-sm w-full font-semibold text-gray-500 last:border-b-0 last:text-base last:pb-0">
+                  Charge fee
+                  <span className="ml-auto flex-shrink-0 text-gray-800 font-bold">
+                    £{cartTotal > 0 ? fee.toFixed(2) : 0}
+                  </span>
+                </div>
                 <div className="border-t mt-4">
                   <div className="flex items-center font-bold font-serif justify-between pt-5 text-sm uppercase">
                     Total cost
                     <span className="font-serif font-extrabold text-lg">
-                      {" "}
-                      £{Math.round(total + 2)}.00
+                      £{cartTotal > 0 ? parseFloat(total).toFixed(2) : 0}
+                      {/* {typeof total} */}
                     </span>
+                    {/* {2 + total + (2 + total) * 0.015 + 0.02} */}
                   </div>
                 </div>
               </div>

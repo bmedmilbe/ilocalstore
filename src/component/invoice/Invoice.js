@@ -124,7 +124,15 @@ const Invoice = ({ data, printRef }) => {
               Shipping Cost
             </span>
             <span className="text-sm text-gray-500 font-semibold font-serif block">
-              {/* ${Math.round(data.shippingCost)}.00 */}£ 2.00
+              £{data.shipping_price.toFixed(2)}
+            </span>
+          </div>
+          <div className="mb-3 md:mb-0 lg:mb-0  flex flex-col sm:flex-wrap">
+            <span className="mb-1 font-bold font-serif text-sm uppercase text-gray-600 block">
+              Charge fee:
+            </span>
+            <span className="text-sm text-gray-500 font-semibold font-serif block">
+              £{(data.total * 0.015 + 0.2).toFixed(2)}
             </span>
           </div>
           <div className="mb-3 md:mb-0 lg:mb-0  flex flex-col sm:flex-wrap">
@@ -132,7 +140,7 @@ const Invoice = ({ data, printRef }) => {
               Discount
             </span>
             <span className="text-sm text-gray-500 font-semibold font-serif block">
-              {/* ${Math.round(data.discount)}.00 */}£ 0.00
+              £{data.discount ? data.discount.toFixed(2) : 0}
             </span>
           </div>
           <div className="flex flex-col sm:flex-wrap">
@@ -140,7 +148,7 @@ const Invoice = ({ data, printRef }) => {
               Total Amount
             </span>
             <span className="text-2xl font-serif font-bold text-red-500 block">
-              £ {Math.round(data.total)}.00
+              £ {(data.total + data.total * 0.015 + 0.2).toFixed(2)}
             </span>
           </div>
         </div>

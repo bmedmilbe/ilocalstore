@@ -35,6 +35,8 @@ const useAddressSubmit = (setModalOpen) => {
     CartServices.getCart()
       .then((res) => {
         // console.log(res);
+        //
+        // https://booking.flytap.com/lite/
         if (res.address) {
           // console.log(res.address.postCode);
           setPostCode(res.address.post_code);
