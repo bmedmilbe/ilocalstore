@@ -352,7 +352,7 @@ const AddNewProduct = ({ product }) => {
                           register={register}
                           label="Price (£)"
                           name="price"
-                          type="number"
+                          type="text"
                           placeholder="1200"
                         />
                         <Error errorName={errors.price} />
