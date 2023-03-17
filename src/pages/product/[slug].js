@@ -48,7 +48,7 @@ const ProductScreen = ({ product, relatedProduct }) => {
       {isLoading ? (
         <Loading loading={isLoading} />
       ) : (
-        <Layout title={product.title} description={product.description}>
+        <Layout title={product?.title} description={product?.description}>
           <div className="px-0 py-10 lg:py-10">
             <div className="mx-auto px-3 lg:px-10 max-w-screen-2xl">
               <div className="flex items-center pb-4">
@@ -85,171 +85,186 @@ const ProductScreen = ({ product, relatedProduct }) => {
                     <FiChevronRight />{" "}
                   </li>
                   <li className="text-sm px-1 transition duration-200 ease-in ">
-                    {product.product.name}
+                    {product?.product.name}
                   </li>
                 </ol>
               </div>
-              <div className="w-full rounded-lg p-3 lg:p-12 bg-white">
-                <div className="flex flex-col xl:flex-row">
-                  <div className="flex-shrink-0 xl:pr-10 lg:block w-full mx-auto md:w-6/12 lg:w-5/12 xl:w-4/12">
-                    <Discount product={product} slug={true} />
-                    <Image
-                      src={product.product.image}
-                      alt={product.product.title}
-                      // layout="responsive"
-                      width={650}
-                      height={650}
-                      priority
-                    ></Image>
-                  </div>
-                  <div className="w-full">
-                    <div className="flex flex-col md:flex-row lg:flex-row xl:flex-row">
-                      <div className="w-full md:w-7/12 md:pr-4 lg:pr-4 xl:pr-12">
-                        <div className="mb-6">
-                          <h1 className="leading-7 text-lg md:text-xl lg:text-2xl mb-1 font-semibold font-serif text-gray-800">
-                            {product.product.name}
-                          </h1>
-                          <p className="uppercase font-serif font-medium text-gray-500 text-sm">
-                            SKU :{" "}
-                            <span className="font-bold text-gray-600">
-                              {product.sku ? product.sku : 10} {/*//Stock */}
-                              {/* : product._id.substring(18, 24)} */}
-                            </span>
-                          </p>
-                        </div>
-                        <Price product={product} />
-                        <div className="mb-4 md:mb-5 block">
-                          <Stock product={product} />
-                        </div>
-                        <div>
-                          <p className="text-sm leading-6 text-gray-500 md:leading-7">
-                            {product.product.description
-                              ? product.product.description
-                              : product.description}
-                          </p>
+              {product ? (
+                <div className="w-full rounded-lg p-3 lg:p-12 bg-white">
+                  <div className="flex flex-col xl:flex-row">
+                    <div className="flex-shrink-0 xl:pr-10 lg:block w-full mx-auto md:w-6/12 lg:w-5/12 xl:w-4/12">
+                      <Discount product={product} slug={true} />
+                      <Image
+                        src={product.product.image}
+                        alt={product.product.title}
+                        // layout="responsive"
+                        width={650}
+                        height={650}
+                        priority
+                      ></Image>
+                    </div>
+                    <div className="w-full">
+                      <div className="flex flex-col md:flex-row lg:flex-row xl:flex-row">
+                        <div className="w-full md:w-7/12 md:pr-4 lg:pr-4 xl:pr-12">
+                          <div className="mb-6">
+                            <h1 className="leading-7 text-lg md:text-xl lg:text-2xl mb-1 font-semibold font-serif text-gray-800">
+                              {product.product.name}
+                            </h1>
+                            <p className="uppercase font-serif font-medium text-gray-500 text-sm">
+                              SKU :{" "}
+                              <span className="font-bold text-gray-600">
+                                {product.sku ? product.sku : 10} {/*//Stock */}
+                                {/* : product._id.substring(18, 24)} */}
+                              </span>
+                            </p>
+                          </div>
+                          <Price product={product} />
+                          <div className="mb-4 md:mb-5 block">
+                            <Stock product={product} />
+                          </div>
+                          <div>
+                            <p className="text-sm leading-6 text-gray-500 md:leading-7">
+                              {product.product.description
+                                ? product.product.description
+                                : product.description}
+                            </p>
 
-                          <div className="flex items-center mt-4">
-                            <div className="flex items-center justify-between space-s-3 sm:space-s-4 w-full">
-                              <div className="group flex items-center justify-between rounded-md overflow-hidden flex-shrink-0 border h-11 md:h-12 border-gray-300">
+                            <div className="flex items-center mt-4">
+                              <div className="flex items-center justify-between space-s-3 sm:space-s-4 w-full">
+                                <div className="group flex items-center justify-between rounded-md overflow-hidden flex-shrink-0 border h-11 md:h-12 border-gray-300">
+                                  <button
+                                    onClick={() => setItem(item - 1)}
+                                    disabled={item === 1}
+                                    className="flex items-center justify-center flex-shrink-0 h-full transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-e border-gray-300 hover:text-gray-500"
+                                  >
+                                    <span className="text-dark text-base">
+                                      <FiMinus />
+                                    </span>
+                                  </button>
+                                  <p className="font-semibold flex items-center justify-center h-full  transition-colors duration-250 ease-in-out cursor-default flex-shrink-0 text-base text-heading w-8  md:w-20 xl:w-24">
+                                    {item}
+                                  </p>
+                                  <button
+                                    onClick={() => setItem(item + 1)}
+                                    disabled={
+                                      product.quantity < item ||
+                                      product.quantity === item
+                                    }
+                                    className="flex items-center justify-center h-full flex-shrink-0 transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-s border-gray-300 hover:text-gray-500"
+                                  >
+                                    <span className="text-dark text-base">
+                                      <FiPlus />
+                                    </span>
+                                  </button>
+                                </div>
                                 <button
-                                  onClick={() => setItem(item - 1)}
-                                  disabled={item === 1}
-                                  className="flex items-center justify-center flex-shrink-0 h-full transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-e border-gray-300 hover:text-gray-500"
+                                  onClick={() => handleAddItem(product)}
+                                  disabled={product.quantity < 1}
+                                  className="text-sm leading-4 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-serif text-center justify-center border-0 border-transparent rounded-md focus-visible:outline-none focus:outline-none text-white px-4 ml-4 md:px-6 lg:px-8 py-4 md:py-3.5 lg:py-4 hover:text-white bg-emerald-500 hover:bg-emerald-600 w-full h-12"
                                 >
-                                  <span className="text-dark text-base">
-                                    <FiMinus />
-                                  </span>
-                                </button>
-                                <p className="font-semibold flex items-center justify-center h-full  transition-colors duration-250 ease-in-out cursor-default flex-shrink-0 text-base text-heading w-8  md:w-20 xl:w-24">
-                                  {item}
-                                </p>
-                                <button
-                                  onClick={() => setItem(item + 1)}
-                                  disabled={
-                                    product.quantity < item ||
-                                    product.quantity === item
-                                  }
-                                  className="flex items-center justify-center h-full flex-shrink-0 transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-s border-gray-300 hover:text-gray-500"
-                                >
-                                  <span className="text-dark text-base">
-                                    <FiPlus />
-                                  </span>
+                                  Add To Cart
                                 </button>
                               </div>
-                              <button
-                                onClick={() => handleAddItem(product)}
-                                disabled={product.quantity < 1}
-                                className="text-sm leading-4 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold font-serif text-center justify-center border-0 border-transparent rounded-md focus-visible:outline-none focus:outline-none text-white px-4 ml-4 md:px-6 lg:px-8 py-4 md:py-3.5 lg:py-4 hover:text-white bg-emerald-500 hover:bg-emerald-600 w-full h-12"
-                              >
-                                Add To Cart
-                              </button>
                             </div>
-                          </div>
 
-                          {/* <button
+                            {/* <button
                       onClick={() => handleAddItem(product)}
                       className="leading-4 inline-flex items-center cursor-pointer transition ease-in-out duration-300 font-semibold text-center justify-center border-0 border-transparent rounded-md placeholder-white focus-visible:outline-none focus:outline-none bg-emerald-500 text-white px-5 md:px-6 lg:px-8 py-3 md:py-3.5 lg:py-3 mt-6 hover:text-white hover:bg-emerald-600 h-12 text-sm lg:text-base w-full sm:w-auto"
                     >
                       Add to Cart
                     </button> */}
 
-                          <div className="flex flex-col mt-4">
-                            <span className="font-serif font-semibold py-1 text-sm d-block">
-                              <span className="text-gray-700">
-                                <h3 className="text-base font-semibold mb-1 font-serif">
-                                  {product.product.collection.title}
-                                </h3>
-                              </span>{" "}
-                              <span className="text-gray-500">
-                                {product.product.sub_collection.title}
+                            <div className="flex flex-col mt-4">
+                              <span className="font-serif font-semibold py-1 text-sm d-block">
+                                <span className="text-gray-700">
+                                  <h3 className="text-base font-semibold mb-1 font-serif">
+                                    {product.product.collection.title}
+                                  </h3>
+                                </span>{" "}
+                                <span className="text-gray-500">
+                                  {product.product.sub_collection.title}
+                                </span>
                               </span>
-                            </span>
-                            <Tags product={product} />
-                          </div>
+                              <Tags product={product} />
+                            </div>
 
-                          {/* social share */}
-                          <div className="mt-8">
-                            <h3 className="text-base font-semibold mb-1 font-serif">
-                              Share your social network
-                            </h3>
-                            <p className="font-sans text-sm text-gray-500">
-                              For get lots of traffic from social network share
-                              this product
-                            </p>
-                            <ul className="flex mt-4">
-                              <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
-                                <FacebookShareButton
-                                  url={`https://www.ilocalstore.com/product/${router.query.slug}`}
-                                  quote="iLocalStore"
-                                >
-                                  <FacebookIcon size={32} round />
-                                </FacebookShareButton>
-                              </li>
-                              <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
-                                <TwitterShareButton
-                                  url={`https://www.ilocalstore.com/product/${router.query.slug}`}
-                                  quote="iLocalStore"
-                                >
-                                  <TwitterIcon size={32} round />
-                                </TwitterShareButton>
-                              </li>
-                              <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
-                                <RedditShareButton
-                                  url={`https://www.ilocalstore.com/product/${router.query.slug}`}
-                                  quote="iLocalStore"
-                                >
-                                  <RedditIcon size={32} round />
-                                </RedditShareButton>
-                              </li>
-                              <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
-                                <WhatsappShareButton
-                                  url={`https://www.ilocalstore.com/product/${router.query.slug}`}
-                                  quote="iLocalStore"
-                                >
-                                  <WhatsappIcon size={32} round />
-                                </WhatsappShareButton>
-                              </li>
-                              <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
-                                <LinkedinShareButton
-                                  url={`https://www.ilocalstore.com/product/${router.query.slug}`}
-                                  quote="iLocalStore"
-                                >
-                                  <LinkedinIcon size={32} round />
-                                </LinkedinShareButton>
-                              </li>
-                            </ul>
+                            {/* social share */}
+                            <div className="mt-8">
+                              <h3 className="text-base font-semibold mb-1 font-serif">
+                                Share your social network
+                              </h3>
+                              <p className="font-sans text-sm text-gray-500">
+                                For get lots of traffic from social network
+                                share this product
+                              </p>
+                              <ul className="flex mt-4">
+                                <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
+                                  <FacebookShareButton
+                                    url={`https://www.ilocalstore.com/product/${router.query.slug}`}
+                                    quote="iLocalStore"
+                                  >
+                                    <FacebookIcon size={32} round />
+                                  </FacebookShareButton>
+                                </li>
+                                <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
+                                  <TwitterShareButton
+                                    url={`https://www.ilocalstore.com/product/${router.query.slug}`}
+                                    quote="iLocalStore"
+                                  >
+                                    <TwitterIcon size={32} round />
+                                  </TwitterShareButton>
+                                </li>
+                                <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
+                                  <RedditShareButton
+                                    url={`https://www.ilocalstore.com/product/${router.query.slug}`}
+                                    quote="iLocalStore"
+                                  >
+                                    <RedditIcon size={32} round />
+                                  </RedditShareButton>
+                                </li>
+                                <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
+                                  <WhatsappShareButton
+                                    url={`https://www.ilocalstore.com/product/${router.query.slug}`}
+                                    quote="iLocalStore"
+                                  >
+                                    <WhatsappIcon size={32} round />
+                                  </WhatsappShareButton>
+                                </li>
+                                <li className="flex items-center text-center border border-gray-100 rounded-full hover:bg-emerald-500  mr-2 transition ease-in-out duration-500">
+                                  <LinkedinShareButton
+                                    url={`https://www.ilocalstore.com/product/${router.query.slug}`}
+                                    quote="iLocalStore"
+                                  >
+                                    <LinkedinIcon size={32} round />
+                                  </LinkedinShareButton>
+                                </li>
+                              </ul>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="w-full xl:w-5/12 lg:w-6/12 md:w-5/12">
-                        <div className="mt-6 md:mt-0 lg:mt-0 bg-gray-50 border border-gray-100 p-4 lg:p-8 rounded-lg">
-                          <Card product={product} />
+                        <div className="w-full xl:w-5/12 lg:w-6/12 md:w-5/12">
+                          <div className="mt-6 md:mt-0 lg:mt-0 bg-gray-50 border border-gray-100 p-4 lg:p-8 rounded-lg">
+                            <Card product={product} />
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className="text-center align-middle mx-auto p-5 my-5">
+                  <Image
+                    className="my-4"
+                    src="/no-result.svg"
+                    alt="no-result"
+                    width={400}
+                    height={380}
+                  />
+                  <h2 className="text-lg md:text-xl lg:text-2xl xl:text-2xl text-center mt-2 font-medium font-serif text-gray-600">
+                    Sorry, we can not find this product 😞
+                  </h2>
+                </div>
+              )}
 
               {/* related products */}
               <div className="pt-10 lg:pt-20 lg:pb-10">
@@ -308,11 +323,27 @@ export const getStaticProps = async (context) => {
   const { slug } = context.params;
   // const product = await ProductServices.getProductBySlug(slug);
   // const products = await ProductServices.getShowingProducts();
+  let product = null;
+  let products = [];
+  ProductServices.getProductBySlug(slug)
+    .then((res) => {
+      product = res;
+    })
+    .catch((err) => {
+      // setLoading(false);
+      product = null;
+    });
 
-  const [product, products] = await Promise.all([
-    ProductServices.getProductBySlug(slug),
-    ProductServices.getShowingProducts(),
-  ]);
+  ProductServices.getShowingProducts()
+    .then((res) => {
+      products = res;
+    })
+    .catch((err) => {
+      // setLoading(false);
+      products = [];
+    });
+
+  // const product = await ProductServices.getProductBySlug(slug);
 
   let relatedProduct = [];
   if (slug) {
