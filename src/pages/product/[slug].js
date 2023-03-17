@@ -322,31 +322,27 @@ const ProductScreen = ({ product, relatedProduct }) => {
 export const getStaticProps = async (context) => {
   const { slug } = context.params;
   // const product = await ProductServices.getProductBySlug(slug);
-  // const products = await ProductServices.getShowingProducts();
-  let product = null;
-  let products = [];
-  ProductServices.getProductBySlug(slug)
-    .then((res) => {
-      product = res;
-    })
-    .catch((err) => {
-      // setLoading(false);
-      product = null;
-    });
+  const products = await ProductServices.getShowingProducts();
+  let productsFound = products.filter((p) => p.slug == slug);
+  const product = productsFound.length > 0 ? productsFound[0] : null;
 
-  ProductServices.getShowingProducts()
-    .then((res) => {
-      products = res;
-    })
-    .catch((err) => {
-      // setLoading(false);
-      products = [];
-    });
+  // let product = null;
+  // let products = [];
+
+  // ProductServices.getShowingProducts()
+  //   .then((res) => {
+  //     products = res;
+
+  //   })
+  //   .catch((err) => {
+  //     // setLoading(false);
+  //     products = [];
+  //   });
 
   // const product = await ProductServices.getProductBySlug(slug);
 
   let relatedProduct = [];
-  if (slug) {
+  if (slug && product) {
     const selectProduct = product;
 
     relatedProduct = products.filter(

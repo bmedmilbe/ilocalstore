@@ -91,6 +91,7 @@ const Home = ({ products, stores, popularProducts, discountProducts }) => {
                     return <ProductCard key={product.id} product={product} />;
                   })}
               </div>
+
               {/* <div className="mx-auto max-w-screen-2xl px-3 sm:px-10"> */}
 
               {/* <div className="max-w-screen-2xl flex py-10 lg:py-12">
