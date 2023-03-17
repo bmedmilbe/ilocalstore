@@ -2,7 +2,7 @@ import React from "react";
 
 const Discount = ({ product, card }) => {
   return (
-    <div className="font-serif product-price font-bold">
+    <div className="font-serif product-price font-semibold">
       {product.discount ? (
         <span
           className={

@@ -66,8 +66,8 @@ const ProductCard = ({ product }) => {
             <span className="text-gray-400 font-medium text-xs d-block mb-1">
               {product.unit}
             </span>
-            <h2 className="text-heading truncate mb-0 block text-sm font-medium text-gray-600">
-              <span className="inline-block text-lg font-semibold text-gray-800">
+            <h2 className="text-gray-400 font-medium text-x d-block mb-1">
+              <span className="inline-block text-gray-800">
                 {product.product.name}
               </span>
             </h2>
