@@ -120,7 +120,9 @@ export const getServerSideProps = async (context) => {
     shopDetail = await ShopServices.getShopBySlug(
       shop?.toLowerCase().replace("&", "").split(" ").join("-")
     );
-  } catch (ex) {}
+  } catch (ex) {
+    // console.log("ex")
+  }
 
   if (shop) {
     products = data.filter(
