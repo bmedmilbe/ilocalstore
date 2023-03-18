@@ -20,8 +20,16 @@ import FeatureCollection from "@component/collection/FeatureCollection";
 import CardShop from "@component/shop-card/CardShop";
 import ShopServices from "@services/ShopService";
 import StickyCategory from "@component/collection/StickyCategory";
+import SubCollectionServices from "../services/SubCollectionServices";
+import SubCollectionCard from "../component/collection/SubCollectionCard";
 
-const Home = ({ products, stores, popularProducts, discountProducts }) => {
+const Home = ({
+  products,
+  stores,
+  popularProducts,
+  discountProducts,
+  subCollections,
+}) => {
   const router = useRouter();
 
   const [value, set] = useSessionstorage("products", products);
@@ -83,25 +91,30 @@ const Home = ({ products, stores, popularProducts, discountProducts }) => {
                   </span>
                 </div>
               </div> */}
-              <div className="sm:px-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
+              {/* <div className="sm:px-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 2xl:grid-cols-6 gap-2 md:gap-3 lg:gap-3">
                 {products
                   ?.slice(itemNumber, itemNumber + itemStep)
                   .map((product) => {
                     itemNumber++;
                     return <ProductCard key={product.id} product={product} />;
                   })}
-              </div>
+              </div> */}
 
               {/* <div className="mx-auto max-w-screen-2xl px-3 sm:px-10"> */}
 
               {/* <div className="max-w-screen-2xl flex py-10 lg:py-12">
                 <div className="w-full grid grid-col gap-4 grid-cols-1 2xl:gap-6 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2">
-                  <CardShop
-                    shops={stores.slice(storeNumber, storeNumber + storeStep)}
-                  />
-                  // {(storeNumber += storeStep)} 
-                </div>
+                  <CardShop shops={stores} />
+                  // {/* // {(storeNumber += storeStep)}  */}
+              {/* </div>
               </div> */}
+              {/* {console.log(subCollections)} */}
+              <div className="max-w-screen-2xl flex py-10 lg:py-12">
+                <div className="w-full grid grid-col gap-4 grid-cols-1 2xl:gap-6 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-2">
+                  <SubCollectionCard subCollections={subCollections} />
+                  {/* // {(storeNumber += storeStep)}  */}
+                </div>
+              </div>
             </div>
             {/* popular products */}
             {/* <div className="bg-gray-50 lg:py-16 py-10 mx-auto max-w-screen-2xl px-3 sm:px-10">
@@ -156,8 +169,10 @@ const Home = ({ products, stores, popularProducts, discountProducts }) => {
 
 export const getStaticProps = async () => {
   const products = await ProductServices.getShowingProducts();
-  // const stores = await ShopServices.getShops();
-  const stores = [];
+  const stores = await ShopServices.getShops();
+  const subCollections = await SubCollectionServices.getShowingSubCollection();
+
+  // const stores = [];
 
   const popularProducts = products;
   // const popularProducts = products.filter((p) => p.discount === 0);
@@ -173,6 +188,7 @@ export const getStaticProps = async () => {
     props: {
       products,
       stores,
+      subCollections,
     },
     revalidate: 60,
   };
