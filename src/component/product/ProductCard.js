@@ -105,6 +105,7 @@ const ProductCard = ({ product }) => {
                       <button
                         onClick={() => handleAddItem(product)}
                         // disabled={product.quantity < 1}
+                        key={product.id}
                         aria-label="cart"
                         className="h-9 w-9 flex items-center justify-center border border-gray-200 rounded text-emerald-500 hover:border-emerald-500 hover:bg-emerald-500 hover:text-white transition-all"
                       >

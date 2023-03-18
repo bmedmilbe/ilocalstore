@@ -38,7 +38,11 @@ const SubCollectionCard = ({ subCollections }) => {
                 layout="responsive"
                 width={550}
                 height={234}
-                src={subCollection.image ? subCollection.image : ""}
+                src={
+                  subCollection.image
+                    ? subCollection.image
+                    : "https://res.cloudinary.com/devqsmv1s/image/upload/v1679146740/ilocalstore/others/matthew-lejune-S1oestI1YWc-unsplash_doug6p.jpg"
+                }
                 alt={subCollection.title}
                 className="object-cover"
               />

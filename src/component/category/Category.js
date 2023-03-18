@@ -82,7 +82,7 @@ const Category = () => {
             <div className="relative grid gap-1 p-6">
               {pages.map((item) => (
                 <a
-                  key={item.title}
+                  key={item.id}
                   href={item.href}
                   className="p-2 flex font-serif items-center rounded-md hover:bg-gray-50 w-full hover:text-emerald-600"
                 >
