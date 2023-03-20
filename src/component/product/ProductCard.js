@@ -53,8 +53,9 @@ const ProductCard = ({ product }) => {
           )}
           <Discount product={product} />
           <NewUsed product={product} />
+          {/* {console.log()} */}
           <Image
-            src={product.product.image}
+            src={product.product.images ? product.product.images[0].image : ""}
             width={160}
             height={160}
             alt={product.product.name}

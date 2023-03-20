@@ -31,6 +31,18 @@ const ProductServices = {
     return requests.get(productUrl(productId));
   },
 
+  saveProductImages(productId, imagesUrl) {
+    const images = [];
+    imagesUrl.map((imageUrl) =>
+      images.push(
+        requests.post(`/store/products/${productId}/images/`, {
+          image: imageUrl,
+        })
+      )
+    );
+    return images;
+  },
+
   saveProduct(product) {
     // console.log(product);
     if (product.id) {

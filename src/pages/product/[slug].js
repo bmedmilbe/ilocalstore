@@ -14,7 +14,7 @@ import {
   WhatsappIcon,
   WhatsappShareButton,
 } from "react-share";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 //internal import
 import Layout from "@layout/Layout";
@@ -33,10 +33,17 @@ const ProductScreen = ({ product, relatedProduct }) => {
   const router = useRouter();
   const { isLoading, setIsLoading } = useContext(SidebarContext);
   const { handleAddItem, setItem, item } = useAddToCart();
-
+  const [mainImage, setMainImage] = useState(
+    product.product.images ? product.product.images[0].image : ""
+  );
   useEffect(() => {
     setIsLoading(false);
   }, [product]);
+
+  const handleChangeImage = (src) => {
+    setMainImage(src);
+    // document.getElementById("main-image").src = src;
+  };
 
   //comment this when using getServerSideProps
   if (router.isFallback) {
@@ -92,16 +99,33 @@ const ProductScreen = ({ product, relatedProduct }) => {
               {product ? (
                 <div className="w-full rounded-lg p-3 lg:p-12 bg-white">
                   <div className="flex flex-col xl:flex-row">
-                    <div className="flex-shrink-0 xl:pr-10 lg:block w-full mx-auto md:w-6/12 lg:w-5/12 xl:w-4/12">
+                    <div className="flex-shrink-0 xl:pr-10 lg:block w-full mx-auto md:w-6/12 lg:w-5/12 xl:w-4/12 relative">
                       <Discount product={product} slug={true} />
                       <Image
-                        src={product.product.image}
+                        src={mainImage}
                         alt={product.product.title}
                         // layout="responsive"
                         width={650}
                         height={650}
                         priority
                       ></Image>
+                      <div className="absolute rounded z-21 left-2 top-8 w-12">
+                        {product.product.images.map((image) => (
+                          <div
+                            key={image.id}
+                            className="rounded-2xl cursor-pointer shadow-md m-1 w-full max-w-4xl"
+                            onClick={() => handleChangeImage(image.image)}
+                          >
+                            <Image
+                              className="rounded-2xl"
+                              src={image.image}
+                              width={80}
+                              height={80}
+                              alt={product.product.name}
+                            />
+                          </div>
+                        ))}
+                      </div>
                     </div>
                     <div className="w-full">
                       <div className="flex flex-col md:flex-row lg:flex-row xl:flex-row">

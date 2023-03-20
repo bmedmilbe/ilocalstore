@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -15,6 +15,9 @@ const ProductModal = ({ modalOpen, setModalOpen, product }) => {
   const router = useRouter();
   const { setIsLoading, isLoading } = useContext(SidebarContext);
   const { handleAddItem, setItem, item } = useAddToCart();
+  const [mainImage, setMainImage] = useState(
+    product.product.images ? product.product.images[0].image : ""
+  );
 
   const handleMoreInfo = (slug) => {
     setModalOpen(false);
@@ -23,6 +26,10 @@ const ProductModal = ({ modalOpen, setModalOpen, product }) => {
 
     setIsLoading(!isLoading);
   };
+  const handleChangeImage = (src) => {
+    setMainImage(src);
+    // document.getElementById("main-image").src = src;
+  };
   // () => handleMoreInfo(product.slug)
   return (
     <MainModal modalOpen={modalOpen} setModalOpen={setModalOpen}>
@@ -30,14 +37,31 @@ const ProductModal = ({ modalOpen, setModalOpen, product }) => {
         <div className="flex flex-col lg:flex-row md:flex-row w-full max-w-4xl overflow-hidden">
           <div
             onClick={() => handleMoreInfo(product.slug)}
-            className="flex-shrink-0 flex items-center justify-center h-auto cursor-pointer"
+            className="flex-shrink-0 flex items-center justify-center h-auto cursor-pointer relative"
           >
             <Image
-              src={product.product.image}
+              src={mainImage}
               width={420}
               height={420}
               alt={product.product.name}
             />
+          </div>
+          <div className="absolute rounded z-40 left-3 top-8 w-20">
+            {product.product.images.map((image) => (
+              <div
+                key={image.id}
+                className="rounded-2xl cursor-pointer shadow-md m-1 w-full max-w-4xl"
+                onClick={() => handleChangeImage(image.image)}
+              >
+                <Image
+                  className="rounded-2xl"
+                  src={image.image}
+                  width={80}
+                  height={80}
+                  alt={product.product.name}
+                />
+              </div>
+            ))}
           </div>
 
           <div className="w-full flex flex-col p-5 md:p-8 text-left">

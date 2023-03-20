@@ -24,10 +24,11 @@ import NoInputArea from "@component/form/NoInputArea";
 import Collection from "@component/collection/Collection";
 import SubCollectionServices from "../../services/SubCollectionServices";
 import { useRouter } from "next/router";
+import UploaderProducts from "../image-uploader/UploaderProducts";
 
 const AddNewProduct = ({ product }) => {
   const router = useRouter();
-  const [imageUrl, setImageUrl] = useState("");
+  const [imagesUrl, setImagesUrl] = useState([]);
   const [loading, setLoading] = useState(false);
   const [stores, setStores] = useState([]);
   const [collections, setCollections] = useState([]);
@@ -74,10 +75,18 @@ const AddNewProduct = ({ product }) => {
       });
   };
 
-  const saveProductMain = (data) => {
+  const saveProductMain = (data, imagesUrl) => {
     ProductServices.saveProduct(data)
       .then((res) => {
-        return res;
+        const productId = res.id;
+        ProductServices.saveProductImages(productId, imagesUrl)
+          .then((res) => {
+            return productId;
+          })
+          .catch((err) => {
+            // setLoading(false);
+            notifyError("Imagens not saved");
+          });
       })
       .catch((err) => {
         // setLoading(false);
@@ -93,7 +102,7 @@ const AddNewProduct = ({ product }) => {
       name: data.name,
       description: data.description,
       tag: data.tag,
-      image: imageUrl,
+      image: imagesUrl[0],
       slug: data.name.toLowerCase().replace("&", "").split(" ").join("-"),
     };
     // console.log(productData.slug);
@@ -106,14 +115,14 @@ const AddNewProduct = ({ product }) => {
         }
       })
       .catch((err) => {
-        saveProductMain(productData);
+        saveProductMain(productData, imagesUrl);
         ProductServices.getProductMainBySlug(productData.slug)
           .then((res) => {
             if (res) {
               try {
                 saveProductShop(res.id, data.store, data.price);
               } catch (ex) {
-                notifyError("Error, please try again later save pS!");
+                notifyError("Error, please try again later save pS!!!");
               }
             } else {
               notifyError("Error, please try again later save pp!");
@@ -126,7 +135,7 @@ const AddNewProduct = ({ product }) => {
   };
 
   const onSubmit = (data) => {
-    if (!imageUrl) {
+    if (!imagesUrl) {
       notifyError("Image is required!");
       return;
     } else if (data.store == 0) {
@@ -237,7 +246,7 @@ const AddNewProduct = ({ product }) => {
       setValue("description", product.description);
       setValue("tag", product.tag);
       setValue("price", product.price);
-      setImageUrl(product.image);
+      setImagesUrl(product.image);
     }
 
     ShopServices.getMyShops()
@@ -310,9 +319,9 @@ const AddNewProduct = ({ product }) => {
               <div>
                 <Label label="Photo" />
                 <div className="mt-1 flex items-center">
-                  <UploaderProduct
-                    imageUrl={imageUrl}
-                    setImageUrl={setImageUrl}
+                  <UploaderProducts
+                    imagesUrl={imagesUrl}
+                    setImagesUrl={setImagesUrl}
                   />
                 </div>
               </div>
