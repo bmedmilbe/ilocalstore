@@ -10,6 +10,9 @@ const withPWA = require("next-pwa")({
   disable: process.env.NODE_ENV === "development",
 });
 
+// https://www.portaldolicenciamento.com/perguntas-e-respostas/confeccionar-alimentos-em-casa-particular.html
+
+// https://weat.pt/como-comecar-um-negocio-de-food-delivery-em-portugal/
 module.exports = withPWA({
   reactStrictMode: true,
   eslint: {
