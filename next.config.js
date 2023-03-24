@@ -13,6 +13,7 @@ const withPWA = require("next-pwa")({
 // https://www.portaldolicenciamento.com/perguntas-e-respostas/confeccionar-alimentos-em-casa-particular.html
 
 // https://weat.pt/como-comecar-um-negocio-de-food-delivery-em-portugal/
+// 1226, "User 'zq8k6axufnll47eh' has exceeded the 'max_questions' resource (current value: 18000)
 module.exports = withPWA({
   reactStrictMode: true,
   eslint: {

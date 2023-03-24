@@ -34,7 +34,7 @@ const ProductScreen = ({ product, relatedProduct }) => {
   const { isLoading, setIsLoading } = useContext(SidebarContext);
   const { handleAddItem, setItem, item } = useAddToCart();
   const [mainImage, setMainImage] = useState(
-    product.product.images ? product.product.images[0].image : ""
+    product?.product.images ? product.product.images[0].image : ""
   );
   useEffect(() => {
     setIsLoading(false);
